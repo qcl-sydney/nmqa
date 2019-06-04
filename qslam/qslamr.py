@@ -146,7 +146,7 @@ class ParticleFilter(Grid):
 
             self.save_alpha_predictive = [] # just after dynanmic update == posterior
             self.save_alpha_bar_1 = [] # just after h1 update
-            self.save_alpha_bar_1_weights = [] # just after h1 update
+            self.save_all_beta_weights = [] # long list of all beta wieghts
             self.save_alpha_beta_joint = [] # just after beta expansion
             self.save_alpha_beta_joint_weights = []  # just after beta expansion
             self.save_alpha_bar_2 = []  # just after beta collapse
@@ -476,6 +476,7 @@ class ParticleFilter(Grid):
         -------
         '''
         new_alpha_weights = self.AlphaSet.calc_weights_set() # Normlaised
+        print "ComputeAlphaWeights", new_alpha_weights # MARKER 
         self.AlphaSet.weights_set = new_alpha_weights
 
     def ComputePosteriorWeights(self, control_j, **BETADICT):
@@ -493,36 +494,53 @@ class ParticleFilter(Grid):
         posterior_weights = []
 
         for idx_alpha in range(self.MODELDESIGN["P_ALPHA"]):
-
+            
+            print idx_alpha
+            
             alpha_particle = self.AlphaSet.particles[idx_alpha]
+            print "alpha weight", alpha_particle.weight
+            
+            print "alpha f state", self.QubitGrid.nodes[control_j].f_state
+            
             alpha_particle.particle[f_state_index] = self.QubitGrid.nodes[control_j].f_state
+            
             beta_alpha_j_weights = self.generate_beta_layer(alpha_particle, **BETADICT)
+            
+            if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_all_beta_weights.append(beta_alpha_j_weights)
+            
+            print "beta_alpha_j_weights", beta_alpha_j_weights
+            print "alpha_particle.weight*beta_alpha_j_weights", alpha_particle.weight*beta_alpha_j_weights
+            
             posterior_weights.append(alpha_particle.weight*beta_alpha_j_weights)
             
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
-                self.save_alpha_beta_joint.append(self.AlphaSet.particles)
+            self.save_alpha_beta_joint.append(self.AlphaSet.particles)
         
         posterior_weights = np.asarray(posterior_weights).flatten()
         normalisation = np.sum(posterior_weights)
+        
 
         if normalisation == 0.0:
-            # print "Zero value normalisation in ComputePosteriorWeights()"
+            print "Zero value normalisation in ComputePosteriorWeights()"
             # print "Resetting to uniform weights"
             normalised_posterior_weights = self.posterior_reset()
+            self.save_alpha_beta_joint_weights.append(["ZeroNormReset"]*self.MODELDESIGN["P_BETA"])
             return normalised_posterior_weights
 
         normalised_posterior_weights = posterior_weights*(1.0/normalisation)
 
         if np.any(np.isnan(normalised_posterior_weights)):
-            # print "Invalid Nan values encountered in ComputePosteriorWeights()"
+            print "Invalid Nan values encountered in ComputePosteriorWeights()"
             # print "Resetting to uniform weights"
             normalised_posterior_weights = self.posterior_reset()
+            self.save_alpha_beta_joint_weights.append(["InvalidReset"]*self.MODELDESIGN["P_BETA"])
             return normalised_posterior_weights
 
         # print "ComputePosteriorWeights() has no error - yay!"
         
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
-                self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
+            self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
         
         return  normalised_posterior_weights
 
@@ -564,8 +582,12 @@ class ParticleFilter(Grid):
         for beta_particle_object in alpha_particle.BetaAlphaSet_j.particles:
 
             self.generate_beta_neighbourhood(beta_particle_object)
-
+        
+        print "list_of_length_samples", list_of_length_samples
+        
         beta_alpha_j_weights = alpha_particle.BetaAlphaSet_j.calc_weights_set()
+        
+        print "returning beta_alpha_j_weights", beta_alpha_j_weights
 
         return beta_alpha_j_weights
 
