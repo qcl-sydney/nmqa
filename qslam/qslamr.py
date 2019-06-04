@@ -131,11 +131,28 @@ class ParticleFilter(Grid):
 
     '''
 
-    def __init__(self, GLOBALDICT, real_data=False, real_data_key=None):
+    def __init__(self, GLOBALDICT, save_run=False, real_data=False, real_data_key=None): # MARKER: intermediary dist. save func. Jun-19
 
         self.GLOBALDICT = GLOBALDICT
         self.MODELDESIGN = self.GLOBALDICT["MODELDESIGN"]
         NOISEPARAMS = self.GLOBALDICT["NOISEPARAMS"]
+        
+        self.save_run = save_run # MARKER: intermediary dist. save func. Jun-19
+        
+        if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+            
+            self.save_run_variance = [] # beta particle variance at location t-1
+            self.save_controls_j = [] # msmt, control location 
+
+            self.save_alpha_predictive = [] # just after dynanmic update == posterior
+            self.save_alpha_bar_1 = [] # just after h1 update
+            self.save_alpha_bar_1_weights = [] # just after h1 update
+            self.save_alpha_beta_joint = [] # just after beta expansion
+            self.save_alpha_beta_joint_weights = []  # just after beta expansion
+            self.save_alpha_bar_2 = []  # just after beta collapse
+            self.save_alpha_bar_2_weights = [] # just after beta collapse
+            self.save_alpha_posterior = [] # final score
+        
 
         self.LikelihoodObj = pl(**NOISEPARAMS)
         self.measurements_controls = None
@@ -242,6 +259,10 @@ class ParticleFilter(Grid):
                                                            next_control_neighbourhood=next_control_neighbourhood)
 
             next_control_neighbourhood = self.particlefilter(msmt_control_pair)
+            
+            if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_run_variance.append(run_variance)
+                self.save_controls_j.append(msmt_control_pair)
 
             if protocol_counter == max_iter_condition - 1:
                 # print "PROTOCOL - SAFE END - Max number of measurements taken"
@@ -301,21 +322,34 @@ class ParticleFilter(Grid):
 
             self.ReceiveMsmt(control_j, next_phys_msmt_j)
             self.PropagateState(control_j)
+            
+            if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_alpha_predictive.append(self.AlphaSet.particles)
+            
             self.ComputeAlphaWeights()
 
             # self.QubitGrid.state_vector = self.AlphaSet.posterior_state*1.0 # ?????
             # Dont update the posterior state as the full posterior
             # has not been computed.
+            
         ###### END  MSMT LOOP / ESTIMATE LOCALLY
 
+        if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_alpha_bar_1.append(self.AlphaSet.particles)
+        
         ###### SHARE WITH NEIGHBOURHOOD / SMOOTHEN GLOBALLY
         posterior_weights = self.ComputePosteriorWeights(control_j,
                                                          **self.LikelihoodObj.WEIGHTFUNCDICT_BETA)
+        
+        
         self.ResampleParticles(posterior_weights) # no QubitGrid update
 
         # COMMENT: Update node j neighbourhood and map estimate
         posterior_state = self.AlphaSet.posterior_state
         self.QubitGrid.state_vector = posterior_state*1.0
+        
+        if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_alpha_posterior.append(self.AlphaSet.particles)
 
         # COMMENT: Sprinkle quasi msmts / share info with neighbours.
         next_control_neighbourhood = self.update_qubitgrid_via_quasimsmts(control_j,
@@ -464,7 +498,10 @@ class ParticleFilter(Grid):
             alpha_particle.particle[f_state_index] = self.QubitGrid.nodes[control_j].f_state
             beta_alpha_j_weights = self.generate_beta_layer(alpha_particle, **BETADICT)
             posterior_weights.append(alpha_particle.weight*beta_alpha_j_weights)
-
+            
+        if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_alpha_beta_joint.append(self.AlphaSet.particles)
+        
         posterior_weights = np.asarray(posterior_weights).flatten()
         normalisation = np.sum(posterior_weights)
 
@@ -483,6 +520,10 @@ class ParticleFilter(Grid):
             return normalised_posterior_weights
 
         # print "ComputePosteriorWeights() has no error - yay!"
+        
+        if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
+                self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
+        
         return  normalised_posterior_weights
 
 
@@ -703,6 +744,11 @@ class ParticleFilter(Grid):
         # print "these are the leaf counts", leaf_count_list
 
         marginalise_weights = leaf_count_list / np.sum(leaf_count_list)
+        
+        if self.save_run is True:
+            self.save_alpha_bar_2.append(new_alpha_particle_list)
+            self.save_alpha_bar_2_weights.append(marginalise_weights)
+            
         p_alpha_indices = ParticleFilter.resample_from_weights(marginalise_weights, self.MODELDESIGN["P_ALPHA"])
         final_alpha_list = [new_alpha_particle_list[idx_] for idx_ in p_alpha_indices]
         
