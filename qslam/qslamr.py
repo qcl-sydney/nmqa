@@ -17,7 +17,7 @@ Created on Thu Apr 20 19:20:43 2017
 
 import numpy as np
 from itertools import combinations
-from scipy.stats import mode
+from scipy.stats import mode, truncnorm
 
 from hardware import Grid, PARTICLE_STATE
 from hardware import Node # not initiated, just access static method
@@ -131,13 +131,15 @@ class ParticleFilter(Grid):
 
     '''
 
-    def __init__(self, GLOBALDICT, save_run=False, real_data=False, real_data_key=None): # MARKER: intermediary dist. save func. Jun-19
+    def __init__(self, GLOBALDICT, save_run=False, beta_expansion_mode=False, # MARKER: intermediary dist. save func. Jun-19
+                 real_data=False, real_data_key=None): 
 
         self.GLOBALDICT = GLOBALDICT
         self.MODELDESIGN = self.GLOBALDICT["MODELDESIGN"]
         NOISEPARAMS = self.GLOBALDICT["NOISEPARAMS"]
         
         self.save_run = save_run # MARKER: intermediary dist. save func. Jun-19
+        self.beta_expansion_mode = beta_expansion_mode # MARKER: intermediary dist. save func. Jun-19
         
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
             
@@ -151,7 +153,8 @@ class ParticleFilter(Grid):
             self.save_alpha_beta_joint_weights = []  # just after beta expansion
             self.save_alpha_bar_2 = []  # just after beta collapse
             self.save_alpha_bar_2_weights = [] # just after beta collapse
-            self.save_alpha_posterior = [] # final score
+            self.save_alpha_posterior = [] # final particle set
+            self.save_posterior_state =[]
         
 
         self.LikelihoodObj = pl(**NOISEPARAMS)
@@ -335,7 +338,8 @@ class ParticleFilter(Grid):
         ###### END  MSMT LOOP / ESTIMATE LOCALLY
 
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
-                self.save_alpha_bar_1.append(self.AlphaSet.particles)
+            self.save_alpha_bar_1.append(self.AlphaSet.particles)
+            
         
         ###### SHARE WITH NEIGHBOURHOOD / SMOOTHEN GLOBALLY
         posterior_weights = self.ComputePosteriorWeights(control_j,
@@ -349,7 +353,8 @@ class ParticleFilter(Grid):
         self.QubitGrid.state_vector = posterior_state*1.0
         
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
-                self.save_alpha_posterior.append(self.AlphaSet.particles)
+            self.save_alpha_posterior.append(self.AlphaSet.particles)
+            self.save_posterior_state.append(posterior_state)
 
         # COMMENT: Sprinkle quasi msmts / share info with neighbours.
         next_control_neighbourhood = self.update_qubitgrid_via_quasimsmts(control_j,
@@ -571,7 +576,7 @@ class ParticleFilter(Grid):
         list_of_length_samples = []
 
         for idx_beta in range(alpha_particle.pset_beta):
-            new_length_sample = self.sample_radii()
+            new_length_sample = self.sample_radii(control_j=alpha_particle.node_j) # MARKER
             new_beta_state[len_idx] = new_length_sample*1.0
             list_of_parent_states.append(new_beta_state.copy())
             list_of_length_samples.append(new_length_sample)
@@ -592,7 +597,7 @@ class ParticleFilter(Grid):
         return beta_alpha_j_weights
 
 
-    def sample_radii(self, previous_length_scale=0.0):
+    def sample_radii(self, previous_length_scale=0.0, control_j=None): # MARKER
         ''' Return a r_state sample from the prior distribution of r_states to
         generate a new Beta particle for a given Alpha parent.
         Helper function to generate_beta_layer().
@@ -603,13 +608,34 @@ class ParticleFilter(Grid):
         Returns:
         -------
         '''
-
-        if previous_length_scale < 0:
-            print "Previous length scale is less than zero:", previous_length_scale
-            raise RuntimeError
-        lower_bound = (previous_length_scale + self.R_MIN)*0.1 + 0.9*self.R_MIN
-        sample = np.random.uniform(low=lower_bound, high=self.R_MAX)
-        return sample
+        
+        
+        if self.beta_expansion_mode:
+            # New trial
+            
+            mean = self.QubitGrid.get_all_nodes(["r_state"])[control_j]
+            var = self.QubitGrid.get_all_nodes(["r_state_variance"])[control_j]
+            
+            
+            a, b = (self.R_MIN - mean) / np.sqrt(var), (self.R_MAX - mean) / np.sqrt(var)
+            sample = truncnorm.rvs(a, b, loc=mean, scale=np.sqrt(var), size=1)
+            print
+            print "Sample a radii"
+            print "mean, var, a, b, r", mean, var, a, b, sample
+            print
+            return sample
+            
+        if not self.beta_expansion_mode:
+        
+            # Pre June 2019 method: Uniformly injected samples betwn Rmin and Rmax
+            
+            if previous_length_scale < 0:
+                print "Previous length scale is less than zero:", previous_length_scale
+                raise RuntimeError
+            lower_bound = (previous_length_scale + self.R_MIN)*0.1 + 0.9*self.R_MIN
+            sample = np.random.uniform(low=lower_bound, high=self.R_MAX)
+            
+            return sample
 
 
     def generate_beta_neighbourhood(self, BetaParticle):
