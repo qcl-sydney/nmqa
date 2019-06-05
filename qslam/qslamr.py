@@ -131,15 +131,17 @@ class ParticleFilter(Grid):
 
     '''
 
-    def __init__(self, GLOBALDICT, save_run=False, beta_expansion_mode=False, # MARKER: intermediary dist. save func. Jun-19
+    def __init__(self, GLOBALDICT, save_run=False, beta_expansion_mode=False, skew_adjust=True, # MARKER: intermediary dist. save func. Jun-19
                  real_data=False, real_data_key=None): 
 
         self.GLOBALDICT = GLOBALDICT
         self.MODELDESIGN = self.GLOBALDICT["MODELDESIGN"]
         NOISEPARAMS = self.GLOBALDICT["NOISEPARAMS"]
         
+        
         self.save_run = save_run # MARKER: intermediary dist. save func. Jun-19
         self.beta_expansion_mode = beta_expansion_mode # MARKER: intermediary dist. save func. Jun-19
+        self.skew_adjust = skew_adjust # MARKER: intermediary dist. save func. Jun-19
         
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
             
@@ -973,11 +975,13 @@ class ParticleFilter(Grid):
 
         variance = np.var(r_lengthscales_array)
         fano = variance / mean_
-
-        # if mean_ < mode_ and counts > 1: # MARKER changed July 2019
-        #    return mode_, variance, fano
-        # if mean_ > mode_ and counts > 1:
-        #    return mode_, variance, fano
+        
+        if self.skew_adjust is True: # MARKER changed July 2019
+        
+            if mean_ < mode_ and counts > 1: 
+               return mode_, variance, fano
+            if mean_ > mode_ and counts > 1:
+               return mode_, variance, fano
         
         return mean_, variance, fano
 
