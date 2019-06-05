@@ -131,7 +131,7 @@ class ParticleFilter(Grid):
 
     '''
 
-    def __init__(self, GLOBALDICT, save_run=False, beta_expansion_mode=False, skew_adjust=True, # MARKER: intermediary dist. save func. Jun-19
+    def __init__(self, GLOBALDICT, save_run=False, beta_expansion_mode=False, beta_skew_adjust=True, # MARKER: intermediary dist. save func. Jun-19
                  real_data=False, real_data_key=None): 
 
         self.GLOBALDICT = GLOBALDICT
@@ -141,7 +141,7 @@ class ParticleFilter(Grid):
         
         self.save_run = save_run # MARKER: intermediary dist. save func. Jun-19
         self.beta_expansion_mode = beta_expansion_mode # MARKER: intermediary dist. save func. Jun-19
-        self.skew_adjust = skew_adjust # MARKER: intermediary dist. save func. Jun-19
+        self.skew_adjust = beta_skew_adjust # MARKER: intermediary dist. save func. Jun-19
         
         if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
             
@@ -652,11 +652,6 @@ class ParticleFilter(Grid):
                     
                     if counter > 1:
                         print "Repeat samples req: ", counter
-            
-            # print
-            # print "Sample radii moments", mean, var
-            # print "mean, var, a, b, r-sample", mean, var, a, b, sample
-            # print
                        
             return sample
             
@@ -978,11 +973,14 @@ class ParticleFilter(Grid):
         
         if skew_adjust is True: # MARKER changed July 2019
         
-            if mean_ < mode_ and counts > 1: 
-               return mode_, variance, fano
+            if mean_ < mode_ and counts > 1:
+                # print "mode"
+                return mode_, variance, fano
             if mean_ > mode_ and counts > 1:
-               return mode_, variance, fano
+                # print "mode"
+                return mode_, variance, fano
         
+        # print "mean"
         return mean_, variance, fano
 
 
