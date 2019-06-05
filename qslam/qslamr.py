@@ -638,13 +638,19 @@ class ParticleFilter(Grid):
             mean = self.QubitGrid.get_all_nodes(["r_state"])[control_j]
             fano = self.QubitGrid.get_all_nodes(["r_state_variance"])[control_j]
             var = fano * mean
+            sd = np.sqrt(var)
             
-            a, b = (self.R_MIN - mean) / np.sqrt(var), (self.R_MAX - mean) / np.sqrt(var)
+            if sd == 0:
+                sd = np.sqrt(self.GLOBALDICT["NOISEPARAMS"]["SIGMOID_APPROX_ERROR"]["SIGMA"]) * 10.**-6 
+                # set very small rel to likelhood parameter variances but not zero
+            
+            a, b = (self.R_MIN - mean) / sd, (self.R_MAX - mean) / sd
             
             valid_sample=False
             counter=0
+            
             while valid_sample is False:
-                sample = truncnorm.rvs(a, b, loc=mean, scale=np.sqrt(var), size=1)
+                sample = truncnorm.rvs(a, b, loc=mean, scale=sd, size=1)
                 counter += 1
                 
                 if sample >= 0:
