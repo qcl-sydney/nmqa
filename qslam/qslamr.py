@@ -610,7 +610,7 @@ class ParticleFilter(Grid):
         '''
         
         
-        if self.beta_expansion_mode:
+        if self.beta_expansion_mode: # MARKER
             # New trial
             
             mean = self.QubitGrid.get_all_nodes(["r_state"])[control_j]
@@ -621,7 +621,7 @@ class ParticleFilter(Grid):
             sample = truncnorm.rvs(a, b, loc=mean, scale=np.sqrt(var), size=1)
             print
             print "Sample a radii"
-            print "mean, var, a, b, r", mean, var, a, b, sample
+            print "mean, var, a, b, r-sample", mean, var, a, b, sample
             print
             return sample
             
