@@ -152,6 +152,7 @@ class ParticleFilter(Grid):
             self.save_alpha_beta_joint = [] # just after beta expansion
             self.save_alpha_beta_joint_weights = []  # just after beta expansion
             self.save_alpha_bar_2 = []  # just after beta collapse
+            self.save_alpha_bar_2_oldnodes = [] # links alpha particles to alpha_bar_1
             self.save_alpha_bar_2_weights = [] # just after beta collapse
             self.save_alpha_posterior = [] # final particle set
             self.save_posterior_state =[]
@@ -231,7 +232,7 @@ class ParticleFilter(Grid):
 
         self.InitializeParticles()
 
-        run_variance = self.QubitGrid.get_all_nodes(["r_state_variance"])
+        run_variance = self.QubitGrid.get_all_nodes(["r_state_variance"]) # MARKER: July 2019: set as a fano factor of 10
 
         if autocontrol == "OFF" and self.measurements_controls is None:
             print "Auto-controller is off and no measurement control protocol is specified "
@@ -260,6 +261,18 @@ class ParticleFilter(Grid):
                                                            run_variance,
                                                            protocol_counter,
                                                            next_control_neighbourhood=next_control_neighbourhood)
+                                                           
+            # MARKER - check variance --> fano replacement
+            # print "At this location, lengthscale params are:"
+            # control_j = msmt_control_pair[1]
+            # print "Location:", control_j
+            # rmean = self.QubitGrid.get_all_nodes(["r_state"])[control_j]
+            # rfano = self.QubitGrid.get_all_nodes(["r_state_variance"])[control_j]
+            # print "Mean:", rmean
+            # print "Index of Dispersion:", rfano
+            # print "Variance:", rfano * rmean
+            # print
+            
 
             next_control_neighbourhood = self.particlefilter(msmt_control_pair)
             
@@ -481,7 +494,9 @@ class ParticleFilter(Grid):
         -------
         '''
         new_alpha_weights = self.AlphaSet.calc_weights_set() # Normlaised
-        print "ComputeAlphaWeights", new_alpha_weights # MARKER 
+        
+        # print "ComputeAlphaWeights", new_alpha_weights # MARKER 
+        
         self.AlphaSet.weights_set = new_alpha_weights
 
     def ComputePosteriorWeights(self, control_j, **BETADICT):
@@ -494,18 +509,19 @@ class ParticleFilter(Grid):
         Returns:
         -------
         '''
+        
         f_state_index = 2*self.QubitGrid.number_of_nodes + control_j
 
         posterior_weights = []
 
-        for idx_alpha in range(self.MODELDESIGN["P_ALPHA"]):
+        for idx_alpha in range(self.MODELDESIGN["P_ALPHA"]): # MARKER
             
-            print idx_alpha
+            # print idx_alpha
             
             alpha_particle = self.AlphaSet.particles[idx_alpha]
-            print "alpha weight", alpha_particle.weight
             
-            print "alpha f state", self.QubitGrid.nodes[control_j].f_state
+            # print "alpha weight", alpha_particle.weight
+            # print "alpha f state", self.QubitGrid.nodes[control_j].f_state
             
             alpha_particle.particle[f_state_index] = self.QubitGrid.nodes[control_j].f_state
             
@@ -514,8 +530,8 @@ class ParticleFilter(Grid):
             if self.save_run is True: # MARKER: intermediary dist. save func. Jun-19
                 self.save_all_beta_weights.append(beta_alpha_j_weights)
             
-            print "beta_alpha_j_weights", beta_alpha_j_weights
-            print "alpha_particle.weight*beta_alpha_j_weights", alpha_particle.weight*beta_alpha_j_weights
+            # print "beta_alpha_j_weights", beta_alpha_j_weights
+            # print "alpha_particle.weight*beta_alpha_j_weights", alpha_particle.weight*beta_alpha_j_weights
             
             posterior_weights.append(alpha_particle.weight*beta_alpha_j_weights)
             
@@ -527,19 +543,23 @@ class ParticleFilter(Grid):
         
 
         if normalisation == 0.0:
-            print "Zero value normalisation in ComputePosteriorWeights()"
+            # print "Zero value normalisation in ComputePosteriorWeights()"
             # print "Resetting to uniform weights"
             normalised_posterior_weights = self.posterior_reset()
-            self.save_alpha_beta_joint_weights.append(["ZeroNormReset"]*self.MODELDESIGN["P_BETA"])
+            
+            self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
+            
             return normalised_posterior_weights
 
         normalised_posterior_weights = posterior_weights*(1.0/normalisation)
 
         if np.any(np.isnan(normalised_posterior_weights)):
-            print "Invalid Nan values encountered in ComputePosteriorWeights()"
+            # print "Invalid Nan values encountered in ComputePosteriorWeights()"
             # print "Resetting to uniform weights"
             normalised_posterior_weights = self.posterior_reset()
-            self.save_alpha_beta_joint_weights.append(["InvalidReset"]*self.MODELDESIGN["P_BETA"])
+            
+            self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
+            
             return normalised_posterior_weights
 
         # print "ComputePosteriorWeights() has no error - yay!"
@@ -588,11 +608,11 @@ class ParticleFilter(Grid):
 
             self.generate_beta_neighbourhood(beta_particle_object)
         
-        print "list_of_length_samples", list_of_length_samples
+        # print "list_of_length_samples", list_of_length_samples
         
         beta_alpha_j_weights = alpha_particle.BetaAlphaSet_j.calc_weights_set()
         
-        print "returning beta_alpha_j_weights", beta_alpha_j_weights
+        # print "returning beta_alpha_j_weights", beta_alpha_j_weights
 
         return beta_alpha_j_weights
 
@@ -614,15 +634,28 @@ class ParticleFilter(Grid):
             # New trial
             
             mean = self.QubitGrid.get_all_nodes(["r_state"])[control_j]
-            var = self.QubitGrid.get_all_nodes(["r_state_variance"])[control_j]
-            
+            fano = self.QubitGrid.get_all_nodes(["r_state_variance"])[control_j]
+            var = fano * mean
             
             a, b = (self.R_MIN - mean) / np.sqrt(var), (self.R_MAX - mean) / np.sqrt(var)
-            sample = truncnorm.rvs(a, b, loc=mean, scale=np.sqrt(var), size=1)
-            print
-            print "Sample a radii"
-            print "mean, var, a, b, r-sample", mean, var, a, b, sample
-            print
+            
+            valid_sample=False
+            counter=0
+            while valid_sample is False:
+                sample = truncnorm.rvs(a, b, loc=mean, scale=np.sqrt(var), size=1)
+                counter += 1
+                
+                if sample >= 0:
+                    valid_sample=True
+                    
+                    if counter > 1:
+                        print "Repeat samples req: ", counter
+            
+            # print
+            # print "Sample radii moments", mean, var
+            # print "mean, var, a, b, r-sample", mean, var, a, b, sample
+            # print
+                       
             return sample
             
         if not self.beta_expansion_mode:
@@ -694,9 +727,10 @@ class ParticleFilter(Grid):
         state_update = 0.
         new_alpha_particle_list = []
         leaf_count_list = []
+        alpha_node_list = [] # MARKER
 
         # for estimating variange at node accross all Alphas.
-        normaliser = (1./float(len(subtree_list)))
+        normaliser = (1./float(len(subtree_list))) # expectation over all alphas surviving
         uncertainity_at_j = 0.0
 
 
@@ -722,9 +756,10 @@ class ParticleFilter(Grid):
                     r_est_subtree_list.append(beta_lengthscale)
 
                 # COMMENT: new posterior for alpha lenthscales based on mode
-                r_est_subtree, r_est_subtree_variance = ParticleFilter.calc_posterior_lengthscale(np.asarray(r_est_subtree_list))
+                r_mean, r_var, r_fano = ParticleFilter.calc_posterior_lengthscale(np.asarray(r_est_subtree_list))
                 parent = self.AlphaSet.particles[alpha_node].particle.copy()*1.0
-                parent[r_est_index] = r_est_subtree
+                
+                parent[r_est_index] = r_mean # MARKER - could be mode or skew
 
                 if np.any(np.isnan(parent)):
                     print "A resampled parent particle has an invalid value."
@@ -743,12 +778,18 @@ class ParticleFilter(Grid):
                 # self.AlphaSet.particles[alpha_node].BetaAlphaSet_j = None
 
                 # New Alphas Stored, control parameters updated
-                uncertainity_at_j += r_est_subtree_variance * normaliser # TODO: is this the correct normalisation?
+                
+                uncertainity_at_j += r_fano * normaliser # TODO: is this the correct normalisation? # MARKER - used index of dispersion, not variance. normaliser takes expectation over alphas. 
+                
                 new_alpha_particle_list.append(self.AlphaSet.particles[alpha_node])
+                
+                # Save alpha_nodes to reconstruct alpha distribution after beta marginisalisation
+                if self.save_run is True:
+                    alpha_node_list.append(alpha_node)
             
                 leaf_count_list.append(leaf_count)
 
-        self.QubitGrid.nodes[self.AlphaSet.particles[alpha_node].node_j].r_state_variance = uncertainity_at_j
+        self.QubitGrid.nodes[self.AlphaSet.particles[alpha_node].node_j].r_state_variance = uncertainity_at_j # MARKER!!! Shouldn't alpha_node be one tab space inside? Oh no, it's just pulling a location
         
 
         ########################################################################
@@ -796,6 +837,7 @@ class ParticleFilter(Grid):
         if self.save_run is True:
             self.save_alpha_bar_2.append(new_alpha_particle_list)
             self.save_alpha_bar_2_weights.append(marginalise_weights)
+            self.save_alpha_bar_2_oldnodes.append(alpha_node_list)
             
         p_alpha_indices = ParticleFilter.resample_from_weights(marginalise_weights, self.MODELDESIGN["P_ALPHA"])
         final_alpha_list = [new_alpha_particle_list[idx_] for idx_ in p_alpha_indices]
@@ -910,8 +952,9 @@ class ParticleFilter(Grid):
         Returns:
         -------
         '''
-        r_posterior_post_beta_collapse, r_posterior_variance = ParticleFilter.calc_skew(r_lengthscales_array)
-        return r_posterior_post_beta_collapse, r_posterior_variance
+        r_mean, r_var, r_fano = ParticleFilter.calc_skew(r_lengthscales_array)
+        
+        return r_mean, r_var, r_fano
 
     @staticmethod
     def calc_skew(r_lengthscales_array):
@@ -929,12 +972,14 @@ class ParticleFilter(Grid):
         median_ = np.sort(r_lengthscales_array)[int(totalcounts/2) - 1]
 
         variance = np.var(r_lengthscales_array)
+        fano = variance / mean_
 
-        if mean_ < mode_ and counts > 1:
-            return mode_, variance
-        if mean_ > mode_ and counts > 1:
-            return mode_, variance
-        return mean_, variance
+        # if mean_ < mode_ and counts > 1: # MARKER changed July 2019
+        #    return mode_, variance, fano
+        # if mean_ > mode_ and counts > 1:
+        #    return mode_, variance, fano
+        
+        return mean_, variance, fano
 
 
     @staticmethod

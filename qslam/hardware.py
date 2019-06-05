@@ -88,12 +88,21 @@ class Node(object):
 
         # COMMENT: f_state can only be initialised here once. No setter function.
         # map_sample = PRIORDICT["SAMPLE_F"]["FUNCTION"](**PRIORDICT["SAMPLE_F"]["ARGS"])
+        
         self._f_state = map_sample
 
         self.r_state = 0.0
-        self.__r_state_variance = 10**4 # COMMENT: default value. Very large to make threshold.
-        self.x_state = 0.0
-        self.y_state = 0.0
+        
+        self.__r_state_variance = 10 # MARKER: reset this in qslamr to be order of Rmax
+        
+        # self.__r_state_variance = 10**4 Pre July 2019 COMMENT: default value of 10**4 for variance. 
+        # MARKER July 2019: This is changed from variance to fano factor
+        # Var= 1/12 (b-a)**2 for b = Rmax, a = Rmin (prior of R)
+        # Mean = 1/2 (b-a)
+        # Fano = Var / Mean = 1/6 (b-a) ~ on order of R_max / 6 ~ on order of Rmax (to start with high variance)
+        
+        self.x_state = 0.0 # MARKER July 2019: not used
+        self.y_state = 0.0 # MARKER July 2019: not used
         self.counter_tau = 0
         self.counter_beta = 0
         self.__physcmsmtsum = 0.0
