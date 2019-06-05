@@ -758,7 +758,7 @@ class ParticleFilter(Grid):
                     r_est_subtree_list.append(beta_lengthscale)
 
                 # COMMENT: new posterior for alpha lenthscales based on mode
-                r_mean, r_var, r_fano = ParticleFilter.calc_posterior_lengthscale(np.asarray(r_est_subtree_list))
+                r_mean, r_var, r_fano = ParticleFilter.calc_posterior_lengthscale(np.asarray(r_est_subtree_list),skew_adjust=self.skew_adjust)
                 parent = self.AlphaSet.particles[alpha_node].particle.copy()*1.0
                 
                 parent[r_est_index] = r_mean # MARKER - could be mode or skew
@@ -943,7 +943,7 @@ class ParticleFilter(Grid):
 #       ------------------------------------------------------------------------
 
     @staticmethod
-    def calc_posterior_lengthscale(r_lengthscales_array):
+    def calc_posterior_lengthscale(r_lengthscales_array, skew_adjust=True):
         '''Return descriptive moments for the distribution of r_states in a
         Beta particle set for an Alpha parent, post resampling.
         Helper function for collapse_beta().
@@ -954,12 +954,12 @@ class ParticleFilter(Grid):
         Returns:
         -------
         '''
-        r_mean, r_var, r_fano = ParticleFilter.calc_skew(r_lengthscales_array)
+        r_mean, r_var, r_fano = ParticleFilter.calc_skew(r_lengthscales_array, skew_adjust)
         
         return r_mean, r_var, r_fano
 
     @staticmethod
-    def calc_skew(r_lengthscales_array):
+    def calc_skew(r_lengthscales_array, skew_adjust=True):
         '''Helper function for  calc_posterior_lengthscale().
 
         Parameters:
@@ -976,7 +976,7 @@ class ParticleFilter(Grid):
         variance = np.var(r_lengthscales_array)
         fano = variance / mean_
         
-        if self.skew_adjust is True: # MARKER changed July 2019
+        if skew_adjust is True: # MARKER changed July 2019
         
             if mean_ < mode_ and counts > 1: 
                return mode_, variance, fano
