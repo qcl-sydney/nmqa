@@ -18,7 +18,7 @@ Created on Thu Apr 20 19:20:43 2017
 '''
 import numpy as np
 PARTICLE_STATE = ["x_state", "y_state", "f_state", "r_state"]
-from experimentaldata import RealData
+
 
 ###############################################################################
 # CHIP STRUCTURE
@@ -284,6 +284,7 @@ class Grid(object):
         self.real_data = real_data
 
         if self.real_data:
+            from experimentaldata import RealData
             self.RealDataGenerator = RealData(real_data_key) 
             
         self.control_sequence = []
