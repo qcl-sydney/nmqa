@@ -16,7 +16,7 @@ from qslamdesignparams import GLOBALDICT
 # Taking in bash parameters
 ########################
 idx_prefix = int(sys.argv[1]) # truth flag type (three options)
-idx_job_array = = int(sys.argv[2]) # job array starts from 1
+idx_job_array = int(sys.argv[2]) # job array starts from 1
 
 ########################
 # Truth Parameters
