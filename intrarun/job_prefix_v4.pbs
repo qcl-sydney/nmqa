@@ -14,5 +14,5 @@ prefix=1
 
 module load python
 
-python ./data_generator.py ${prefix} ${PBS_ARRAY_INDEX}
+python ./data_generator_v4.py ${prefix} ${PBS_ARRAY_INDEX}
 
