@@ -2,6 +2,7 @@ import sys
 import os
 import copy
 import traceback
+import numpy as np
 
 ########################
 # Find qslam modules
