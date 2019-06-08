@@ -1,5 +1,5 @@
 #PBS -P QCL_KF
-#PBS -N scaling_idx_prefix_1
+#PBS -N scaling_idx_prefix_2
 #PBS -J 1-50
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
@@ -12,7 +12,7 @@ cd $PBS_O_WORKDIR/
 
 prefix=2
 idx_1=12
-idx_2=13s
+idx_2=13
 
 module load python
 
