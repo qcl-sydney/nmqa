@@ -1,0 +1,20 @@
+#PBS -P QCL_KF
+#PBS -N scaling_idx_prefix_1
+#PBS -J 1-50
+#PBS -M riddhi.sw@gmail.com
+#PBS -m abe
+#PBS -l select=1:ncpus=1:mem=2GB
+#PBS -l walltime=16:00:00 
+#PBS -q defaultQ
+# #PBS -j oe
+
+cd $PBS_O_WORKDIR/
+
+prefix=1
+idx_1=2
+idx_2=12
+
+module load python
+
+python ./scaling_analysis_data_generator_v1.py ${prefix} ${PBS_ARRAY_INDEX} ${idx_1} ${idx_2}
+
