@@ -9,7 +9,7 @@ import numpy as np
 ########################
 sys.path.append('../qslam')
 
-from singlerun_v2 import SingleRunAnalysis2
+from singlerun_v2 import SingleRunAnalysis2 as SingleRunAnalysis
 from riskanalysis import EngineeredTruth
 from qslamdesignparams import GLOBALDICT
 
@@ -134,8 +134,8 @@ for idx_3 in range(IDX3_SHP):
 
 
     uniform_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, beta_expansion_mode=False)
-    uniform_r_expt.run_analysis(path+'Uni_R'+prefix+fname_likelihood+str(idx_3)+'_'+idx_job_array)
+    uniform_r_expt.run_analysis(path+'Uni_R'+prefix+fname_likelihood+str(idx_3)+'_'+str(idx_job_array))
 
     trunc_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, beta_expansion_mode=True)
-    trunc_r_expt.run_analysis(path+'Trunc_R'+prefix+fname_likelihood+str(idx_3)+'_'+idx_job_array)
+    trunc_r_expt.run_analysis(path+'Trunc_R'+prefix+fname_likelihood+str(idx_3)+'_'+str(idx_job_array))
 

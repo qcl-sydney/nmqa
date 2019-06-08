@@ -80,7 +80,8 @@ class SingleRunAnalysis2(object):
         joint_weights = np.zeros((max_num_iterations, P_ALPHA * P_BETA)) 
 
         marginalised_weights = np.zeros((max_num_iterations, P_ALPHA))
-
+        marginalised_states = np.zeros((max_num_iterations, P_ALPHA, self.numofnodes*4))
+        posterior_states = np.zeros((max_num_iterations, P_ALPHA, self.numofnodes*4))
 
         alpha_labels = range(1, P_ALPHA + 1, 1)
         beta_labels = range(1, P_BETA + 1, 1)
@@ -101,8 +102,12 @@ class SingleRunAnalysis2(object):
             for idx_m in range(len(marginalised_labels)):
                 idx_particle = marginalised_labels[idx_m]
                 marginalised_weights[idxt, idx_particle] = np.asarray(qslamobj.save_alpha_bar_2_weights[idxt])[idx_m]
+                marginalised_states[idxt, idx_particle, :] = qslamobj.save_alpha_bar_2[idxt][idx_m].particle
 
             posterior_weights[idxt, :] = np.asarray([qslamobj.save_alpha_posterior[idxt][idx].weight for idx in range(P_ALPHA)])
+            
+            for idx in range(P_ALPHA):
+                posterior_states[idxt, idx, :] = np.asarray([qslamobj.save_alpha_posterior[idxt][idx].particle])
             
         
         np.savez(filename,
@@ -115,8 +120,10 @@ class SingleRunAnalysis2(object):
                  predictive_weights=predictive_weights, 
                  leaf_weights=leaf_weights, 
                  joint_weights=joint_weights, 
-                 marginalised_weights=marginalised_weights, 
-                 posterior_weights=posterior_weights)
+                 marginalised_weights=marginalised_weights,
+                 marginalised_states=marginalised_states,
+                 posterior_weights=posterior_weights,
+                 posterior_states=posterior_states)
        
         return
     
