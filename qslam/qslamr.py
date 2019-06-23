@@ -410,7 +410,13 @@ class ParticleFilter(Grid):
         for idx_key in ["SAMPLE_X", "SAMPLE_Y", "SAMPLE_F", "SAMPLE_R"]: # f_state cannot be set, merely read from QubitGrid
 
             if idx_key == "SAMPLE_F":
-                samples = self.QubitGrid.get_all_nodes(["f_state"]) # Currently  all alpha particles have the same prior ie. same f_state values. 
+                
+                # samples = self.QubitGrid.get_all_nodes(["f_state"]) # All alpha particles have the same prior ie. same f_state values. 
+                
+                # MARKER JUNE 2019 - differentiate alpha maps
+                # Different alpha particle initial state
+                self.PRIORDICT["SAMPLE_F"]["ARGS"]["SIZE"] = size
+                samples = self.PRIORDICT["SAMPLE_F"]["FUNCTION"](**self.PRIORDICT["SAMPLE_F"]["ARGS"])  
 
             if idx_key != "SAMPLE_F":
 
@@ -442,12 +448,16 @@ class ParticleFilter(Grid):
         Returns:
         -------
         '''
-
-        self.QubitGrid.nodes[control_j].physcmsmtsum = next_phys_msmt_j
+        # Update tau counter before likelihood calculation
+        # self.QubitGrid.nodes[control_j].physcmsmtsum = next_phys_msmt_j
+        
         prob_j = self.QubitGrid.nodes[control_j].sample_prob_from_msmts()
         pl.update_alpha_dictionary(next_phys_msmt_j,
                                    prob_j,
                                    **self.LikelihoodObj.LIKELIHOOD_ALPHA)
+        
+        # MARKER JUN 2019 - Update tau counter after likelihood calculation
+        self.QubitGrid.nodes[control_j].physcmsmtsum = next_phys_msmt_j
 
 #       ------------------------------------------------------------------------
 #       SUPPORT FUNCTION 3: PROPAGATE (ALPHA) STATES
