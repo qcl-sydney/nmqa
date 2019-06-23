@@ -23,7 +23,7 @@ path = '/scratch/QCL_KF/qslamdatapaper_v2/' # on Artemis
 # Set Defaults
 ########################
 
-prefix = '_idx_prefix_'+str(idx_prefix)+'_'
+prefix = '_ALPHA_idx_prefix_'+str(idx_prefix)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
 
