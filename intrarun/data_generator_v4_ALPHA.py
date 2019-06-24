@@ -16,8 +16,8 @@ from qslamdesignparams import GLOBALDICT
 ########################
 # Taking in bash parameters
 ########################
-idx_prefix = int(sys.argv[1]) # truth flag type (three options)
-idx_job_array = int(sys.argv[2]) # job array starts from 1
+idx_prefix = 1 #int(sys.argv[1]) # truth flag type (three options)
+# idx_job_array = int(sys.argv[2]) # job array starts from 1
 
 ########################
 # Truth Parameters
@@ -39,8 +39,8 @@ TRUTHKWARGS["OneStepdfloorarea"] = FLOOR_RATIO
 # Save to path 
 ########################
 
-path = '/scratch/QCL_KF/qslamdatapaper_v2/' # on Artemis
-#path = './data_v2/'
+# path = '/scratch/QCL_KF/qslamdatapaper_v2/' # on Artemis
+path = './data_ALPHA_test/'
 
 ########################
 # Set true field
@@ -97,7 +97,7 @@ numofnodes=25
 repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
 
-prefix = '_ALPHA_idx_prefix_'+str(idx_prefix)+'_'
+prefix = '_ALPHA_2_idx_prefix_'+str(idx_prefix)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
 
@@ -114,7 +114,7 @@ IDX3_SHP = len(particleconfigs)
 truemap_generator = EngineeredTruth(numofnodes, TRUTHKWARGS)
 true_map_ = truemap_generator.get_map()
 
-idx_1, idx_2 = np.unravel_index(idx_job_array - 1 , (IDX1_SHP, IDX2_SHP) )
+idx_1, idx_2 = 4, 18 #np.unravel_index(idx_job_array - 1 , (IDX1_SHP, IDX2_SHP) )
 
 
 GLOBALDICT["NOISEPARAMS"]["SIGMOID_APPROX_ERROR"]["SIGMA"] = random_variances['g2var'][idx_1]

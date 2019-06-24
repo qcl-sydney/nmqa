@@ -450,8 +450,14 @@ class ParticleFilter(Grid):
         '''
         # Update tau counter before likelihood calculation
         # self.QubitGrid.nodes[control_j].physcmsmtsum = next_phys_msmt_j
+        # prob_j = self.QubitGrid.nodes[control_j].sample_prob_from_msmts()
         
+        # MARKER JUN 2019 - Update tau counter after likelihood calculation
         prob_j = self.QubitGrid.nodes[control_j].sample_prob_from_msmts()
+        if prob_j is None:
+            initial_state = self.QubitGrid.nodes[control_j].f_state
+            prob_j = self.QubitGrid.nodes[control_j].born_rule(initial_state)
+        
         pl.update_alpha_dictionary(next_phys_msmt_j,
                                    prob_j,
                                    **self.LikelihoodObj.LIKELIHOOD_ALPHA)
