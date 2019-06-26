@@ -21,7 +21,7 @@ PARTICLE_STATE = ["x_state", "y_state", "f_state", "r_state"]
 
 
 ###############################################################################
-# CHIP STRUCTURE
+# HARDWARE STRUCTURE
 ###############################################################################
 class Node(object):
     ''' Maintains spatial coordinates, state estimates and measurement data
@@ -50,12 +50,12 @@ class Node(object):
         f_state (`float64` | scalar | non-public attribute):
             State variable for the dephasing noise field about this location
                 caculated based on physical measurements and inferred data.
-                Initial Value: 0.0
+                Initial Value: Sampled from f_state prior as map_sample.
                 Setter Function: None.
         r_state_variance (`float64` | scalar ):
             Derived quantity from state variables tracking the level of uncertainty
                 in qslam's knowledge of correlation lengths at this location.
-                Initial Value: 10**4
+                Initial Value: 10. (Reset by QSLAM to reflect Fano factor.)
                 Setter Function: r_state_variance(var_metric)
         physcmsmtsum (`float64` | scalar ):
             Sum of binary physical measurement outcomes.
@@ -87,20 +87,13 @@ class Node(object):
     def __init__(self, map_sample, LAMBDA_1):
 
         # COMMENT: f_state can only be initialised here once. No setter function.
-        # map_sample = PRIORDICT["SAMPLE_F"]["FUNCTION"](**PRIORDICT["SAMPLE_F"]["ARGS"])
-        
         self._f_state = map_sample
-
         self.r_state = 0.0
-        
-        self.__r_state_variance = 10 # MARKER: reset this in qslamr to be order of Rmax
-        
-        # self.__r_state_variance = 10**4 Pre July 2019 COMMENT: default value of 10**4 for variance. 
-        # MARKER July 2019: This is changed from variance to fano factor
-        # Var= 1/12 (b-a)**2 for b = Rmax, a = Rmin (prior of R)
-        # Mean = 1/2 (b-a)
-        # Fano = Var / Mean = 1/6 (b-a) ~ on order of R_max / 6 ~ on order of Rmax (to start with high variance)
-        
+
+        # fano = Var / Mean = 1/6 (b-a) ~ on order of Rmax (for a = Rmin, b = Rmax).
+        # self.__r_state_variance = 10**4 Pre July 2019 COMMENT: default value of 10**4 for variance.
+        self.__r_state_variance = 10 # Reset by QSLAM 
+
         self.x_state = 0.0 # MARKER July 2019: not used
         self.y_state = 0.0 # MARKER July 2019: not used
         self.counter_tau = 0
@@ -129,10 +122,6 @@ class Node(object):
         self.__quasimsmtsum += next_quasi_msmt
         self.counter_beta += 1
 
-
-    ############################################################################
-    # PLACEHOLDER kew based control for SLAM
-    ############################################################################
     @property
     def r_state_variance(self):
         ''' Return level of uncertainty in qslam's knowledge of correlation lengths
@@ -143,18 +132,13 @@ class Node(object):
         ''' Update r_state_variance with new value.'''
         self.__r_state_variance = skew_metric
 
-
-    ############################################################################
     @property
-    def f_state(self): # no .setter function
+    def f_state(self): # No .setter function
         '''Return state variable for the dephasing noise field about this location.'''
 
         prob_sample = self.sample_prob_from_msmts()
 
-        # print "Inside f_state, the probability sample is:", prob_sample
-
         if prob_sample is None:
-            # print "Map value returned is I.C.; prob_sample NONE in f_state", self._f_state
             return self._f_state
 
         if prob_sample >= 0.0 and prob_sample <= 1.0:
@@ -164,7 +148,7 @@ class Node(object):
         print "INVALID prob_sample value encountered in calling f_state", prob_sample
         raise RuntimeError
 
-    def sample_prob_from_msmts(self): # TODO Data Association
+    def sample_prob_from_msmts(self):
         ''' Returns a sample probability for observing the qubit up-state based
             on physical and quasi-measurements.'''
 
@@ -183,9 +167,8 @@ class Node(object):
             w_p = 0.5 + 0.5*(1 - forgetting_factor)
 
         if w_p is None and w_q is None:
-            # print "NONE returned in sample_prob_from_msmts"
             return  None
-        
+
         elif w_p is not None  and w_q is None:
             w_p = 1.0
             w_q = 0.0
@@ -198,7 +181,7 @@ class Node(object):
 
         if prob_j > 1 or prob_j < 0:
             raise RuntimeError
-        
+
         return prob_j
 
 
@@ -211,6 +194,7 @@ class Node(object):
 
     @staticmethod
     def quantiser(born_prob):
+        ''' Return a simulated 0 or 1 single qubit measurement. '''
         flip = np.random.binomial(1, born_prob)
         return flip
 
@@ -258,10 +242,11 @@ class Grid(object):
 
     '''
 
-    def __init__(self,LAMBDA_1=1.0,
+    def __init__(self,
+                 LAMBDA_1=1.0,
                  list_of_nodes_positions=None,
                  engineeredtruemap=None,
-                 addnoise=None, 
+                 addnoise=None,
                  real_data=False, real_data_key=None,
                  **SAMPLE_F):
 
@@ -285,8 +270,8 @@ class Grid(object):
 
         if self.real_data:
             from experimentaldata import RealData
-            self.RealDataGenerator = RealData(real_data_key) 
-            
+            self.RealDataGenerator = RealData(real_data_key)
+
         self.control_sequence = []
         self.addnoise = addnoise
 
@@ -325,7 +310,7 @@ class Grid(object):
         '''Return a 0 or 1 physical measurement for performing a
             single shot Ramsey experiment on a qubit.'''
 
-        # REAL DATA FEED 
+        # REAL DATA FEED
         if self.real_data:
             msmt = self.RealDataGenerator.get_real_data(node_j)
             self.control_sequence.append(node_j)

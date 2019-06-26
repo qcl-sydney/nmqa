@@ -33,16 +33,16 @@ Created on Thu Apr 20 19:20:43 2017
             prior to take a projective (quantised) boolean measurement.
 
         "CORRELATION_DYNAMICS" :: Noisy time evolution of true correlation length
-            scales in the underlying field.
+            scales in the underlying field. [NOT USED]
 
         "SPATIAL_NOISE_JITTER" :: Spatio-temporal environmental jitter that
-            manifests as uncertainty in our knowledge of the qubit positions.
+            manifests as uncertainty in our knowledge of the qubit positions. [NOT USED]
 
     MODELDESIGN : Defines model parameters for particle filtering SLAM solution.
         LAMBDA_1 (`float` | scalar):
-            Spatial quasi-msmt forgetting factor for sample probabilities
+            QSLAM model parameter for sample probabilities
         LAMBDA_2 (`float` | scalar):
-            Spatial quasi-msmt forgetting factor for smeared phase information
+            QSLAM model parameter for data messages
         GAMMA_T (`float` | scalar):
             Threshold for initiating adaptive resampling [NOT USED].
         P_ALPHA (`int` | scalar):
@@ -54,11 +54,11 @@ Created on Thu Apr 20 19:20:43 2017
         MULTIPLER_R_MAX (`float` | scalar):
             Sets R_MAX based on qubit grid.
         MULTIPLER_MEAN_RADIUS (`float` | scalar):
-            Sets mean radius according to posterior r_state??
+            Sets mean radius according to posterior r_state [NOT USED]
         MAX_WEIGHT_CUTOFF (`float` | scalar):
             In ParticleSet.calc_weights_set() object, resets extremely large weights
-        MSMTS_PER_NODE (`int`  | scalar): Number of measurements per qubit per iteration before information is
-            exchanged with neighbours.
+        MSMTS_PER_NODE (`int`  | scalar): Number of measurements per qubit per iteration
+            before information is exchanged with neighbours.
         MAX_NUM_ITERATIONS (`int`  | scalar): Max number of iterations for a qslam
             algorithm. A single control directive corressponds to one iteration.
 
@@ -87,14 +87,14 @@ Created on Thu Apr 20 19:20:43 2017
                 ARGS["SIZE"]: Number of samples to return.
 
         "SAMPLE_X" : Return samples from the prior distribution for qubit
-            X-position state variable, assumed to be:
+            X-position state variable, assumed to be: [NOT USED]
                 FUNCTION: Gaussian distribution.
                 ARGS["MEAN"] : Mean of the Gaussian distribution.
                 ARGS["VAR"]: Variance of the Gaussian distribution.
                 ARGS["SIZE"]: Number of samples to return.
 
         "SAMPLE_Y" : Return samples from the prior distribution for qubit
-            Y-position state variable, assumed to be:
+            Y-position state variable, assumed to be: [NOT USED]
                 FUNCTION: Gaussian distribution.
                 ARGS["MEAN"] : Mean of the Gaussian distribution.
                 ARGS["VAR"]: Variance of the Gaussian distribution.
@@ -108,7 +108,9 @@ moduleauthor:: Riddhi Gupta <riddhi.sw@gmail.com>
 import numpy as np
 from engineerednoise import EngineeredNoise
 
-########################################### QUBIT SPATIAL ARRANGEMENT ##########
+# ##############################################################################
+# QUBIT SPATIAL ARRANGEMENT
+# ##############################################################################
 
 GRIDDICT = {"QUBIT_01" : (0.0, 0.0),
             "QUBIT_02" : (0.0, 1.0),
@@ -142,7 +144,9 @@ GRIDDICT = {"QUBIT_01" : (0.0, 0.0),
 LIST_OF_POSITIONS = [(0.0, 0.0), (0.0, 1.0), (0.0, 2.0), (0.0, 3.0), (0.0, 4.0), (1.0, 0.0), (1.0, 1.0), (1.0, 2.0), (1.0, 3.0), (1.0, 4.0), (2.0, 0.0), (2.0, 1.0), (2.0, 2.0), (2.0, 3.0), (2.0, 4.0), (3.0, 0.0), (3.0, 1.0), (3.0, 2.0), (3.0, 3.0), (3.0, 4.0), (4.0, 0.0), (4.0, 1.0), (4.0, 2.0), (4.0, 3.0), (4.0, 4.0)]
 
 
-####################################### PROCESS AND MEASUREMENT NOISE ##########
+# ##############################################################################
+# PROCESS AND MEASUREMENT MOISE
+# ##############################################################################
 
 NOISEPARAMS = {"SIGMOID_APPROX_ERROR" : {"MU": 0.0, "SIGMA" : 1.0},
                "QUANTISATION_UNCERTY" : {"MU": 0.0, "SIGMA" : 0.001},
@@ -150,11 +154,16 @@ NOISEPARAMS = {"SIGMOID_APPROX_ERROR" : {"MU": 0.0, "SIGMA" : 1.0},
                "SPATIAL_NOISE_JITTER" : {"MU": 0.0, "SIGMA" : 0.0}
               }
 
-########################################## PARTICLE FILTER PARAMETERS ##########
+# ##############################################################################
+# PARTICLE FILTER DESIGN
+# ##############################################################################
 
 def gaussian_kernel(dist_jq, f_est_j, r_est_j):
-    '''docstring'''
-    # TODO : Revist whether there needs to be a normalisation factor
+    ''' Return estimated value of f_state at point q in a circular region about j,
+    with separation distance dist_jq, given a Gaussian blurring function and:
+       f_est_j : estimated value of f_state at point j
+       r_est_j : estimated Gaussian length-scale at point j
+    '''
     argument = -1.0*dist_jq**2 / (2.0*r_est_j**2)
     kernel_val = f_est_j*np.exp(argument)
     return kernel_val
@@ -174,9 +183,9 @@ MODELDESIGN = {"LAMBDA_1" : 0.99, # Forgetting factor for sample probabilities
                "ID": 'calibration_run_C0'
               }
 
-################################################# PRIOR DISTRIBUTIONS ##########
-
-
+# ##############################################################################
+# PRIOR STATE DISTRIBUTION
+# ##############################################################################
 
 def sample_s_prior(**args):
     '''Return samples from the prior distribution for x or y coordinate of a qubit.'''
@@ -185,7 +194,7 @@ def sample_s_prior(**args):
     SIZE = args["SIZE"]
 
     samples = np.random.normal(loc=MEAN,
-                               scale=VAR, # TODO: st dev or variance?
+                               scale=VAR,
                                size=SIZE)
     return samples
 
@@ -195,14 +204,14 @@ S_PRIOR_ARGS = {"MEAN" : 0.0,
 
 
 def sample_f_prior(**args):
-    '''Return samples from the prior distribution for phase estimate at a qubit.'''
-    F_MIN = args["F_MIN"]
-    F_MAX = args["F_MAX"]
-    SIZE = args["SIZE"]
+    '''Return samples from the prior distribution for f_state estimate at a qubit.'''
+    fmin = args["F_MIN"]
+    fmax = args["F_MAX"]
+    size = args["SIZE"]
 
-    samples = np.random.uniform(low=F_MIN,
-                                high=F_MAX,
-                                size=SIZE)
+    samples = np.random.uniform(low=fmin,
+                                high=fmax,
+                                size=size)
     return samples
 
 F_PRIOR_ARGS = {"F_MIN" : 0.0,
@@ -211,13 +220,13 @@ F_PRIOR_ARGS = {"F_MIN" : 0.0,
 
 def sample_r_prior(**args):
     '''Return samples from the prior distribution for correlation length at a qubit.'''
-    R_MIN = args["R_MIN"]
-    R_MAX = args["R_MAX"]
-    SIZE = args["SIZE"]
+    rmin = args["R_MIN"]
+    rmax = args["R_MAX"]
+    size = args["SIZE"]
 
-    samples = np.random.uniform(low=R_MIN,
-                                high=R_MAX,
-                                size=SIZE)
+    samples = np.random.uniform(low=rmin,
+                                high=rmax,
+                                size=size)
     return samples
 
 R_PRIOR_ARGS = {"R_MIN" : None,
@@ -232,15 +241,19 @@ PRIORDICT = {"SAMPLE_X" : {"FUNCTION": sample_s_prior, "ARGS": S_PRIOR_ARGS},
              "SAMPLE_R" : {"FUNCTION": sample_r_prior, "ARGS": R_PRIOR_ARGS}
             }
 
-#################################### HYPERPARAMETER PRIOR DISTRIBUTIONS #########
+# ##############################################################################
+# HYPER PARAMETER DISTRIBUTIONS
+# ##############################################################################
 
 def sample_hyper_dist(space_size=None, **hyper_args):
-    L_MIN = hyper_args["MIN"]
-    L_MAX = hyper_args["MAX"]
-    
+    ''' Return samples from distribution of hyper-parameters for QSLAM model.
+    '''
+    lmin = hyper_args["MIN"]
+    lmax = hyper_args["MAX"]
+
     if space_size is None:
-        sample = np.random.uniform(low=L_MIN, high = L_MAX, size=1)
-    
+        sample = np.random.uniform(low=lmin, high=lmax, size=1)
+
     elif space_size is not None:
         sample = func_x0(space_size)
 
@@ -253,18 +266,20 @@ def func_x0(space_size):
     maxindex = space_size.shape[0]-1
     ind = int(np.random.uniform(low=0, high=maxindex))
     exponent = space_size[ind]
-    return np.random.uniform(0,1)*(10.0**exponent)
+    return np.random.uniform(0, 1)*(10.0**exponent)
 
-hyper_args = {"LAMBDA_1": {"MIN": 0.9, "MAX": 1.0},
+HYPER_ARGS = {"LAMBDA_1": {"MIN": 0.9, "MAX": 1.0},
               "LAMBDA_2": {"MIN": 0.9, "MAX": 1.0},
               "SIGMOID_VAR": {"MIN": 0., "MAX": 1.0},
               "QUANT_VAR": {"MIN": 0., "MAX": 1.0}
-              }
+             }
 HYPERDICT = {"DIST" : sample_hyper_dist,
-             "ARGS" : hyper_args
+             "ARGS" : HYPER_ARGS
             }
 
-##################################################### RISK MODEL ###############
+# ##############################################################################
+# RISK MODEL
+# ##############################################################################
 
 RISKPARAMS = {"savetopath": './',
               "max_it_qslam": 1,
@@ -274,12 +289,19 @@ RISKPARAMS = {"savetopath": './',
               "loss_truncation":0.1
              }
 
-##################################################### ENGINEERED NOISE #########
+# ##############################################################################
+# ENGINEERED NOISE
+# ##############################################################################
+NOISEPROCESS = EngineeredNoise()
+ADDNOISE = {"func": NOISEPROCESS.add_noise, "args": {"prob_hit": 0.1, "noise_type" : "noiseless"}}
 
-noiseprocess = EngineeredNoise()
-ADDNOISE = {"func": noiseprocess.add_noise, "args": {"prob_hit": 0.1, "noise_type" : "noiseless"}}
 
-##################################################### GLOBAL MODEL ###############
+
+
+# ##############################################################################
+# GLOBAL MODEL
+# ##############################################################################
+
 GLOBALDICT = {"MODELDESIGN": MODELDESIGN,
               "PRIORDICT" : PRIORDICT,
               "NOISEPARAMS": NOISEPARAMS,

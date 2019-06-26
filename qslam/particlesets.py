@@ -2,7 +2,7 @@
 Created on Thu Apr 20 19:20:43 2017
 @author: riddhisw
 
-.. module:: name
+.. module:: particlesets
 
     :synopsis: Defines particle objects for particle filtering. Distinguishes
         between Alpha and Beta particles used in qslam.
@@ -33,8 +33,8 @@ class Particle(object):
     ----------
         particle (`float64` | dims: 4 * Grid.number_of_nodes):
             Extended, vectorised state variable consisting of stacked substates:
-                x_state : Spatial x estimate of all qubits on grid in vectorised form.
-                y_state : Spatial y estimate of all qubits on grid in vectorised form.
+                x_state : Spatial x estimate of all qubits on grid in vectorised form. [NOT USED]
+                y_state : Spatial y estimate of all qubits on grid in vectorised form. [NOT USED]
                 f_state : Dephasing noise field estimate at each qubit on grid in vectorised form.
                 r_state : Correlation length estimate at each qubit on grid in vectorised form.
             Initial Value: 0.0
@@ -125,7 +125,21 @@ class ParticleSet(object):
     def __init__(self, list_of_particle_objects,
                  MAX_WEIGHT_CUTOFF=100000.0,
                  **WEIGHTFUNCDICT):
-        ''' Initiates a ParticleSet instance.'''
+        ''' Initiates a ParticleSet instance.
+
+        list_of_particle_objects (`type`: list, `Particle` class objects):
+             List of particle objects which define a set of Particles to model
+             a particular posterior distribution; such that the weights of the particles
+             sum to 1.0.
+        WEIGHTFUNCDICT (`type`: dictionary object)
+            A dictionary object that defines the weight calculation for all particles
+            in ParticleSet.
+        MAX_WEIGHT_CUTOFF (`dtype`: float scalar):
+            Defines numerical singularities for unnormalised weights calculated by
+            user-defined WEIGHTFUNCDICT.
+            Default value 100000.0.
+
+        '''
 
         self.__weights_set = 0.0
         self.__posterior_state = 0.0
@@ -144,8 +158,7 @@ class ParticleSet(object):
         for particle in self.particles:
             new_weight = self.w_dict["function"](particle, **self.w_dict["args"])
 
-            if new_weight > self.MAX_WEIGHT_CUTOFF: # avoid inf
-                # print "Large weight reset"
+            if new_weight > self.MAX_WEIGHT_CUTOFF: # Avoid (inf) weights
                 new_weight = float(self.MAX_WEIGHT_CUTOFF)
 
             new_weight_set.append(new_weight)
@@ -154,8 +167,7 @@ class ParticleSet(object):
 
         unnormalised_total = np.sum(raw_weights)
 
-        if unnormalised_total == 0.0: # avoid zeros
-            # print "Weights all zeros =", raw_weights
+        if unnormalised_total == 0.0: # Avoid zeros
             normalisation = 1.0
             return normalisation*raw_weights
 
@@ -198,20 +210,20 @@ class AlphaParticle(Particle):
                 expressed as an index of vectorised set of ordered qubit coordinates in Grid.nodes.
         SIG2_MEASR (`float` | scalar):
              Measurement noise covariance strength. Equivalent to uncertainty in the result of a
-                non-linear measurement model prior to quantisation of measurement outcomes. Used in
-                computing the likelihood function for Beta particles (children).
+             non-linear measurement model prior to quantisation of measurement outcomes. Used in
+             computing the likelihood function for Beta particles (children).
         BetaAlphaSet_j (`ParticleSet` class object initiated with a list of `BetaParticle` objects):
              A set of Beta Particle,  associated with the Alpha Particle as a common parent.
                 Initiated as a `ParticleSet` class object using a list of `BetaParticle` instances.
                 BetaAlphaSet_j is reset after resampling procedure in qslamr.
 
-    Methods:
-    -------
-        generate_beta_pset :
-            Set BetaAlphaSet_j with a Beta particle distribution for a common AlphaParticle
-                parent, and for a physical measurement at node_j.
+    Class Methods:
+    --------------
+        generate_beta_pset : Set attribute BetaAlphaSet_j to a Beta particle distribution,
+            for a physical measurement at node_j.
     '''
     def __init__(self):
+        ''' Creates an AlphaParticle class instance.'''
         Particle.__init__(self)
         self.pset_beta = 0
         self.node_j = 0.0
@@ -219,8 +231,10 @@ class AlphaParticle(Particle):
         self.BetaAlphaSet_j = None
 
     def generate_beta_pset(self, parents, radii, **BETADICT):
-        '''docstring'''
-
+        ''' Set attribute BetaAlphaSet_j to a Beta particle distribution,
+            for a physical measurement at node_j.
+            This generates a Beta particle distribution for an Alpha parent.
+        '''
 
         beta_s = []
         for idx in range(len(parents)): # TODO: Use enumerate
@@ -274,12 +288,13 @@ class BetaParticle(Particle):
                 outcome at node_j.
     Methods:
     -------
-        get_neighbourhood_qj : Builds neighbour_dist_qj, the list of neighbouring qubits
+        get_neighbourhood_qj : Set attribute `neighbour_dist_qj`, the list of neighbouring qubits
             around node_j where the pairwise distance between node_j and a neighbour
             is less than mean_radius.
 
-        smear_fj_on_neighbours : Builds smeared_phases_qj, the list of phase estimates for all
-            neighbouring qubits around node_j, after a local measurement at node_j.
+        smear_fj_on_neighbours : Set attribute `smeared_phases_qj`, the list of
+            map estimates for all neighbouring qubits around node_j,
+            after a local measurement at node_j.
     '''
 
     def __init__(self, node_j, parent_state, radius):
@@ -296,10 +311,12 @@ class BetaParticle(Particle):
         self.neighbour_dist_qj = []
         self.smeared_phases_qj = []
         self.x_j, self.y_j, self.f_j, self.r_j = self.particle[self.node_j::self.total_nodes]
-        self.mean_radius = radius # TODO: * 3.0
+
+        self.mean_radius = radius # TODO: Conservative approach.
+        # Improve functionality to set mean_radius in QSLAM design parameters.
 
     def get_neighbourhood_qj(self):
-        ''' Builds neighbour_dist_qj, the list of neighbouring qubits around node_j
+        ''' Set attribute `neighbour_dist_qj`, the list of neighbouring qubits around node_j
             where the pairwise distance between node_j and a neighbour
             is less than mean_radius.
         '''
@@ -321,10 +338,34 @@ class BetaParticle(Particle):
 
 
     def smear_fj_on_neighbours(self, **args):
-        ''' Builds smeared_phases_qj, the list of phase estimates for all
+        ''' Set attribute `smeared_phases_qj`, the list of phase estimates for all
             neighbouring qubits around node_j, after a local measurement at node_j.
+
+            Parameters:
+            -----------
+            prev_posterior_f_state (`dtype`: numpy array):
+                f_state: Alpha parent at t; or posterior f_state at t.
+
+                This is the f_state of the Alpha parent t if self.smear_fj_on_neighbours()
+                is being called to perform likelihood function calculations for beta particles.
+
+                This is the posterior f_state at t if self.smear_fj_on_neighbours()
+                is being called to generate data messages.
+
+            prev_counter_tau_state (`dtype`: float scalar):
+                Tau counter at location q representing the number of
+                physical measurements performed at q until t.
+
+            lambda_ (`dtype`: float scalar ):
+                Model parameter for QSLAM  which governs the extent
+                to which data messages influence f_state value at location q.
+                Optimised or set apriori. (Refer as lambda_2 in theory)
+
+            kernel_function (type: Python function object):
+                Function relating the point value of a map estimate to an
+                arbitrary region around the point. (Implemented as a Gaussian function
+                with amplitude self.f_j, and lenthscale self.r_j.)
         '''
-        
         self.get_neighbourhood_qj()
 
         prev_posterior_f_state = args["prev_posterior_f_state"]
@@ -340,13 +381,17 @@ class BetaParticle(Particle):
 
             if tau_q == 0:
                 # TODO: Add functionality here for dealing with unmeasured qubits.
+                # At present, makes no sense to include unmeasured qubits.
+                # In future, an interpolation scheme can enable QSLAM
+                # to include qubits that have never been physically measured
+                # as part of the likelihood function.
                 pass
+
             f_state_q = prev_posterior_f_state[node_q]
 
             lambda_q = lambda_** tau_q
             kernel_val = args["kernel_function"](dist_jq, self.f_j, self.r_j)
 
             smear_phase = (1.0 - lambda_q)*f_state_q + lambda_q*kernel_val
-
 
             self.smeared_phases_qj.append(smear_phase)

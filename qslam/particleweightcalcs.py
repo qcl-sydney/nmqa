@@ -43,13 +43,21 @@ Created on Thu Apr 20 19:20:43 2017
 .. moduleauthor:: Riddhi Gupta <riddhi.sw@gmail.com>
 '''
 
-# from qslamdesignparams import NOISEPARAMS
 from scipy.special import erf
 import numpy as np
 
 class ParticleLikelihoods(object):
+    ''' Class centralises calculation of all particle weights and likelihood functions
+        using dynamically updated dictionaries to pass arguments to weight calculation
+        functions. '''
 
     def __init__(self, **NOISEPARAMS):
+        ''' Creates ParticleLikelihoods instance.
+
+        Parameters:
+        -----------
+        NOISEPARAMS : Dictionary object. See qslam.qslamdesignparams module.
+        '''
 
         self.LIKELIHOOD_ALPHA = {"l_func" : ParticleLikelihoods.likelihood_func_alpha,
                                  "l_args" : {"MU" : NOISEPARAMS["QUANTISATION_UNCERTY"]["MU"],
@@ -153,7 +161,7 @@ class ParticleLikelihoods(object):
         '''
 
         old_weight = alpha_particle_object.weight
-        # TODO: there needs to be a better way of taking in msmts.
+
         likelihood = alpha_args["l_func"](**alpha_args["l_args"])
         new_raw_weight = old_weight*likelihood
         return new_raw_weight
@@ -198,14 +206,18 @@ class ParticleLikelihoods(object):
         Parameters:
         ----------
             l_args["MU"] (`float64`, scalar):
-                True process noise mean (unknown but discovered via optimisation?)
+                True process noise mean (unknown- set apriori design parameter,
+                or discovered via optimisation)
             l_args["SIGMA"] (`float64`, scalar):
-                True process noise covariance scale (unknown but discovered via optimisation?)
+                True process noise covariance scale (unknown- set apriori design parameter,
+                or discovered via optimisation)
             l_args["new_phase"] (`float64`, scalar):
-                Sigmoid smoothened phase from `j` to its neighbourhood at `q`.
+                 A f_state estimate at neighbour qubit q due to a physical
+                measurement at qubit j.
+                Implemtend as a Gaussian smoothened phase from `j` to its neighbourhood at `q`.
             l_args["old_phase"] (`float64`, scalar):
-                State estimate for the phase at `q` given physical and quasi-measurements
-                at `q`.
+                A f_state estimate at neighbour qubit q due to all previous
+                physical measurements and data messages.
 
         Returns:
         -------
@@ -218,11 +230,11 @@ class ParticleLikelihoods(object):
         new_phase = l_args["new_phase"]
         old_phase = l_args["old_phase"]
         prefactor = 1.0 / np.sqrt(2.0 * np.pi * variance)
-        
-        trunc_arg1 = (np.pi - mean) / np.sqrt(variance * 2.0) 
+
+        trunc_arg1 = (np.pi - mean) / np.sqrt(variance * 2.0)
         trunc_arg2 = (np.pi + mean) / np.sqrt(variance * 2.0)
         truncation_constant = 0.5 * (erf(trunc_arg1) + erf(trunc_arg2))
-        
+
         argument = -1.0 * ((new_phase - old_phase)- mean)**2 / (2.0 * variance)
         result = (1.0 / truncation_constant) * prefactor * np.exp(argument)
 
@@ -235,36 +247,26 @@ class ParticleLikelihoods(object):
         Parameters:
         ----------
             beta_args["l_func"] : Likelihood function for scoring beta particles.
-            beta_args["new_phase"] : A phase estimate at neighbour qubit q due to a physical
+            beta_args["new_phase"] : A f_state estimate at neighbour qubit q due to a physical
                 measurment at qubit j.
-            beta_args["old_phase"] : A phase estimate at neighbour qubit q due to all previous
-                physical and quasi measurements.
+            beta_args["old_phase"] : A f_state estimate at neighbour qubit q due to all previous
+                physical measurements and data messages.
         Returns:
         -------
-            net_likelihood : Total likelihood over the neighbouhood of phase estimates
-                for a single Beta particle.
+            net_likelihood : Total likelihood for r_state sample at j (single Beta particle)
+                over the neighbouhood of f_state estimates about j.
         '''
 
         likelihood_neighbours = []
-        # print # TODO : Delete code. Printdebug only.
-        # print "In beta_weight_calc" # TODO : Delete code. Printdebug only.
 
         for idx_q in range(len(BetaParticle.neighbourhood_qj)):
-            # INCORRECT? SHOULDN"T THIS BE args["l_args"]["new_phase"]
-            # args["new_phase"] = BetaParticle.smeared_phases_qj[idx_q]
+
             beta_args["l_args"]["new_phase"] = BetaParticle.smeared_phases_qj[idx_q]
             beta_args["l_args"]["old_phase"] = BetaParticle.parent[idx_q]
-            # INCORRECT? SHOULDN"T THIS BE args["l_args"]["old_phase"]
-            # args["old_phase"] = BetaParticle.parent[idx_q]
+
             likelihood = beta_args["l_func"](**beta_args["l_args"])
             likelihood_neighbours.append(likelihood)
-
-            # print "For the next beta likelhood calculation,..." # TODO : Delete code. Printdebug only.
-            # print "LIKELHOOD BETA args are: ", args["l_args"] # TODO : Delete code. Printdebug only.
-            # print "And the likelihood value is ", likelihood # TODO : Delete code. Printdebug only.
-            # print # TODO : Delete code. Printdebug only.
 
         net_likelihood = np.prod(np.asarray(likelihood_neighbours).flatten())
 
         return net_likelihood
-

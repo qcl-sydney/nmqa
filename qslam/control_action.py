@@ -36,7 +36,9 @@ def control_lengthscale_uncertainty(listofcontrolparameters,
             Dims: Grid.number_of_nodes
 
         next_control_neighbourhood (`int`| list) :
-            List of indices for a qubit within a control region.
+            List of indices for qubit locations, denoted a control region.
+            The highest uncertainity location will be chosen from this set
+            and be selected for the next physical measurement.
 
         number_of_diff_nodes (`int`| scalar | optional):
             Number of single qubit measurements at different locations
