@@ -6,7 +6,7 @@ import traceback
 ########################
 # Find qslam modules
 ########################
-sys.path.append('../')
+sys.path.append('../qslam/')
 
 from qslamdesignparams import GLOBALDICT
 from riskanalysis import CreateQslamExpt as riskqslam
