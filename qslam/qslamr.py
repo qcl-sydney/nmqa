@@ -591,7 +591,8 @@ class ParticleFilter(Grid):
             # print "Resetting to uniform weights"
             normalised_posterior_weights = self.posterior_reset()
 
-            self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
+            if self.save_run is True:
+                self.save_alpha_beta_joint_weights.append(normalised_posterior_weights)
 
             return normalised_posterior_weights
 
