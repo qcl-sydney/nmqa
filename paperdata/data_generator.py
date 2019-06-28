@@ -41,7 +41,8 @@ TRUTHKWARGS["OneStepdfloorarea"] = FLOOR_RATIO
 # Save to path 
 ########################
 
-savetopath = '/scratch/QCL_KF/qslamdatapaper_v3/' # on Artemis
+savetopath = '/scratch/QCL_RG/qslamdatapaper_v3/' # on Artemis
+# savetopath = '/scratch/QCL_KF/qslamdatapaper_v3/' # on Artemis
 # savetopath = './data/' # local
 
 ########################
