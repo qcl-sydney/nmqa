@@ -277,14 +277,13 @@ class NaiveEstimatorExpt(object):
         node_labels = np.arange(self.numofnodes)
 
         # MARKER JUNE 2019 - ALTERNATIVE INITIALISATION
-        # self.empirical_estimate = np.random.randint(low=0.0,
-        #                                             high=np.pi,
-        #                                             size=self.numofnodes)
+        self.empirical_estimate = np.ones(self.numofnodes) * np.random.random_sample(size=1) * np.pi
+        # Physically says we don't know anything except its some radian between 0, 2pi and continuous
 
         # Original Initialisation
-        self.empirical_estimate = np.ones(self.numofnodes) * np.random.randint(low=0.0,
-                                                                               high=np.pi,
-                                                                               size=1)
+        # self.empirical_estimate = np.ones(self.numofnodes) * np.random.randint(low=0.0,
+        #                                                                        high=np.pi,
+        #                                                                        size=1)
 
         for idx_node in node_labels[mask]:
 
