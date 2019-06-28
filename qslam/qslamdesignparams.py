@@ -245,6 +245,8 @@ PRIORDICT = {"SAMPLE_X" : {"FUNCTION": sample_s_prior, "ARGS": S_PRIOR_ARGS},
 # HYPER PARAMETER DISTRIBUTIONS
 # ##############################################################################
 
+# NOT USED
+
 def sample_hyper_dist(space_size=None, **hyper_args):
     ''' Return samples from distribution of hyper-parameters for QSLAM model.
     '''
@@ -252,9 +254,11 @@ def sample_hyper_dist(space_size=None, **hyper_args):
     lmax = hyper_args["MAX"]
 
     if space_size is None:
+        # Uniform priors
         sample = np.random.uniform(low=lmin, high=lmax, size=1)
 
     elif space_size is not None:
+        # NOT USED
         sample = func_x0(space_size)
 
     return sample
@@ -262,14 +266,15 @@ def sample_hyper_dist(space_size=None, **hyper_args):
 def func_x0(space_size):
     '''
     Returns random samples from a parameter space defined by space_size
+    [not used]
     '''
     maxindex = space_size.shape[0]-1
     ind = int(np.random.uniform(low=0, high=maxindex))
     exponent = space_size[ind]
     return np.random.uniform(0, 1)*(10.0**exponent)
 
-HYPER_ARGS = {"LAMBDA_1": {"MIN": 0.9, "MAX": 1.0},
-              "LAMBDA_2": {"MIN": 0.9, "MAX": 1.0},
+HYPER_ARGS = {"LAMBDA_1": {"MIN": 0.0, "MAX": 1.0},
+              "LAMBDA_2": {"MIN": 0.0, "MAX": 1.0},
               "SIGMOID_VAR": {"MIN": 0., "MAX": 1.0},
               "QUANT_VAR": {"MIN": 0., "MAX": 1.0}
              }
