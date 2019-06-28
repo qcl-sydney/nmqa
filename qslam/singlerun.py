@@ -1,12 +1,12 @@
 import qslamr as qs
 import numpy as np
 
-#### THIS MODULE IS THE SAME AS SINGLERUN_V2 EXCEPT THAT SINGLERUN_V2 
+#### THIS MODULE IS THE SAME AS SINGLERUN_V2 EXCEPT THAT SINGLERUN_V2
 # SAVES 2 ADDITIONAL DATA OUTPUTS (POSTERIOR AND MARGINALISED STATES)
 # AND REPETITIONS ARE EXCLUDED FROM SINGLERUN_V2, WHILE THEY ARE ENDOGENOUS HERE.
 
 class SingleRunAnalysis(object):
-    
+
     def __init__(self, 
                  SAMPLE_GLOBAL_MODEL,true_map_,repts,
                  measurements_controls_= None,
@@ -27,11 +27,11 @@ class SingleRunAnalysis(object):
         self.beta_skew_adjust=beta_skew_adjust
         
     def call_qslam(self):
-        
+
         qslamobj=0
         qslamobj = qs.ParticleFilter(self.SAMPLE_GLOBAL_MODEL, 
                                      save_run=True, 
-                                     beta_expansion_mode=self.beta_expansion_mode, 
+                                     beta_expansion_mode=self.beta_expansion_mode,
                                      beta_skew_adjust=self.beta_skew_adjust)
 
         qslamobj.QubitGrid.engineeredtruemap = self.true_map_
@@ -44,7 +44,7 @@ class SingleRunAnalysis(object):
         return qslamobj
 
     def run_analysis(self, filename='./SingleRunAnalysis'):
-    
+
         max_num_iterations=self.SAMPLE_GLOBAL_MODEL["MODELDESIGN"]["MAX_NUM_ITERATIONS"]
 
         # --------------------------------------------------------------------
@@ -109,8 +109,7 @@ class SingleRunAnalysis(object):
                 marginalised_weights[idxt, idx_particle] = np.asarray(qslamobj.save_alpha_bar_2_weights[idxt])[idx_m]
 
             posterior_weights[idxt, :] = np.asarray([qslamobj.save_alpha_posterior[idxt][idx].weight for idx in range(P_ALPHA)])
-            
-        
+
         np.savez(filename,
                  alpha_labels=alpha_labels, 
                  beta_labels=beta_labels, 
@@ -123,7 +122,6 @@ class SingleRunAnalysis(object):
                  joint_weights=joint_weights, 
                  marginalised_weights=marginalised_weights, 
                  posterior_weights=posterior_weights)
-       
+
         return
-    
-    
+

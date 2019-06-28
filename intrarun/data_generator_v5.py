@@ -131,9 +131,9 @@ for idx_3 in range(IDX3_SHP):
     SAMPLE_GLOBAL_MODEL = copy.deepcopy(GLOBALDICT)
 
 
-    uniform_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=False)
+    uniform_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=False, beta_skew_adjust=False)
     uniform_r_expt.run_analysis(path+'Uni_R'+prefix+fname_likelihood+str(idx_3))
 
-    trunc_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=True)
+    trunc_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=True, beta_skew_adjust=False)
     trunc_r_expt.run_analysis(path+'Trunc_R'+prefix+fname_likelihood+str(idx_3))
 
