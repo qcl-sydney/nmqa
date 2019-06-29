@@ -16,14 +16,14 @@ datatype=['Uni_R', 'Trunc_R']
 # Save to path 
 ########################
 
-path = '/scratch/QCL_KF/qslamdatapaper_v2/' # on Artemis
+path = '/scratch/QCL_RG/qslamdatapaper_v3/' # on Artemis
 #path = './data_v2/'
 
 ########################
 # Set Defaults
 ########################
 
-prefix = '_ALPHA_idx_prefix_'+str(idx_prefix)+'_'
+prefix = '_idx_prefix_'+str(idx_prefix)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
 
