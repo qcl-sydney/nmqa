@@ -1,0 +1,16 @@
+Optimal trunc termination error: 7.56636942953 Params: (0, 18, 3)
+Optimal uniform termination error: 7.86020000207 Params: (22, 18, 0)
+--------
+--------
+--------
+First 10 minimal parameters for Uniform sampling
+[(22, 18, 0), (10, 18, 0), (29, 18, 0), (14, 18, 0), (5, 18, 0), (6, 18, 0), (11, 18, 0), (10, 18, 1), (27, 18, 0), (24, 12, 0)]
+--------
+--------
+--------
+First 10 minimal parameters for Trunc Gaussian sampling
+[(0, 18, 3), (28, 18, 4), (2, 12, 3), (12, 18, 1), (8, 12, 4), (14, 12, 3), (0, 18, 4), (7, 12, 3), (5, 12, 3), (16, 12, 4)]
+--------
+--------
+-- end ---
+
