@@ -16,7 +16,14 @@ from qslamdesignparams import GLOBALDICT
 ########################
 # Taking in bash parameters
 ########################
-idx_prefix = int(sys.argv[1]) # truth flag type (three options)
+idx_prefix = int(sys.argv[1])
+# truth flag type (five options)
+# 0 - Linear 1D field, 25 qubit array
+# 1 - Square 2D field, 25 qubit array
+# 2 - Gaussian 2D array, 25 qubit array
+# 3 - Square 2D field, 9 qubit array
+# 4 - Square 2D field, 16 qubit array
+
 idx_job_array = int(sys.argv[2]) # job array starts from 1
 
 ########################
@@ -46,15 +53,12 @@ path = '/scratch/QCL_RG/qslamdatapaper_v3/' # on Artemis
 # Set true field
 ########################
 
-prefix_list = ['2019_Jun_1D', '2019_Jun_2D', '2019_Jun_2D_Gssn']
-prefix = prefix_list[idx_prefix]
-
 if idx_prefix == 0:
     change_gridconfig = True # 1D
     TRUTHFLAG = None # use TRUTHKWARGS
     TRUTHKWARGS["truthtype"] = 'OneStepd' 
 
-if idx_prefix == 1:
+if idx_prefix == 1: 
     change_gridconfig = False # 2D
     TRUTHFLAG = None # use TRUTHKWARGS
     TRUTHKWARGS["truthtype"] = 'OneStepq' 
@@ -63,6 +67,11 @@ if idx_prefix == 2:
     change_gridconfig = False # 2D
     TRUTHFLAG = None # use TRUTHKWARGS
     TRUTHKWARGS["truthtype"] = 'Gaussian' 
+    
+if idx_prefix > 2: # Covers all truth flag options except 2.
+    change_gridconfig = False # 2D
+    TRUTHFLAG = None # use TRUTHKWARGS
+    TRUTHKWARGS["truthtype"] = 'OneStepq' 
 
 ########################
 # Set 1D Hardware if req
@@ -84,6 +93,17 @@ if change_gridconfig is True:
             
             GLOBALDICT["GRIDDICT"]["QUBIT_" + str(idx_posy)] = (0.0, float(idx_posy))
 
+########################
+# Change 2D Grid Size if req
+########################
+
+if idx_prefix == 3:
+    from qslamdesignparams import GRIDDICT_9
+    GLOBALDICT["GRIDDICT"] = copy.deepcopy(GRIDDICT_9)
+    
+if idx_prefix == 4:
+    from qslamdesignparams import GRIDDICT_16
+    GLOBALDICT["GRIDDICT"] = copy.deepcopy(GRIDDICT_16)
 
 ########################
 # Set Defaults
