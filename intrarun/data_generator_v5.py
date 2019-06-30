@@ -68,11 +68,13 @@ if idx_prefix == 2:
 # Set 1D Hardware if req
 ########################
 
+num_of_nodes = len(GLOBALDICT["GRIDDICT"])
+
 if change_gridconfig is True:
     
     GLOBALDICT["GRIDDICT"] = {}
     
-    for idx_posy in range(25):
+    for idx_posy in range(num_of_nodes):
         
         if idx_posy < 10 :
             
