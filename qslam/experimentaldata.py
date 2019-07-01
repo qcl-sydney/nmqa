@@ -39,7 +39,7 @@ DataSetProperties_2['path'] = '/home/riddhisw/Documents/SLAM_project/project/sta
 DataSetProperties_2['wait_time'] = 40 # milliseconds
 DataSetProperties_2['classifier'] = 'MultiLayer Perceptron'
 DataSetProperties_2['expttype'] = 'Ramsey'
-DataSetProperties_2['parameters'] = np.load(DataSetProperties_2['path'])['DataParams'].item()
+DataSetProperties_2['parameters'] = '' # np.load(DataSetProperties_2['path'])['DataParams'].item()
 DataSetProperties_2['parameters']['dpts'] = 1 # same experiment (static)
 
 DataSetProperties_3 = {}
@@ -49,7 +49,7 @@ DataSetProperties_3['path'] = '/home/riddhisw/Documents/SLAM_project/project/sta
 DataSetProperties_3['wait_time'] = 8 # milliseconds
 DataSetProperties_3['classifier'] = 'Random Forest with  Importance Re-weighting'
 DataSetProperties_3['expttype'] = 'pA or pB'
-DataSetProperties_3['parameters'] = np.load(DataSetProperties_3['path'])['DataParams'].item()
+DataSetProperties_3['parameters'] = '' # np.load(DataSetProperties_3['path'])['DataParams'].item()
 DataSetProperties_3['parameters']['dpts'] = 2 # two different types of expts - pA and pB
 
 DataSetProperties_4 = {}
@@ -59,7 +59,7 @@ DataSetProperties_4['path'] = '/home/riddhisw/Documents/SLAM_project/project/sta
 DataSetProperties_4['wait_time'] = 25 # milliseconds
 DataSetProperties_4['classifier'] = 'MultiLayer Perceptron'
 DataSetProperties_4['expttype'] = 'pA or pB'
-DataSetProperties_4['parameters'] = np.load(DataSetProperties_4['path'])['DataParams'].item()
+DataSetProperties_4['parameters'] = '' # np.load(DataSetProperties_4['path'])['DataParams'].item()
 DataSetProperties_4['parameters']['dpts'] = 2 # Two different types of expts - pA and pB
 
 DataKeys = {'1': DataSetProperties_1,
