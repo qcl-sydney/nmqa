@@ -22,7 +22,7 @@ class SingleRunAnalysis(object):
         self.measurements_controls_=measurements_controls_
         self.autocontrol_=autocontrol_
         self.var_thres_=var_thres_
-        self.numofnodes=numofnodes
+        self.numofnodes=len(SAMPLE_GLOBAL_MODEL["GRIDDICT"])
         self.beta_expansion_mode=beta_expansion_mode
         self.beta_skew_adjust=beta_skew_adjust
         
