@@ -1,5 +1,5 @@
-#PBS -P QCL_KF
-#PBS -N job_prefix_v5_conv
+#PBS -P QCL_RG
+#PBS -N conv_3
 #PBS -J 1-900
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
