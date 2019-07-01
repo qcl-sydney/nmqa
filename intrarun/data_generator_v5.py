@@ -100,10 +100,12 @@ if change_gridconfig is True:
 if idx_prefix == 3:
     from qslamdesignparams import GRIDDICT_9
     GLOBALDICT["GRIDDICT"] = copy.deepcopy(GRIDDICT_9)
-    
+    num_of_nodes = len(GLOBALDICT["GRIDDICT"])
+
 if idx_prefix == 4:
     from qslamdesignparams import GRIDDICT_16
     GLOBALDICT["GRIDDICT"] = copy.deepcopy(GRIDDICT_16)
+    num_of_nodes = len(GLOBALDICT["GRIDDICT"])
 
 ########################
 # Set Defaults
