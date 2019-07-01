@@ -5,7 +5,6 @@ import sys
 # Set Defaults
 ###################
 idx_prefix = idx_prefix = int(sys.argv[1]) 
-numofnodes=25
 repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10] , [21,14], [30, 20]]
 max_iterations = 75

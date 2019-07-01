@@ -112,7 +112,7 @@ if idx_prefix == 4:
 GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"] = 75
 GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"] = 1
 GLOBALDICT["MODELDESIGN"]["MULTIPLER_R_MAX"] = 4.
-numofnodes=25
+
 repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
 
@@ -130,7 +130,7 @@ IDX3_SHP = len(particleconfigs)
 # Run Script
 ########################
 
-truemap_generator = EngineeredTruth(numofnodes, TRUTHKWARGS)
+truemap_generator = EngineeredTruth(num_of_nodes, TRUTHKWARGS)
 true_map_ = truemap_generator.get_map()
 
 idx_1, idx_2 = np.unravel_index(idx_job_array - 1 , (IDX1_SHP, IDX2_SHP) )
