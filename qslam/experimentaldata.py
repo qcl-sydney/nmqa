@@ -24,7 +24,8 @@ import numpy as np
 DataSetProperties_1 = {}
 
 DataSetProperties_1['key'] = 1
-DataSetProperties_1['path'] = '/home/riddhisw/Documents/SLAM_project/project/statedetectn/rf_fulldata_ramsey.npz'
+DataSetProperties_1['path'] = './rf_fulldata_ramsey.npz' # Artemis
+# DataSetProperties_1['path'] = '/home/riddhisw/Documents/SLAM_project/project/expt_qslam/rf_fulldata_ramsey.npz' # local
 DataSetProperties_1['wait_time'] = 40 # milliseconds
 DataSetProperties_1['classifier'] = 'Random Forest'
 DataSetProperties_1['expttype'] = 'Ramsey'

@@ -1,0 +1,18 @@
+#PBS -P QCL_RG
+#PBS -N job_expt_data
+#PBS -J 1-900
+#PBS -M riddhi.sw@gmail.com
+#PBS -m abe
+#PBS -l select=1:ncpus=1:mem=2GB
+#PBS -l walltime=16:00:00 
+#PBS -q defaultQ
+# #PBS -j oe
+
+cd $PBS_O_WORKDIR/
+
+datakey=1
+
+module load python
+
+python ./data_generator_from_expt_v2.py ${datakey} ${PBS_ARRAY_INDEX}
+
