@@ -49,7 +49,7 @@ if change_gridconfig is True:
 # Set Defaults
 ########################
 
-GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"] = change_MSMTS_PER_NODE
+GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"] = 1
 GLOBALDICT["MODELDESIGN"]["P_ALPHA"] = 15
 GLOBALDICT["MODELDESIGN"]["P_BETA"] = 10
 
@@ -65,7 +65,6 @@ random_variances = np.load('random_variances.npz')
 
 IDX1_SHP = len(random_variances['g1var'])
 IDX2_SHP = 30 # len(lambda_paris_2['lambda_1']) not doing all 250
-IDX3_SHP = len(particleconfigs)
               
 ########################
 # Run Script
