@@ -87,7 +87,9 @@ msmt_per_qubit_scan = [1] # [1, 2, 4, 5, 6, 8, 10, 15, 20, 25, 50]
 # NEW PARAMETER SCANS
 # ------------------------------------------------------------------------------
 
-meta_max_iter_scan = [ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250]
+# bugfix
+meta_max_iter_scan = [int(idx_x) for idx_x in np.floor(num_qubits * np.asarray([ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250]) / 25.)]
+# meta_max_iter_scan = [ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250]
 
 lambda_databse = np.load('./lambda_pairs_2.npz')
 lambda1 = list(lambda_databse['lambda_1']) 
