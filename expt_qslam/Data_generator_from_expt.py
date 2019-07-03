@@ -87,9 +87,16 @@ msmt_per_qubit_scan = [1] # [1, 2, 4, 5, 6, 8, 10, 15, 20, 25, 50]
 # NEW PARAMETER SCANS
 # ------------------------------------------------------------------------------
 
-# bugfix
-meta_max_iter_scan = [int(idx_x) for idx_x in np.floor(num_qubits * np.asarray([ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250]) / 25.)]
-# meta_max_iter_scan = [ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250]
+# BUGFIX
+# Need to adjust total iterations for a gridsize of 6 ions. 
+# If we keep the same ratios of sys size to msmts, then: [int(idx_x) for idx_x in np.floor(6.0 * np.asarray([ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250]) / 25.)]
+#   gives us [1, 2, 3, 4, 6, 12, 18, 24, 30, 60] iteratons.
+# If we keep consistency with previous data but eliminate 0 msmts, then: 6.0*np.floor(np.asarray([ 5, 10, 15, 20, 25, 50, 75, 100, 125, 250])/ 6)[1:] 
+#   we get [   6.,   12.,   18.,   24.,   48.,   72.,   96.,  120.,  246.] iterations 
+# The code below combines both:
+
+meta_max_iter_scan =[ 1, 2, 3, 4, 6, 12, 18, 24, 30, 60, 72, 96, 120, 246]
+
 
 lambda_databse = np.load('./lambda_pairs_2.npz')
 lambda1 = list(lambda_databse['lambda_1']) 
