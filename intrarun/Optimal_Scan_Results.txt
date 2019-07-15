@@ -83,6 +83,16 @@ First 10 minimal parameters for Trunc Gaussian sampling
 -- end ---
 
 
+get *idx_prefix_1*_10_18_* done
+get *idx_prefix_2*_21_13_* done
+get *idx_prefix_3*_10_12_* done
+get *idx_prefix_4*_18_18_* done
+
+get *idx_prefix_0*_29_0_* done
+get *idx_prefix_1*_10_0_* done
+get *idx_prefix_2*_21_0_* done
+get *idx_prefix_3*_10_0_* done
+get *idx_prefix_4*_18_0_* done
 ################################################################################
 TRUTH FLAG: 2 (Gaussian Field with 25 Qubit Array) LOST
 ################################################################################
@@ -105,7 +115,7 @@ First 10 minimal parameters for Trunc Gaussian sampling
 -- end ---
 
 ################################################################################
-TRUTH FLAG: 2 (Gaussian Field with 25 Qubit Array)
+TRUTH FLAG: 2 (Gaussian Field with 25 Qubit Array) IGNORE 
 ################################################################################
 [rgup9526@login4 intrarun]$ python extract_optimisation_results.py 2
 Optimal trunc termination error: 8.12420500834 Params: (18, 13, 4)
