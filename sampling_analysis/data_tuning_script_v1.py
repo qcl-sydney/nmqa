@@ -44,8 +44,8 @@ total_qubits = calc_padua_cgl(padua_order)[0]
 # Set Data Points
 ########################
 
-GLOBALDICT["GRIDDICT"]["DATA_QUBITS"] = generate_data_qubits_coords(data_qubit_num,
-                                                                    flag=data_qubit_flag)
+GLOBALDICT["DATA_QUBITS"] = generate_data_qubits_coords(data_qubit_num,
+                                                        flag=data_qubit_flag)
 
 ########################
 # Set hardware and true map
@@ -94,30 +94,29 @@ IDX3_SHP = len(particleconfigs)
 # Tuning Script (Data Generation)
 ####################################
 
-for idx_job_array in range(1, IDX1_SHP*30):
-    
-    idx_1, idx_2 = np.unravel_index(idx_job_array - 1 , (IDX1_SHP, IDX2_SHP) )
 
-    GLOBALDICT["NOISEPARAMS"]["SIGMOID_APPROX_ERROR"]["SIGMA"] = random_variances['g2var'][idx_1]
-    GLOBALDICT["NOISEPARAMS"]["QUANTISATION_UNCERTY"]["SIGMA"] = random_variances['g1var'][idx_1]
-    GLOBALDICT["MODELDESIGN"]["LAMBDA_1"] = lambda_paris_2['lambda_1'][idx_2]
-    GLOBALDICT["MODELDESIGN"]["LAMBDA_2"] = lambda_paris_2['lambda_2'][idx_2]
+idx_1, idx_2 = np.unravel_index(idx_job_array - 1 , (IDX1_SHP, IDX2_SHP) )
 
-    fname_likelihood = 'rand_'+str(idx_1)+'_'+str(idx_2)+'_'
+GLOBALDICT["NOISEPARAMS"]["SIGMOID_APPROX_ERROR"]["SIGMA"] = random_variances['g2var'][idx_1]
+GLOBALDICT["NOISEPARAMS"]["QUANTISATION_UNCERTY"]["SIGMA"] = random_variances['g1var'][idx_1]
+GLOBALDICT["MODELDESIGN"]["LAMBDA_1"] = lambda_paris_2['lambda_1'][idx_2]
+GLOBALDICT["MODELDESIGN"]["LAMBDA_2"] = lambda_paris_2['lambda_2'][idx_2]
 
-    max_iterations = num_of_nodes * 3
-    GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"] = max_iterations
+fname_likelihood = 'rand_'+str(idx_1)+'_'+str(idx_2)+'_'
 
-    for idx_3 in range(IDX3_SHP):
+max_iterations = num_of_nodes * 3
+GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"] = max_iterations
 
-        GLOBALDICT["MODELDESIGN"]["P_ALPHA"] = particleconfigs[idx_3][0]
-        GLOBALDICT["MODELDESIGN"]["P_BETA"] = particleconfigs[idx_3][1]
+for idx_3 in range(IDX3_SHP):
 
-        SAMPLE_GLOBAL_MODEL = copy.deepcopy(GLOBALDICT)
+    GLOBALDICT["MODELDESIGN"]["P_ALPHA"] = particleconfigs[idx_3][0]
+    GLOBALDICT["MODELDESIGN"]["P_BETA"] = particleconfigs[idx_3][1]
 
-        uniform_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=False, beta_skew_adjust=False)
-        uniform_r_expt.run_analysis(path+'Uni_R'+prefix+fname_likelihood+str(idx_3))
+    SAMPLE_GLOBAL_MODEL = copy.deepcopy(GLOBALDICT)
 
-        trunc_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=True, beta_skew_adjust=False)
-        trunc_r_expt.run_analysis(path+'Trunc_R'+prefix+fname_likelihood+str(idx_3))
+    uniform_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=False, beta_skew_adjust=False)
+    uniform_r_expt.run_analysis(path+'Uni_R'+prefix+fname_likelihood+str(idx_3))
+
+    trunc_r_expt = SingleRunAnalysis(SAMPLE_GLOBAL_MODEL, true_map_, repts, beta_expansion_mode=True, beta_skew_adjust=False)
+    trunc_r_expt.run_analysis(path+'Trunc_R'+prefix+fname_likelihood+str(idx_3))
 

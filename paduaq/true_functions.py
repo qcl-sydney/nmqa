@@ -23,7 +23,7 @@ def generate_data_qubits_coords(number, flag='random'):
     if flag == 'uniform':
         approxgrid = int(np.sqrt(number))
         data_x, data_y = np.meshgrid(np.linspace(-1, 1, approxgrid), np.linspace(-1, 1, approxgrid))
-        data_qubits = np.asarray(zip(data_x.flatten(), data_y.flatten()))
+        data_qubits = zip(data_x.flatten(), data_y.flatten())
     if flag == 'random':
         data_qubits = np.random.rand(number, 2)*2.0 - 1.0 # inside unit square
     return data_qubits
