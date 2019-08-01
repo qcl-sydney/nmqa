@@ -168,6 +168,8 @@ GRIDDICT = {"QUBIT_01" : (0.0, 0.0),
            }
 
 
+
+
 # Make this into  A FUNCTION
 LIST_OF_POSITIONS = [(0.0, 0.0), (0.0, 1.0), (0.0, 2.0), (0.0, 3.0), (0.0, 4.0), (1.0, 0.0), (1.0, 1.0), (1.0, 2.0), (1.0, 3.0), (1.0, 4.0), (2.0, 0.0), (2.0, 1.0), (2.0, 2.0), (2.0, 3.0), (2.0, 4.0), (3.0, 0.0), (3.0, 1.0), (3.0, 2.0), (3.0, 3.0), (3.0, 4.0), (4.0, 0.0), (4.0, 1.0), (4.0, 2.0), (4.0, 3.0), (4.0, 4.0)]
 
@@ -341,5 +343,6 @@ GLOBALDICT = {"MODELDESIGN": MODELDESIGN,
               "GRIDDICT" : GRIDDICT,
               "RISKPARAMS" : RISKPARAMS,
               "HYPERDICT": HYPERDICT,
-              "ADDNOISE" : ADDNOISE
+              "ADDNOISE" : ADDNOISE,
+              "DATA_QUBITS": None
              }

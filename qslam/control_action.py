@@ -23,6 +23,7 @@ import numpy as np
 def control_lengthscale_uncertainty(listofcontrolparameters,
                                     next_control_neighbourhood,
                                     number_of_diff_nodes=1,
+                                    list_of_dataqubits=None,
                                     dtype=[('Node', int), ('ControlParam', float)]
                                    ):
 
@@ -44,6 +45,11 @@ def control_lengthscale_uncertainty(listofcontrolparameters,
             Number of single qubit measurements at different locations
             that can be simultaneously performed on the hardware grid.
 
+        list_of_dataqubits (`int`| list) :
+            List of indices for qubit locations for data qubits that
+            cannot be used for sensing measurements.
+            Defaults to None.
+
         dtype ( List of tuples | optional) :
             Specifies how control parameters and control neighbourhoods are read,
             and handled by this function. Should be a hidden local variable.
@@ -61,15 +67,18 @@ def control_lengthscale_uncertainty(listofcontrolparameters,
     # in the analysis for choosing the next measurement.
 
     labelled_params = [iterate for iterate in enumerate(listofcontrolparameters)]
-    structured_array = np.asarray(labelled_params, dtype=dtype)
-
-    if len(next_control_neighbourhood) == 0:
-        mask = np.ones(len(labelled_params), dtype=bool) # Mask for showing all values.
-        print "Control List empty; randomly chosen qubit on grid."
-
+    structured_array = np.asarray(labelled_params, dtype=dtype) 
+    
     if len(next_control_neighbourhood) > 0:
         mask = np.zeros(len(labelled_params), dtype=bool) # Mask for hiding all values.
         mask[next_control_neighbourhood] = True # Show nodes only from next_control_neighbourhood.
+        
+        if list_of_dataqubits is not None:
+            mask[list_of_dataqubits] = False # Show nodes only from next_control_neighbourhood.
+
+    if len(next_control_neighbourhood) == 0 or np.sum(mask) == 0 : 
+        mask = np.ones(len(labelled_params), dtype=bool) # Mask for showing all values.
+        # print "Control List empty; randomly chosen qubit on grid."
 
     structured_array = structured_array[mask] # No mask for lists - make array and bring back.
 
@@ -114,7 +123,10 @@ PROTOCOL = {"userinput" : control_user_input,
            }
 
 
-def controller(listofcontrolparameters, next_control_neighbourhood, controltype='lenvar', number_of_nodes=1):
+def controller(listofcontrolparameters, next_control_neighbourhood, 
+               controltype='lenvar',
+               list_of_dataqubits=None,
+               number_of_nodes=1):
     ''' Return location(s) for next set of single qubit measurement(s) based on
         a selected control protocol.
 
@@ -133,6 +145,11 @@ def controller(listofcontrolparameters, next_control_neighbourhood, controltype=
             Number of single qubit measurements that can be simultaneously
             performend on the hardware grid.
             Defaults to 1.
+
+        list_of_dataqubits (`int`| list) :
+            List of indices for qubit locations for data qubits that
+            cannot be used for sensing measurements.
+            Defaults to None.
 
         Returns:
         -------

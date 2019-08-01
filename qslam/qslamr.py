@@ -231,6 +231,7 @@ class ParticleFilter(Grid):
                measurements_controls=None,
                autocontrol="OFF",
                max_num_iterations=None,
+               list_of_dataqubits=None,
                var_thres=1.0):
         ''' Execute core QSLAM module.
 
@@ -243,11 +244,23 @@ class ParticleFilter(Grid):
                 "OFF" - next qubit measured is specified as a user input via measurement_controls_
                 "ON" - next qubit measured is chosen by the algorithm.
                 Default value: "OFF".
+
             max_num_iterations : Maximum number of iterations at which the algorithm terminates.
+
+            list_of_dataqubits (`int`| list) :
+                List of indices for qubit locations for data qubits that
+                cannot be used for sensing measurements.
+                Defaults to None.
+
             var_thres :[NOT USED] Error variance threshold where if the variance
                 of length scales is less than interqubit separation, then algorithm
                 terminates.
         '''
+
+        # Set up Data Qubits (qubits which are never physically measured):
+        if list_of_dataqubits is None:
+            list_of_dataqubits = self.GLOBALDICT["DATA_QUBITS"]
+
         # Set stopping protocol
         if max_num_iterations is None:
             max_num_iterations = self.MODELDESIGN["MAX_NUM_ITERATIONS"]
@@ -283,7 +296,8 @@ class ParticleFilter(Grid):
             msmt_control_pair = self.PerformMeasurement(autocontrol,
                                                         run_variance,
                                                         protocol_counter,
-                                                        next_control_neighbourhood=next_control_neighbourhood)
+                                                        next_control_neighbourhood=next_control_neighbourhood,
+                                                        list_of_dataqubits=list_of_dataqubits)
 
             next_control_neighbourhood = self.RunTwoLayerParticleFilter(msmt_control_pair)
 
@@ -339,6 +353,7 @@ class ParticleFilter(Grid):
                            autocontrol,
                            listofcontrolparameters,
                            protocol_counter,
+                           list_of_dataqubits=None,
                            next_control_neighbourhood=None):
 
         ''' Return measurement outcome and control directive i.e. the location of
@@ -357,6 +372,10 @@ class ParticleFilter(Grid):
             next_control_neighbourhood (`int`| list) :
                 List of indices for a qubit within a control region.
                 Default value: NONE.
+            list_of_dataqubits (`int`| list) :
+                List of indices for qubit locations for data qubits that
+                cannot be used for sensing measurements.
+                Defaults to None.
 
         Returns:
         -------
@@ -374,6 +393,7 @@ class ParticleFilter(Grid):
 
             node_j = controller(listofcontrolparameters,
                                 next_control_neighbourhood,
+                                list_of_dataqubits=list_of_dataqubits,
                                 number_of_nodes=1)[0]
 
             # TODO: adapt for arbitrary number of simultaneous msmts at different locations, number_of_nodes > 1
