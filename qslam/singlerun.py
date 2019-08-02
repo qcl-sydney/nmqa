@@ -57,8 +57,9 @@ class SingleRunAnalysis(object):
 
         for idx_rept in range(self.repts):
 
+            
             qslamobj = self.call_qslam()
-
+            
             for idxt in range(0, max_num_iterations): 
 
                 f_strt = self.numofnodes * 2  # fixed by QSLAM design of state vector
@@ -72,7 +73,6 @@ class SingleRunAnalysis(object):
                     rate_of_change_of_map[idx_rept, idxt, :] = abs(qslamobj.save_posterior_state[idxt][f_strt:f_end] - qslamobj.save_posterior_state[idxt-1][f_strt:f_end])
                     rate_of_change_of_len[idx_rept, idxt, :] = abs(qslamobj.save_posterior_state[idxt][r_strt:] - qslamobj.save_posterior_state[idxt-1][r_strt:])
         
-        print(qslamobj.save_alpha_predictive[0][0].weight)
         # --------------------------------------------------------------------
         # Make matrices for distribution of weights for the last repetition
         # --------------------------------------------------------------------
@@ -90,9 +90,8 @@ class SingleRunAnalysis(object):
         beta_labels = range(1, P_BETA + 1, 1)
         joint_labels = range(1, P_ALPHA*P_BETA + 1, 1)
 
-        for idxt in range(0, max_num_iterations): 
+        for idxt in range(0, max_num_iterations):
 
-            print(qslamobj.save_alpha_predictive[0][0].weight)
             predictive_weights[idxt, :] = np.asarray([qslamobj.save_alpha_predictive[idxt][idx].weight for idx in range(P_ALPHA)])
 
             start = P_ALPHA * idxt

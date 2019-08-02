@@ -79,7 +79,7 @@ true_map_ = np.asarray(true_map)
 GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"] = 1
 GLOBALDICT["MODELDESIGN"]["MULTIPLER_R_MAX"] = 4.
 
-repts = 0
+repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
 
 prefix = '_padua_ord_'+str(padua_order)+'_'
