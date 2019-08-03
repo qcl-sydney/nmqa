@@ -111,7 +111,7 @@ GLOBALDICT["MODELDESIGN"]["LAMBDA_2"] = lambda_paris_2['lambda_2'][idx_2]
 
 fname_likelihood = 'rand_'+str(idx_1)+'_'+str(idx_2)+'_'
 
-max_iterations = num_of_nodes * 3
+max_iterations = len(sensing_qubits) * 3
 GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"] = max_iterations
 
 for idx_3 in range(IDX3_SHP):
