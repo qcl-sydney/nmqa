@@ -23,12 +23,23 @@ import qslamr as qs
 import numpy as np
 import os
 
+from scipy.interpolate import LinearNDInterpolator
+
+# PADUA COMPATIBILITY
+import sys
+sys.path.append('../paduaq/')
+from pdinter_MM import pd_interpolant
+from pdpoints import dims_padua_set
+
 H_PARAM = ['LAMBDA_1', 'LAMBDA_2', 'SIGMOID_VAR', 'QUANT_VAR']
 
 from hardware import Node
 class EngineeredTruth(object):
     ''' Generates true maps for Bayes Risk analysis.'''
-    def __init__(self, numberofnodes, TRUTHKWARGS):
+    def __init__(self,
+                 numberofnodes,
+                 TRUTHKWARGS):
+
         ''' Creates EngineeredTruth instance.
         Parameters:
         -----------
@@ -68,6 +79,16 @@ class EngineeredTruth(object):
                     mu_y = 2.0 # mean in y
                     scl = 0.8 # scale
 
+                "UseFunction" : sets true field using coordinate locations for each qubit
+
+                    TRUTHKWARGS["all_qubit_locations"] : List of tuples [(x,y)] for coordinates
+                    of qubit locations (sensing and data qubits)
+
+                    TRUTHKWARGS["true_function"] : true_function() used for interpolation
+
+                    TRUTHKWARGS["true_function_type"] : flag to specify calculation
+                        inside true_function()
+
             TRUTHKWARGS["OneStepdheight"]["low"] : phase value of "low field",
                 a scalar between 0 and np.pi, when "OneStepd" or "OneStepq" is selected.
 
@@ -76,6 +97,8 @@ class EngineeredTruth(object):
 
             TRUTHKWARGS["OneStepdfloorarea"] : Ratio of the number of qubits
             in low vs. high field region when truth type "OneStepdheight" is selected.
+
+
 
         Returns:
         --------
@@ -140,6 +163,16 @@ class EngineeredTruth(object):
 
             truemap = np.asarray(truemap)
 
+        if self.type == "UseFunction":
+
+            true_map = []
+            true_function_type = self.TRUTHKWARGS["true_function_type"]
+            for idx_point in range(self.dims):
+                point = self.TRUTHKWARGS["all_qubit_locations"][idx_point]
+                true_map.append(self.TRUTHKWARGS["true_function"](point[0], point[1], d=true_function_type))
+
+            truemap = np.asarray(true_map)
+
         return truemap
 
 class NaiveEstimator(object):
@@ -174,6 +207,8 @@ class NaiveEstimator(object):
                  TRUTHKWARGS,
                  msmt_per_node=1,
                  numofnodes=25,
+                 data_qubits_indicies=None, # PADUA COMPATIBILITY - DATA QUBITS CANNOT BE MEASURED
+                 intepolationflag=None, # PADUA COMPATIBILITY - LINEAR or PADUA INTERPOLATION
                  max_num_iterations=None):
         '''
         Creates a NaiveEstimator instance.
@@ -208,7 +243,14 @@ class NaiveEstimator(object):
         self.msmt_per_node = msmt_per_node
         self.numofnodes = numofnodes
         self.max_num_iterations = max_num_iterations
+
+        # PADUA 
+        self.data_qubits_indicies = data_qubits_indicies
+        self.intepolationflag = intepolationflag
+
         self.truth_generator = EngineeredTruth(self.numofnodes, TRUTHKWARGS)
+        # PADUA COMPATIBILITY - TRUE MAP SUPPLIED
+
         self.empirical_estimate = None
 
         self.__total_msmt_budget = self.msmt_per_node * self.max_num_iterations
@@ -219,38 +261,37 @@ class NaiveEstimator(object):
 
     def get_empirical_est(self, addnoise=None):
 
+        # PADUA COMPATIBILITY - TRUE MAP SUPPLIED
+        # if self.true_map_supplied is None:
         phase_map = self.truth_generator.get_map()
+        # if self.true_map_supplied is not None:
+        #     phase_map = self.true_map_supplied
 
-        if self.numofnodes <= self.max_num_iterations:
+        # PADUA COMPATIBILITY - exclude data qubits
+        num_of_sensing_nodes = self.numofnodes
+        sensing_qubits = np.arange(num_of_sensing_nodes)
+        if self.data_qubits_indicies is not None:
+            sensing_qubits = np.asarray(list(set(sensing_qubits) - set(self.data_qubits_indicies)))
+            num_of_sensing_nodes = len(sensing_qubits)
 
-            if self.max_num_iterations / self.numofnodes == self.msmt_per_node:
-                mask = np.ones(self.numofnodes, dtype=bool)
+        mask = np.zeros(self.numofnodes, dtype=bool) # Mask for hiding all values.
+        if num_of_sensing_nodes <= self.max_num_iterations:
 
-            if self.max_num_iterations / self.numofnodes != self.msmt_per_node:
-                self.msmt_per_node = int(self.total_msmt_budget / self.numofnodes)
-                mask = np.ones(self.numofnodes, dtype=bool)
+            if self.max_num_iterations / num_of_sensing_nodes == self.msmt_per_node:
+                mask[sensing_qubits] = True
+            if self.max_num_iterations / num_of_sensing_nodes != self.msmt_per_node:
+                self.msmt_per_node = int(self.total_msmt_budget / num_of_sensing_nodes)
+                mask[sensing_qubits] = True
 
-        if self.numofnodes > self.max_num_iterations:
-
-            randomly_choose = np.random.choice(self.numofnodes, self.max_num_iterations, replace=False)
-            mask = np.zeros(self.numofnodes, dtype=bool) # Mask for hiding all values.
+        if num_of_sensing_nodes > self.max_num_iterations:
+            randomly_choose = np.random.choice(sensing_qubits, self.max_num_iterations, replace=False)
             mask[randomly_choose] = True
 
-
-        node_labels = np.arange(self.numofnodes)
-
-        # Physically says we don't know anything except its some radian between 0, 2pi and conitnuous
-        # shouldn't be np.random.randint but rather random_sample
-
-        # ORIGINAL INITIALISATION
-        # self.empirical_estimate = np.ones(self.numofnodes) * np.random.randint(low=0.0,
-        #                                                                        high=np.pi,
-        #                                                                        size=1)
-
-        # JUNE 2019 Initialisation
+        # Final set of qubits that are measured under a Naieve Approach
+        final_measured_qubits = np.arange(self.numofnodes)[mask]
         self.empirical_estimate = np.ones(self.numofnodes) * np.random.random_sample(size=1) * np.pi
 
-        for idx_node in node_labels[mask]:
+        for idx_node in final_measured_qubits:
 
             single_shots = [Node.quantiser(Node.born_rule(phase_map[idx_node])) for idx_shot in range(self.msmt_per_node)]
 
@@ -262,11 +303,24 @@ class NaiveEstimator(object):
                 print "There is no noise process dictionary (NaiveEstimator.get_empirical_est)."
                 self.empirical_estimate[idx_node] = Node.inverse_born(np.mean(np.asarray(single_shots, dtype=float)))
 
+        # Add Padua interpolation for unmeasured data qubits.
+        if self.data_qubits_indicies is not None and self.intepolationflag is not None:
+
+            f_data =  self.empirical_estimate[sensing_qubits]
+            data_points = np.asarray([self.all_qubit_locations[idx_point] for idx_point in sensing_qubits])
+            test_points = np.asarray([self.all_qubit_locations[idx_point] for idx_point in self.data_qubits_indicies])
+
+            if self.intepolationflag > 0:
+                order = self.intepolationflag
+                f_interpolated_vals = pd_interpolant(order, f_data, [test_points[:,0], test_points[:,1]])
+
+            if self.intepolationflag == 'linear':
+                lin_interpolator = LinearNDInterpolator(data_points, f_data, fill_value=np.nan, rescale=False)
+                f_interpolated_vals = lin_interpolator.__call__(test_points)
+
+            self.empirical_estimate[self.data_qubits_indicies] = f_interpolated_vals
 
         return self.empirical_estimate, phase_map
-
-        # maperrors =  self.empirical_estimate - phase_map # RETAIN FOR BACKWARD COMPATIBILITY
-        # return  maperrors # RETAIN  FOR BACKWARD COMPATIBILITY
 
 class Bayes_Risk(object):
     ''' Stores Bayes Risk map for a scenario specified by (testcase, variation)
@@ -319,7 +373,7 @@ class Bayes_Risk(object):
         self.loss_truncation = RISKPARAMS["loss_truncation"]
         self.numofnodes = numofnodes # Default
 
-        self.truemap_generator = EngineeredTruth(self.numofnodes, TRUTHKWARGS)
+        self.truemap_generator = EngineeredTruth(self.numofnodes, TRUTHKWARGS) # PADUA 
 
         self.filename_br = None
         self.macro_true_fstate = None
@@ -743,11 +797,19 @@ class CreateNaiveExpt(Bayes_Risk):
                 Difference between estimated f_state  and a true map at the end
                     of a Naive brute force measurement run.
          '''
+        KWARGS = {}
+        KWARGS["msmt_per_node"] = self.GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"]
+        KWARGS["numofnodes"] = len(self.GLOBALDICT["GRIDDICT"])
+        KWARGS["max_num_iterations"] = self.GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"]
 
-        self.naiveobj = NaiveEstimator(self.truemap_generator.TRUTHKWARGS,
-                                       msmt_per_node=self.GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"],
-                                       numofnodes=len(self.GLOBALDICT["GRIDDICT"]),
-                                       max_num_iterations=self.GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"])
+        if self.GLOBALDICT["DATA_QUBITS"] is not None:
+            KWARGS["data_qubits_indicies"] = self.GLOBALDICT["DATA_QUBITS"]
+
+        if self.GLOBALDICT["INTERPOLATE_FLAG"] is not None:
+            KWARGS["intepolationflag"] = self.GLOBALDICT["INTERPOLATE_FLAG"]
+
+        self.naiveobj = NaiveEstimator(self.truemap_generator.TRUTHKWARGS, **KWARGS)
+
         posterior_map, true_map_ = self.naiveobj.get_empirical_est(addnoise=self.GLOBALDICT["ADDNOISE"])
 
         map_residuals = self.loss(posterior_map, true_map_)

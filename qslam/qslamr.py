@@ -204,8 +204,10 @@ class ParticleFilter(Grid):
 
         self.PRIORDICT = self.GLOBALDICT["PRIORDICT"]
 
+        # Ensures order in how points are input into QSLAM
         poskeys = sorted(self.GLOBALDICT["GRIDDICT"].keys())
         posvals = [self.GLOBALDICT["GRIDDICT"][idx_key] for idx_key in poskeys]
+
         LAMBDA_1 = self.MODELDESIGN["LAMBDA_1"]
         SAMPLE_F = self.PRIORDICT["SAMPLE_F"]
 
