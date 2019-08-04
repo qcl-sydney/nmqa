@@ -3,7 +3,6 @@ import os
 import copy
 import traceback
 import numpy as np
-import matplotlib.pyplot as plt
 
 sys.path.append('../paduaq')
 from pdpoints import dims_padua_set
@@ -25,7 +24,6 @@ path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
 # Set Defaults
 ########################
 
-repts = 0
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
 
 prefix = '_padua_ord_'+str(padua_order)+'_'
