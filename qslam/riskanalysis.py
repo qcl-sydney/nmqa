@@ -243,13 +243,14 @@ class NaiveEstimator(object):
         self.msmt_per_node = msmt_per_node
         self.numofnodes = numofnodes
         self.max_num_iterations = max_num_iterations
+        self.truth_generator = EngineeredTruth(self.numofnodes, TRUTHKWARGS)
 
-        # PADUA 
+        # PADUA
         self.data_qubits_indicies = data_qubits_indicies
         self.intepolationflag = intepolationflag
-
-        self.truth_generator = EngineeredTruth(self.numofnodes, TRUTHKWARGS)
-        # PADUA COMPATIBILITY - TRUE MAP SUPPLIED
+        self.all_qubit_locations = None
+        if self.intepolationflag is not None:
+            self.all_qubit_locations = self.truth_generator.TRUTHKWARGS["all_qubit_locations"]
 
         self.empirical_estimate = None
 
