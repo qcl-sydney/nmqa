@@ -27,7 +27,7 @@ from tuningresults import SIMULATIONSDICT
 ########################
 # Taking in bash parameters
 ########################
-padua_order = int(sys.argv[1]) # Padua order
+padua_order = int(sys.argv[1]) + 2 # Padua order 3, 4, 5
 true_function_type = 'cheb2fun'
 data_qubit_num = 25
 data_qubit_flag ='uniform'

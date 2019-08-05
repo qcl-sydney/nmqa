@@ -6,7 +6,7 @@ from pdpoints import dims_padua_set
 
 SIMULATIONSDICT = {}
 
-for padua_order in [4, 5] : # Padua order for cheb2chev function
+for padua_order in [3, 4, 5] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -38,6 +38,22 @@ for padua_order in [4, 5] : # Padua order for cheb2chev function
 ###########################################################
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
+SIMULATIONSDICT[3]["Opt_Beta_Expn"] = "Uniform"
+
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_1"] = 21
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_2"] = 20
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_1"] = 21
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_1"] = 26
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_3"] = 3
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_1"] = 26
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
 
 SIMULATIONSDICT[4]["Opt_Beta_Expn"] = "TruncGauss"
 
