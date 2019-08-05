@@ -313,7 +313,7 @@ class NaiveEstimator(object):
 
             if self.intepolationflag > 0:
                 order = self.intepolationflag
-                f_interpolated_vals = pd_interpolant(order, f_data, [test_points[:,0], test_points[:,1]])
+                f_interpolated_vals = np.diag(pd_interpolant(order, f_data, [test_points[:,0], test_points[:,1]]))
 
             if self.intepolationflag == 'linear':
                 lin_interpolator = LinearNDInterpolator(data_points, f_data, fill_value=np.nan, rescale=False)
