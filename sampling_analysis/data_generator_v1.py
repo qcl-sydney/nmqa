@@ -100,7 +100,7 @@ random_variances = np.load('random_variances.npz')
 # Set Loop Parameters
 ########################
 
-Multiples = [1, 3]#, 5, 7, 10, 15, 20]
+Multiples = [1, 3, 5, 7, 9, 10, 15, 20, 50]
 
 ########################
 # Run Script
