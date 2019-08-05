@@ -3,6 +3,8 @@ import os
 import copy
 import traceback
 
+
+
 ########################
 # Find qslam modules
 ########################
@@ -19,13 +21,13 @@ sys.path.append('../paduaq')
 from pdinter_MM import pd_interpolant, calc_padua_cgl
 from true_functions import true_function, generate_data_qubits_coords
 
+sys.path.append('./')
+from tuningresults import SIMULATIONSDICT
+
 ########################
 # Taking in bash parameters
 ########################
 padua_order = int(sys.argv[1]) # Padua order
-idx_1 = int(sys.argv[2]) # choice of variance
-idx_2 = int(sys.argv[3]) # choice of lambda params
-idx_3 = int(sys.argv[4]) # choice of particle number
 true_function_type = 'cheb2fun'
 data_qubit_num = 25
 data_qubit_flag ='uniform'
@@ -83,18 +85,31 @@ for idx_posy in range(num_of_nodes):
         GLOBALDICT["GRIDDICT"]["QUBIT_" + str(idx_posy)] =  (point[0], point[1])
 
 ########################
-# Set Optimal Params
+# Set Simulation Params
 ########################
 
 GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"] = 1
 GLOBALDICT["MODELDESIGN"]["MULTIPLER_R_MAX"] = 4.
-
 repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
-
 prefix = '_padua_ord_'+str(padua_order)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
+
+########################
+# Set Loop Parameters
+########################
+
+Multiples = [1, 3, 5, 7, 10, 15, 20]
+
+########################
+# Run Script
+######## ################
+
+opt_method = "Uniform" # SIMULATIONSDICT[padua_order]["Opt_Beta_Expn"] 
+idx_1 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_1"]
+idx_2 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_2"]
+idx_3 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_3"]
 
 GLOBALDICT["NOISEPARAMS"]["SIGMOID_APPROX_ERROR"]["SIGMA"] = random_variances['g2var'][idx_1]
 GLOBALDICT["NOISEPARAMS"]["QUANTISATION_UNCERTY"]["SIGMA"] = random_variances['g1var'][idx_1]
@@ -103,17 +118,7 @@ GLOBALDICT["MODELDESIGN"]["LAMBDA_2"] = lambda_paris_2['lambda_2'][idx_2]
 GLOBALDICT["MODELDESIGN"]["P_ALPHA"] = particleconfigs[idx_3][0]
 GLOBALDICT["MODELDESIGN"]["P_BETA"] = particleconfigs[idx_3][1]
 
-########################
-# Set Loop Parameters
-########################
-
-Multiples = [1, 2, 3, 5, 10, 100]
-
-########################
-# Run Script
-########################
-
-fname_likelihood = 'optidx_'+str(idx_1)+'_'+str(idx_2)+'_'+str(idx_3)+'_'
+fname_likelihood = 'optidx_'+str(idx_1)+'_'+str(idx_2)+'_'+str(idx_3)
 
 for idx_msmt_var in Multiples:
 
