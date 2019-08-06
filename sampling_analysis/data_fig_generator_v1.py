@@ -20,8 +20,13 @@ from tuningresults import SIMULATIONSDICT
 ###########################################################
 # User to specify padua flag
 padua_order = int(sys.argv[1])
+idx_functype = int(sys.argv[2])
+if idx_functype ==0:
+    true_function_type = 'cheb2fun'
+if idx_functype ==1:
+    true_function_type = 'lin'
 path = './data/'
-prefix = '_padua_ord_'+str(padua_order)+'_'
+prefix = true_function_type+'_padua_ord_'+str(padua_order)+'_'
 
 ###########################################################
 # DATA SOURCES AND SAVE PATHS

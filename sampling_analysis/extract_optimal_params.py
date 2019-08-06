@@ -11,6 +11,14 @@ from pdpoints import dims_padua_set
 # Taking in bash parameters
 ########################
 padua_order = int(sys.argv[1]) # Padua order. 1, 2, 3, 4, 5,...
+
+idx_functype = int(sys.argv[2])
+if idx_functype ==0:
+    true_function_type = 'cheb2fun'
+if idx_functype ==1:
+    true_function_type = 'lin'
+    
+
 data_qubit_num = 25
 max_iterations = dims_padua_set(padua_order) * 3
 
@@ -26,7 +34,7 @@ path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
 
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
 
-prefix = '_padua_ord_'+str(padua_order)+'_'
+prefix = true_function_type+'_padua_ord_'+str(padua_order)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
 

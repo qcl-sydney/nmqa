@@ -11,8 +11,9 @@
 cd $PBS_O_WORKDIR/
 
 paduaorder=4
+func=1
 
 module load python
 
-python ./data_tuning_script_v1.py ${paduaorder} ${PBS_ARRAY_INDEX}
+python ./data_tuning_script_v1.py ${paduaorder} ${PBS_ARRAY_INDEX} ${func}
 

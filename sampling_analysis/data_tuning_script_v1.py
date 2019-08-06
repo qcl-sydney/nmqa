@@ -24,10 +24,16 @@ from qslamdesignparams import GLOBALDICT
 ########################
 padua_order = int(sys.argv[1]) # Padua order. 1, 2, 3, 4, 5,...
 idx_job_array = int(sys.argv[2]) # job array starts from 1. Used for tuning
+
+idx_functype = int(sys.argv[3])
+if idx_functype ==0:
+    true_function_type = 'cheb2fun'
+if idx_functype ==1:
+    true_function_type = 'lin'
+ 
 data_qubit_num = 25
 data_qubit_flag ='uniform'
-true_function_type = 'cheb2fun'
-
+TUNING_MULTIPLIER=5
         
 ########################
 # Save to path 
@@ -89,7 +95,7 @@ GLOBALDICT["MODELDESIGN"]["MULTIPLER_R_MAX"] = 4.
 repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
 
-prefix = '_padua_ord_'+str(padua_order)+'_'
+prefix = true_function_type +'_padua_ord_'+str(padua_order)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
 
@@ -111,7 +117,7 @@ GLOBALDICT["MODELDESIGN"]["LAMBDA_2"] = lambda_paris_2['lambda_2'][idx_2]
 
 fname_likelihood = 'rand_'+str(idx_1)+'_'+str(idx_2)+'_'
 
-max_iterations = len(sensing_qubits) * 3
+max_iterations = len(sensing_qubits) * TUNING_MULTIPLIER
 GLOBALDICT["MODELDESIGN"]["MAX_NUM_ITERATIONS"] = max_iterations
 
 for idx_3 in range(IDX3_SHP):

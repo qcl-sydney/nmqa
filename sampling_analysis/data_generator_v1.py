@@ -27,8 +27,13 @@ from tuningresults import SIMULATIONSDICT
 ########################
 # Taking in bash parameters
 ########################
-padua_order = int(sys.argv[1]) + 2 # Padua order 3, 4, 5
-true_function_type = 'cheb2fun'
+padua_order = int(sys.argv[1])  # Padua order 1, 2, 3, 4, 5 for lin; 3, 4, 5 for cheb2fun
+idx_functype = int(sys.argv[2])
+if idx_functype ==0:
+    true_function_type = 'cheb2fun'
+if idx_functype ==1:
+    true_function_type = 'lin'
+ 
 data_qubit_num = 25
 data_qubit_flag ='uniform'
 
@@ -92,7 +97,7 @@ GLOBALDICT["MODELDESIGN"]["MSMTS_PER_NODE"] = 1
 GLOBALDICT["MODELDESIGN"]["MULTIPLER_R_MAX"] = 4.
 repts = 50
 particleconfigs = [ [3,2], [9,6], [15,10], [21,14], [30, 20]]
-prefix = '_padua_ord_'+str(padua_order)+'_'
+prefix = true_function_type+'_padua_ord_'+str(padua_order)+'_'
 lambda_paris_2 = np.load('lambda_pairs_2.npz')
 random_variances = np.load('random_variances.npz')
 
