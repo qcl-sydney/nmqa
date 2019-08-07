@@ -39,6 +39,23 @@ for padua_order in [3, 4, 5] : # Padua order for cheb2chev function
 ###########################################################
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
+SIMULATIONSDICT[2]["Opt_Beta_Expn"] = "Uniform"
+
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
 SIMULATIONSDICT[3]["Opt_Beta_Expn"] = "Uniform"
 
 SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_1"] = 21

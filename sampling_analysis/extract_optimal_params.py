@@ -70,6 +70,10 @@ for idx_1 in range(IDX1_SHP):
                 truncg_tuning_params[idx_1, idx_2, idx_pconfig] = error_scaling_matrix_1[idx_pconfig, max_iterations-1]
                 
             except:
+                print "Type", sys.exc_info()[0]
+                print "Value", sys.exc_info()[1]
+                print "Traceback", traceback.format_exc()
+                
                 continue
                 
 ordered_error_vals_T = np.argsort(truncg_tuning_params.flatten())
