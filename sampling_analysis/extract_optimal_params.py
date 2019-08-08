@@ -22,7 +22,7 @@ if idx_functype ==1:
     
 
 data_qubit_num = 25
-max_iterations = dims_padua_set(padua_order) * MULTIPLIER
+max_iterations = int(dims_padua_set(padua_order) * MULTIPLIER)
 
 ########################
 # Save to path 
