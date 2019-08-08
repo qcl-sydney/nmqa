@@ -13,7 +13,7 @@ sys.path.append('../paduaq')
 from pdpoints import dims_padua_set
 
 sys.path.append('./')
-from tuningresults import SIMULATIONSDICT
+
 
 ###########################################################
 # USER TO SPECIFY
@@ -21,10 +21,15 @@ from tuningresults import SIMULATIONSDICT
 # User to specify padua flag
 padua_order = int(sys.argv[1])
 idx_functype = int(sys.argv[2])
+
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
+    from tuningresults_cheb2fun_3 import SIMULATIONSDICT
+
 if idx_functype ==1:
     true_function_type = 'lin'
+    from tuningresults_lin_5 import SIMULATIONSDICT
+
 path = './data/'
 prefix = true_function_type+'_padua_ord_'+str(padua_order)+'_'
 
