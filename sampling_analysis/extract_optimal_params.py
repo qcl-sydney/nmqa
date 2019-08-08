@@ -15,12 +15,14 @@ padua_order = int(sys.argv[1]) # Padua order. 1, 2, 3, 4, 5,...
 idx_functype = int(sys.argv[2])
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
+    MULTIPLIER=3
 if idx_functype ==1:
     true_function_type = 'lin'
+    MULTIPLIER=5
     
 
 data_qubit_num = 25
-max_iterations = dims_padua_set(padua_order) * 3
+max_iterations = dims_padua_set(padua_order) * MULTIPLIER
 
 ########################
 # Save to path 
