@@ -12,7 +12,7 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-paduaord=(3 4 5)
+paduaord=(0 3 4 5)
 
 python ./data_generator_v1.py ${paduaord[$PBS_ARRAY_INDEX]}
 

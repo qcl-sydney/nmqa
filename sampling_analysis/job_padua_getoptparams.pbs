@@ -12,7 +12,7 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-paduaord=(2 3 4 5)
+paduaord=(0 2 3 4 5)
 
 python extract_optimal_params.py ${paduaord[$PBS_ARRAY_INDEX]} 1
 
