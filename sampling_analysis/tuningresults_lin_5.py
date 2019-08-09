@@ -39,19 +39,19 @@ for padua_order in [2, 3, 4, 5] : # Padua order for linear function
 ###########################################################
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
-SIMULATIONSDICT[2]["Opt_Beta_Expn"] = " "
+SIMULATIONSDICT[2]["Opt_Beta_Expn"] = "Uniform"
 
-SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_1"] = 0
-SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_2"] = 0
-SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_3"] = 0
-SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_1"] = 28
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_2"] = 8
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_3"] = 3
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_1"] = 28
 SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_1"] = 0
-SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_2"] = 0
-SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_3"] = 0
-SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_1"] = 5
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_2"] = 11
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_1"] = 5
 SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
@@ -73,33 +73,33 @@ SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_2"] = 0
 SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
-SIMULATIONSDICT[4]["Opt_Beta_Expn"] = " "
+SIMULATIONSDICT[4]["Opt_Beta_Expn"] = "Uniform"
 
-SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_1"] = 17
-SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_2"] = 8
+SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_1"] = 9
+SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_2"] = 12
 SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_3"] = 2
-SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_1"] = 17
+SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_1"] = 9
 SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_1"] = 24
-SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_2"] = 15
+SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_1"] = 29
+SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_2"] = 8
 SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_3"] = 0 
-SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_1"] = 24
+SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_1"] = 29
 SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[5]["Opt_Beta_Expn"] = " "
+SIMULATIONSDICT[5]["Opt_Beta_Expn"] = "Uniform"
 
-SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_1"] = 25 
-SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_2"] = 8
-SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_3"] = 3
-SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_1"] = 25
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_1"] = 17 
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_1"] = 17
 SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_3"] = None
 
 SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_1"] = 3
-SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_2"] = 12
+SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_2"] = 28
 SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_3"] = 0 
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_1"] = 3
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
