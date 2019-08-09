@@ -22,7 +22,7 @@ from pdinter_MM import pd_interpolant, calc_padua_cgl
 from true_functions import true_function, generate_data_qubits_coords
 
 sys.path.append('./')
-from tuningresults import SIMULATIONSDICT
+
 
 ########################
 # Taking in bash parameters
@@ -31,8 +31,10 @@ padua_order = int(sys.argv[1])  # Padua order 1, 2, 3, 4, 5 for lin; 3, 4, 5 for
 idx_functype = int(sys.argv[2])
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
+    from tuningresults_cheb2fun_3 import SIMULATIONSDICT
 if idx_functype ==1:
     true_function_type = 'lin'
+    from tuningresults_lin_5 import SIMULATIONSDICT
  
 data_qubit_num = 25
 data_qubit_flag ='uniform'
