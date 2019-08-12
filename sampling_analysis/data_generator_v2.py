@@ -59,7 +59,7 @@ data_qubits = generate_data_qubits_coords(data_qubit_num,
                                           flag=data_qubit_flag)
 
 GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits),  len(sensing_qubits) + data_qubit_num, dtype='int')
-GLOBALDICT["INTERPOLATE_FLAG"] = padua_order
+GLOBALDICT["INTERPOLATE_FLAG"] = padua_order # this should give a padua interpolation for naive
 
 ########################
 # Set hardware and true map
