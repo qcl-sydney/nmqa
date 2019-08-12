@@ -1,5 +1,5 @@
 #PBS -P QCL_RG
-#PBS -N padua_3
+#PBS -N padua_4_1
 #PBS -J 1-900
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
@@ -10,10 +10,10 @@
 
 cd $PBS_O_WORKDIR/
 
-paduaorder=3
+paduaorder=4
 func=1
 
 module load python
 
-python ./data_tuning_script_v1.py ${paduaorder} ${PBS_ARRAY_INDEX} ${func}
+python ./data_tuning_script_v2.py ${paduaorder} ${PBS_ARRAY_INDEX} ${func}
 

@@ -3,18 +3,23 @@ import numpy as np
 def true_function(X, Y, d=None):
 
     if d == 'cheb2fun':
-        return np.cos(np.exp(2*X+Y))*np.sin(Y)
+        f_data = np.cos(np.exp(2*X+Y))*np.sin(Y)
+        return (f_data + 1.)*np.pi/2.
 
     if d == 'lin':
-        return Y*0.5 + X*0.5
+        f_data = Y*0.5 + X*0.5 
+        return (f_data + 1.)*np.pi/2.
 
     if d == 'exp':
-        return np.exp(X + 0.0*Y)
+        print "true_function not normalised to [0, pi]"
+        return np.exp(-X) 
 
-    if d == 'gss':
+    if d == 'gss': 
+        print "true_function not normalised to [0, pi]"
         return 2.0*np.exp((X-0.25)**2/5. + Y**2/30.)
 
     if d == 'sinc':
+        print "true_function not normalised to [0, pi]"
         return np.sin(X**2 + Y**2) / (X**2 + Y**2)
 
     return np.pi * (X + Y + 0.1)/ (X + Y + 0.1)

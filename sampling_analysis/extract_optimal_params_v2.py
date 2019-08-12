@@ -15,7 +15,7 @@ padua_order = int(sys.argv[1]) # Padua order. 1, 2, 3, 4, 5,...
 idx_functype = int(sys.argv[2])
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
-    MULTIPLIER=3
+    MULTIPLIER=5
 if idx_functype ==1:
     true_function_type = 'lin'
     MULTIPLIER=5

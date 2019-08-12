@@ -180,7 +180,7 @@ for idx_figure in range(2):
     ax_err.axvline(x=num_of_nodes, ls='-', color='grey', linewidth=0.5, label='Num. of qubits')
     ax_err.legend(loc=0)
 
-    plt.savefig(savetopath+'fig_'+str(idx_paramtype)+'_error_OPT_'+str(padua_order)+'.svg', format='svg', dpi=800)
+    plt.savefig(savetopath+'fig_'+true_function_type+'_'+str(idx_paramtype)+'_error_OPT_'+str(padua_order)+'.svg', format='svg', dpi=800)
     plt.show()
 
     #################################
@@ -224,5 +224,5 @@ for idx_figure in range(2):
     ax2.legend(loc=0)
     ax2.yaxis.set_ticklabels([])
 
-    plt.savefig(savetopath+'fig_'+str(idx_paramtype)+'_error_state_change_OPT_'+str(padua_order)+'.svg', format='svg', dpi=800)
+    plt.savefig(savetopath+'fig_'+true_function_type+'_'+str(idx_paramtype)+'_error_state_change_OPT_'+str(padua_order)+'.svg', format='svg', dpi=800)
     plt.show()
