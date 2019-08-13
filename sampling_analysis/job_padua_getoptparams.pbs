@@ -1,6 +1,6 @@
 #PBS -P QCL_RG
 #PBS -N padua_results_func
-#PBS -J 1-2
+#PBS -J 1-3
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
 #PBS -l select=1:ncpus=1:mem=8GB
@@ -12,7 +12,7 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-paduaord=(0 4 5)
-func=(0 1 1)
+paduaord=(0 3 4 5)
+func=(0 0 0 0)
 
 python extract_optimal_params_v2.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}
