@@ -11,7 +11,7 @@ for padua_order in [2, 3, 4, 5] : # Padua order for cheb2chev function
     SIMULATIONSDICT[padua_order]["num_of_nodes"] = dims_padua_set(padua_order) + 25
     SIMULATIONSDICT[padua_order]["linear"] = False
     SIMULATIONSDICT[padua_order]["repts"] = 50
-    SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * 5s
+    SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * 5
     SIMULATIONSDICT[padua_order]["functype"]= 'cheb2fun'
     
     for idx_expandtype in ["Uniform", "TruncGauss"]:
