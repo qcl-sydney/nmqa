@@ -31,7 +31,7 @@ padua_order = int(sys.argv[1])  # Padua order 1, 2, 3, 4, 5 for lin; 3, 4, 5 for
 idx_functype = int(sys.argv[2])
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
-    from tuningresults_cheb2fun_3 import SIMULATIONSDICT
+    from tuningresults_cheb2fun_5 import SIMULATIONSDICT
 if idx_functype ==1:
     true_function_type = 'lin'
     from tuningresults_lin_5 import SIMULATIONSDICT
