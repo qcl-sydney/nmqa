@@ -42,10 +42,10 @@ SIMULATIONSDICT[2]["Opt_Beta_Expn"] = "TruncGauss"
 # Optimal trunc termination error: 17.675734373 Params: (2, 13, 4)
 # Optimal uniform termination error: 17.7089964369 Params: (16, 7, 0)
 
-# *_Rcheb2fun_padua_ord_2_rand_2_13_*.npz 
-# *_Rcheb2fun_padua_ord_2_rand_2_0_*.npz
-# *_Rcheb2fun_padua_ord_2_rand_16_7_*.npz 
-# *_Rcheb2fun_padua_ord_2_rand_16_0_*.npz 
+# *_Rcheb2fun_padua_ord_2_rand_2_13_*.npz done
+# *_Rcheb2fun_padua_ord_2_rand_2_0_*.npz done
+# *_Rcheb2fun_padua_ord_2_rand_16_7_*.npz done
+# *_Rcheb2fun_padua_ord_2_rand_16_0_*.npz done
 
 SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_1"] = 16
 SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_2"] = 7

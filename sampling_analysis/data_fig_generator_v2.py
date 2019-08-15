@@ -24,7 +24,7 @@ idx_functype = int(sys.argv[2])
 
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
-    from tuningresults_cheb2fun_3 import SIMULATIONSDICT
+    from tuningresults_cheb2fun_5 import SIMULATIONSDICT
 
 if idx_functype ==1:
     true_function_type = 'lin'
