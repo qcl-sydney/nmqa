@@ -63,8 +63,13 @@ SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
 SIMULATIONSDICT[3]["Opt_Beta_Expn"] = "TruncGauss"
-Optimal trunc termination error: 17.2006810442 Params: (12, 23, 0)
-Optimal uniform termination error: 17.2343209911 Params: (22, 7, 1)
+# Optimal trunc termination error: 17.2006810442 Params: (12, 23, 0)
+# Optimal uniform termination error: 17.2343209911 Params: (22, 7, 1)
+# *_Rcheb2fun_padua_ord_3_rand_22_7_*.npz done
+# *_Rcheb2fun_padua_ord_3_rand_22_0_*.npz done
+# *_Rcheb2fun_padua_ord_3_rand_12_23_*.npz done
+# *_Rcheb2fun_padua_ord_3_rand_12_0_*.npz done
+
 
 SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_1"] = 22
 SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_2"] = 7
@@ -82,8 +87,12 @@ SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
 SIMULATIONSDICT[4]["Opt_Beta_Expn"] = "Uniform"
-Optimal trunc termination error: 18.5568393359 Params: (19, 23, 0)
-Optimal uniform termination error: 18.2337574235 Params: (1, 18, 2)
+# Optimal trunc termination error: 18.5568393359 Params: (19, 23, 0)
+# Optimal uniform termination error: 18.2337574235 Params: (1, 18, 2)
+# *_Rcheb2fun_padua_ord_4_rand_19_23_*.npz wip
+# *_Rcheb2fun_padua_ord_4_rand_19_0_*.npz 
+# *_Rcheb2fun_padua_ord_4_rand_1_18_*.npz 
+# *_Rcheb2fun_padua_ord_4_rand_1_0_*.npz 
 
 SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_1"] = 1
 SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_2"] = 18
@@ -101,8 +110,12 @@ SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
 SIMULATIONSDICT[5]["Opt_Beta_Expn"] = "Uniform"
-Optimal trunc termination error: 20.4307016309 Params: (0, 18, 0)
-Optimal uniform termination error: 19.7005178226 Params: (11, 18, 0)
+# Optimal trunc termination error: 20.4307016309 Params: (0, 18, 0)
+# Optimal uniform termination error: 19.7005178226 Params: (11, 18, 0)
+# *_Rcheb2fun_padua_ord_5_rand_0_18_*.npz 
+# *_Rcheb2fun_padua_ord_5_rand_0_0_*.npz wip
+# *_Rcheb2fun_padua_ord_5_rand_11_18_*.npz 
+# *_Rcheb2fun_padua_ord_5_rand_11_0_*.npz wip
 
 SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_1"] = 0 
 SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_2"] = 18
