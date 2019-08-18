@@ -62,55 +62,58 @@ SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_2"] = 0
 SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
-SIMULATIONSDICT[3]["Opt_Beta_Expn"] = "Uniform"
-# not done
+SIMULATIONSDICT[3]["Opt_Beta_Expn"] = "TruncGauss"
+Optimal trunc termination error: 17.2006810442 Params: (12, 23, 0)
+Optimal uniform termination error: 17.2343209911 Params: (22, 7, 1)
 
-SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_1"] = 21
-SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_2"] = 20
-SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_3"] = 2
-SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_1"] = 21
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_1"] = 22
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_2"] = 7
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_3"] = 1
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_1"] = 22
 SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_1"] = 26
-SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_2"] = 18
-SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_3"] = 3
-SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_1"] = 26
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_1"] = 12
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_2"] = 23
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_1"] = 12
 SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
-SIMULATIONSDICT[4]["Opt_Beta_Expn"] = "TruncGauss"
-# not done
+SIMULATIONSDICT[4]["Opt_Beta_Expn"] = "Uniform"
+Optimal trunc termination error: 18.5568393359 Params: (19, 23, 0)
+Optimal uniform termination error: 18.2337574235 Params: (1, 18, 2)
 
-SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_1"] = 17
-SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_2"] = 8
+SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_1"] = 1
+SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_2"] = 18
 SIMULATIONSDICT[4]["Uniform"]["optimal"]["idx_3"] = 2
-SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_1"] = 17
+SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_1"] = 1
 SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[4]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_1"] = 24
-SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_2"] = 15
+SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_1"] = 19
+SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_2"] = 23
 SIMULATIONSDICT[4]["TruncGauss"]["optimal"]["idx_3"] = 0 
-SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_1"] = 24
+SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_1"] = 19
 SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[4]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
 SIMULATIONSDICT[5]["Opt_Beta_Expn"] = "Uniform"
-# not done
+Optimal trunc termination error: 20.4307016309 Params: (0, 18, 0)
+Optimal uniform termination error: 19.7005178226 Params: (11, 18, 0)
 
-SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_1"] = 25 
-SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_2"] = 8
-SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_3"] = 3
-SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_1"] = 25
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_1"] = 0 
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_1"] = 0
 SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_1"] = 3
-SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_2"] = 12
+SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_1"] = 11
+SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_2"] = 18
 SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_3"] = 0 
-SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_1"] = 3
+SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_1"] = 11
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_3"] = None
