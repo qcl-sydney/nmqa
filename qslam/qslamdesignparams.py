@@ -344,5 +344,6 @@ GLOBALDICT = {"MODELDESIGN": MODELDESIGN,
               "RISKPARAMS" : RISKPARAMS,
               "HYPERDICT": HYPERDICT,
               "ADDNOISE" : ADDNOISE,
-              "DATA_QUBITS": None
+              "DATA_QUBITS": None,
+              "INTERPOLATE_FLAG": None
              }
