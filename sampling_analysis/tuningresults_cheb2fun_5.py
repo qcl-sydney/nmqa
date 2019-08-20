@@ -4,7 +4,7 @@ from pdpoints import dims_padua_set
 
 SIMULATIONSDICT = {}
 
-for padua_order in [2, 3, 4, 5] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", 2, 3, 4, 5] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -37,6 +37,26 @@ for padua_order in [2, 3, 4, 5] : # Padua order for cheb2chev function
 ###########################################################
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
+
+SIMULATIONSDICT["no_padua"]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 7.31968610978 Params: (28, 13, 4)
+# Optimal uniform termination error: 8.09703230899 Params: (21, 18, 0)
+
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_1"] = 21
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_1"] = 21
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_1"] = 28
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_1"] = 28
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
 SIMULATIONSDICT[2]["Opt_Beta_Expn"] = "TruncGauss"
 
 # Optimal trunc termination error: 17.675734373 Params: (2, 13, 4)

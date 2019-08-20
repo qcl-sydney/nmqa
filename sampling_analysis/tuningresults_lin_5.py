@@ -4,7 +4,7 @@ from pdpoints import dims_padua_set
 
 SIMULATIONSDICT = {}
 
-for padua_order in [2, 3, 4, 5] : # Padua order for linear function
+for padua_order in ["no_padua", 2, 3, 4, 5] : # Padua order for linear function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -37,6 +37,23 @@ for padua_order in [2, 3, 4, 5] : # Padua order for linear function
 ###########################################################
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
+SIMULATIONSDICT["no_padua"]["Opt_Beta_Expn"] = "TruncGauss"
+
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_1"] = 16
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_2"] = 7
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_1"] = 16
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_1"] = 2
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_1"] = 2
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
 SIMULATIONSDICT[2]["Opt_Beta_Expn"] = "Uniform"
 
 # Optimal trunc termination error: 18.586002274 Params: (21, 12, 0)
