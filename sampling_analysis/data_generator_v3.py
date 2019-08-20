@@ -52,7 +52,8 @@ path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
 if padua_order > 0:
     sensing_qubits = calc_padua_cgl(padua_order)[0]
 
-if padua_order == -1: 
+if padua_order == -1:
+    print("did this")
     sensing_qubits = generate_data_qubits_coords(data_qubit_num,
                                           flag=data_qubit_flag)
 
@@ -124,6 +125,8 @@ Multiples = [1, 3, 5, 7, 9, 10, 15, 20, 50]
 # Run Script
 ######## ################
 
+if padua_order == -1:
+    padua_order = "no_padua"
 opt_method = "Uniform" # SIMULATIONSDICT[padua_order]["Opt_Beta_Expn"] 
 idx_1 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_1"]
 idx_2 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_2"]
