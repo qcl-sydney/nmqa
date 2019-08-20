@@ -27,7 +27,7 @@ if padua_order >0:
     prefix = true_function_type+'_padua_ord_'+str(padua_order)+'_'
 
 if padua_order == -1: 
-    max_iterations = data_qubit_num
+    max_iterations = data_qubit_num * MULTIPLIER
     prefix = true_function_type +'_no_padua_'
     
 ########################
