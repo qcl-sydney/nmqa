@@ -3,15 +3,23 @@ sys.path.append('../paduaq')
 from pdpoints import dims_padua_set
 
 SIMULATIONSDICT = {}
+GRIDSIZE=25 # number of data qubits if padua qubits are used. else, total number of regularly arranged sensing qubits
+MULTIPLIER=5
 
 for padua_order in ["no_padua", 2, 3, 4, 5] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
-    SIMULATIONSDICT[padua_order]["num_of_nodes"] = dims_padua_set(padua_order) + 25
+    if padua_order == "no_padua":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = GRIDSIZE * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE
+    
+    if padua_order != "no_padua":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = dims_padua_set(padua_order) + GRIDSIZE
+    
     SIMULATIONSDICT[padua_order]["linear"] = False
     SIMULATIONSDICT[padua_order]["repts"] = 50
-    SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * 5
     SIMULATIONSDICT[padua_order]["functype"]= 'cheb2fun'
     
     for idx_expandtype in ["Uniform", "TruncGauss"]:
