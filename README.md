@@ -12,40 +12,40 @@ References:
 
 Contains the following Python packges:
     
-    qslam : Python package to implement NMQA algorithm. 
+    qslam : Python package to implement NMQA-QSLAM algorithm. 
         Supports References [1], [2], [3].
  
     paduaq : Python package for Lagrange 2D interpolation at Padua points. 
-        Supports Reference [2].
-        Reference [3].
+        Supports Reference [3].
 
     clfanalysis : Python package for image classification for pre-processing
-        single qubit measurements from trapped ions flouresence data.
+        single qubit measurements from trapped ion camera data.
         Supports Reference [1].
 
 Contains the following directories for associated research analysis:
 
-    expt_data : Converts trapped ion images into measurement database. 
-        Codebase stored as a series of Jupyter Notebooks (.ipynb) 
+    paperdata : Compares NMQA-QSLAM to Naive Approach using simulated data. 
+        Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
         Supports Reference [1].
-    
-    expt_qslam : Compares NMQA/QSLAM to Naive Approach using experimental data.
+        
+    expt_qslam : Compares NMQA-QSLAM to Naive Approach using experimental data.
         Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
         Supports Reference [1].
     
     intrarun : Implements convergence analysis for NMQA-QSLAM.
         Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
         Supports Reference [2].
-
-    paperdata : Compares NMQA with Naive approaches using simulated data. 
-        Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
-        Supports Reference [1].
-   
-    sampling_analysis: Compares NMQA with Padua interpolation techniques. 
+ 
+    sampling_analysis: Compares NMQA-QSLAM to Naive Approach with Padua interpolation. 
         Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
         Supports Reference [3].
     
-    statedetectn : Implements image classification for pre-processing
-        single qubit measurements from trapped ions flouresence data.
+    expt_data : Converts trapped ion images into measurement database. 
+        Codebase stored as a series of Jupyter Notebooks (.ipynb) 
+        Supports Reference [1].
+    
+    statedetectn : Analyses qubit state detection via image classification
+        on trapped ion camera data.
         Codebase stored as a series of Jupyter Notebooks (.ipynb).
         Supports Reference [1].
+
