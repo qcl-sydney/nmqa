@@ -232,7 +232,7 @@ class Metric(object):
         mu_y = np.mean(sigy)
         stdx = np.std(sigx, ddof=1)
         stdy = np.std(sigx, ddof=1)
-
+        
         Nminus1 = sigx.shape[0] - 1
         covarxy = (1.0 / Nminus1)*np.sum((sigx - mu_x)*(sigy - mu_y))
 
