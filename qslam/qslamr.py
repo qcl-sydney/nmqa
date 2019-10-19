@@ -261,7 +261,7 @@ class ParticleFilter(Grid):
 
         # Set up Data Qubits (qubits which are never physically measured):
         if list_of_dataqubits is None:
-            list_of_dataqubits = self.GLOBALDICT["DATA_QUBITS"]
+            list_of_dataqubits = self.GLOBALDICT["DATA_QUBITS"] # if no list is supplied, then access via GLOBALDICT
 
         # Set stopping protocol
         if max_num_iterations is None:
@@ -290,6 +290,7 @@ class ParticleFilter(Grid):
 
         max_iter_condition = max(len(self.measurements_controls), max_num_iterations)
         next_control_neighbourhood = range(0, self.QubitGrid.number_of_nodes)
+        num_sensor_qubits = self.QubitGrid.number_of_nodes - len(list_of_dataqubits)
 
         # Run QSLAM
         protocol_counter = 0
@@ -302,6 +303,13 @@ class ParticleFilter(Grid):
                                                         list_of_dataqubits=list_of_dataqubits)
 
             next_control_neighbourhood = self.RunTwoLayerParticleFilter(msmt_control_pair)
+            
+            # Control Decision:
+            # Reset control neighborhood to entire grid if num of msmts > num of qubits on grid
+            # Added Oct 2019 
+            if protocol_counter > num_sensor_qubits:
+                next_control_neighbourhood = range(0, self.QubitGrid.number_of_nodes)
+            # ----
 
             if self.save_run is True:
                 self.save_run_variance.append(run_variance)
