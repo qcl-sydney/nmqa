@@ -82,6 +82,9 @@ class Metric(object):
 
     Static Methods:
     ---------------
+        infnorm :
+            Return the inf-norm error metric over many trials via e_type.
+        
         ssim :
             Return the expected value of SSIM for a set of true maps and map estimates;
             as well as the list of SSIM scores for a set of true maps and map estimates over
@@ -108,7 +111,31 @@ class Metric(object):
         Creates a Metric instance.
         '''
         pass
-
+    
+    
+    @staticmethod
+    def infnorm(macro_residuals, e_type="maxval"):
+        '''
+        Return the inf-norm error metric over many trials via e_type.
+        
+        '''
+        residuals =  macro_residuals[0, :, :]
+        dims = residuals.shape
+        error = np.zeros(dims[0])
+        
+        for idx_trial in range(dims[0]):
+            error[idx_trial] = np.max(abs(residuals[idx_trial, :]))
+        
+        if e_type =='maxval':
+            return np.max(error)
+        
+        if e_type =='expval':
+            return np.mean(error)
+            
+        print("Invalid e_type")
+        raise RuntimeError
+        
+        
     @staticmethod
     def rms(macro_residuals):
         ''' Return the expected value of root mean square error metric
