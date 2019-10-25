@@ -1,17 +1,17 @@
 #PBS -P QCL_RG
-#PBS -N padua_160_0
+#PBS -N padua_100_1
 #PBS -J 1-900
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
-#PBS -l select=1:ncpus=1:mem=2GB
+#PBS -l select=1:ncpus=1:mem=50GB
 #PBS -l walltime=500:00:00 
 #PBS -q defaultQ
 # #PBS -j oe
 
 cd $PBS_O_WORKDIR/
 
-paduaorder=160
-func=0
+paduaorder=100
+func=1
 
 module load python
 
