@@ -1,10 +1,10 @@
 #PBS -P QCL_RG
 #PBS -N padua_results_func
-#PBS -J 1-4
+#PBS -J 1-2
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
-#PBS -l select=1:ncpus=1:mem=20GB
-#PBS -l walltime=24:00:00 
+#PBS -l select=1:ncpus=1:mem=4GB
+#PBS -l walltime=20:00:00 
 #PBS -q defaultQ
 # #PBS -j oe
 
@@ -12,8 +12,8 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-paduaord=(0 10 10 1 1)
-func=(0 0 1 0 1)
+paduaord=(0 1 10)
+func=(0 0 0)
 
 python ./data_generator_v2.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}
 
