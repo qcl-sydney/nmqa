@@ -6,7 +6,7 @@ SIMULATIONSDICT = {}
 GRIDSIZE=25 # number of data qubits if padua qubits are used. else, total number of regularly arranged sensing qubits
 MULTIPLIER=5
 
-for padua_order in ["no_padua", 2, 3, 4, 5] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -158,3 +158,26 @@ SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_3"] = 0
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_1"] = 11
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+SIMULATIONSDICT[10]["Opt_Beta_Expn"] = "Uniform"
+# Optimal trunc termination error: 33.0076201271 Params: (13, 13, 0)
+# Optimal uniform termination error: 31.5247888311 Params: (1, 13, 0)
+# *_Rcheb2fun_padua_ord_10_rand_13_13_*.npz done
+# *_Rcheb2fun_padua_ord_10_rand_13_0_*.npz done
+# *_Rcheb2fun_padua_ord_10_rand_1_13_*.npz done
+# *_Rcheb2fun_padua_ord_10_rand_1_0_*.npz done
+
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_1"] = 1 
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_1"] = 1
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_1"] = 13
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_1"] = 13
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_3"] = None

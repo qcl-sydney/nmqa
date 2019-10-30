@@ -6,7 +6,7 @@ SIMULATIONSDICT = {}
 GRIDSIZE=25 # number of data qubits if padua qubits are used. else, total number of regularly arranged sensing qubits
 MULTIPLIER=5
 
-for padua_order in ["no_padua", 2, 3, 4, 5] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", 2, 3, 4, 5, 10] : # Padua order for linear function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -18,7 +18,7 @@ for padua_order in ["no_padua", 2, 3, 4, 5] : # Padua order for cheb2chev functi
         SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * MULTIPLIER
         SIMULATIONSDICT[padua_order]["num_of_nodes"] = dims_padua_set(padua_order) + GRIDSIZE
     
-    SIMULATIONSDICT[padua_order]["linear"] = False
+    SIMULATIONSDICT[padua_order]["linear"] = False # WTF is this
     SIMULATIONSDICT[padua_order]["repts"] = 50
     SIMULATIONSDICT[padua_order]["functype"]= 'lin'
     
@@ -156,3 +156,20 @@ SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_3"] = 1
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_1"] = 28
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+SIMULATIONSDICT[10]["Opt_Beta_Expn"] = "NAME"
+
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_1"] = 0 
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_3"] = 1
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_3"] = None
