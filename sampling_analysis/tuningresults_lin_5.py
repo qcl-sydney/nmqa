@@ -63,19 +63,19 @@ SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_1"] = 8
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[1]["Opt_Beta_Expn"] = "NAME"
+SIMULATIONSDICT[1]["Opt_Beta_Expn"] = "Uniform"
 
-SIMULATIONSDICT[1]["Uniform"]["optimal"]["idx_1"] = None
-SIMULATIONSDICT[1]["Uniform"]["optimal"]["idx_2"] = None
-SIMULATIONSDICT[1]["Uniform"]["optimal"]["idx_3"] = None
-SIMULATIONSDICT[1]["Uniform"]["zerolambda"]["idx_1"] = None
+SIMULATIONSDICT[1]["Uniform"]["optimal"]["idx_1"] = 9
+SIMULATIONSDICT[1]["Uniform"]["optimal"]["idx_2"] = 20
+SIMULATIONSDICT[1]["Uniform"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT[1]["Uniform"]["zerolambda"]["idx_1"] = 9
 SIMULATIONSDICT[1]["Uniform"]["zerolambda"]["idx_2"] = 0
 SIMULATIONSDICT[1]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT[1]["TruncGauss"]["optimal"]["idx_1"] = None
-SIMULATIONSDICT[1]["TruncGauss"]["optimal"]["idx_2"] = None
-SIMULATIONSDICT[1]["TruncGauss"]["optimal"]["idx_3"] = None
-SIMULATIONSDICT[1]["TruncGauss"]["zerolambda"]["idx_1"] = None
+SIMULATIONSDICT[1]["TruncGauss"]["optimal"]["idx_1"] = 11
+SIMULATIONSDICT[1]["TruncGauss"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT[1]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT[1]["TruncGauss"]["zerolambda"]["idx_1"] = 11
 SIMULATIONSDICT[1]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT[1]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
