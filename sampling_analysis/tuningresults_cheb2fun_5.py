@@ -6,7 +6,7 @@ SIMULATIONSDICT = {}
 GRIDSIZE=25 # number of data qubits if padua qubits are used. else, total number of regularly arranged sensing qubits
 MULTIPLIER=5
 
-for padua_order in ["no_padua", 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
