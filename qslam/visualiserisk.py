@@ -114,7 +114,7 @@ class Metric(object):
     
     
     @staticmethod
-    def infnorm(macro_residuals, e_type="maxval"):
+    def infnorm(macro_residuals, e_type="maxinf"):
         '''
         Return the inf-norm error metric over many trials via e_type.
         
@@ -126,10 +126,10 @@ class Metric(object):
         for idx_trial in range(dims[0]):
             error[idx_trial] = np.max(abs(residuals[idx_trial, :]))
         
-        if e_type =='maxval':
+        if e_type =='maxinf':
             return np.max(error)
         
-        if e_type =='expval':
+        if e_type =='expinf':
             return np.mean(error)
             
         print("Invalid e_type")
