@@ -22,13 +22,26 @@ if idx_functype ==1:
     
 data_qubit_num = 25
 
+# For each type of grid, data is analysed when the num of msmts per sensor = MULTIPLIER
+
 if padua_order >0:
-    max_iterations = int(dims_padua_set(padua_order) * MULTIPLIER)
+    max_iterations = int(dims_padua_set(padua_order) * MULTIPLIER) 
     prefix = true_function_type+'_padua_ord_'+str(padua_order)+'_'
 
 if padua_order == -1: 
-    max_iterations = data_qubit_num * MULTIPLIER
+    ALLGRID = data_qubit_num
+    max_iterations = ALLGRID * MULTIPLIER 
     prefix = true_function_type +'_no_padua_'
+    
+if padua_order == 'REG_COARSE':
+    COARSEGRID = 16
+    data_qubits = COARSEGRID * MULTIPLIER 
+    prefix = true_function_type +'_regcoarse_'
+    
+if padua_order == 'REG_FINE':
+    FINEGRID = 81
+    data_qubits = FINEGRID * MULTIPLIER 
+    prefix = true_function_type +'_regfine_'
     
 ########################
 # Save to path 

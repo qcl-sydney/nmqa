@@ -43,23 +43,39 @@ TUNING_MULTIPLIER=5
 path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
 
 ########################
-# Generate Padua Qubits
+# Generate Sensing Qubits
 ########################
+
+# Sensor-qubits in Padua formation
 
 if padua_order > 0:
     sensing_qubits = calc_padua_cgl(padua_order)[0]
+    
+# No data-qubits, basic analysis
 
 if padua_order == -1: 
     sensing_qubits = generate_data_qubits_coords(data_qubit_num,
                                           flag=data_qubit_flag)
+
+# Sensor-qubits in regular (non-Padua) formation
+
+if padua_order == 'REG_FINE':
+    FINEGRID = 81
+    sensing_qubits = generate_data_qubits_coords(FINEGRID, flag=data_qubit_flag)
+
+if padua_order == 'REG_COARSE':
+    COARSEGRID = 16
+    sensing_qubits = generate_data_qubits_coords(COARSEGRID, flag=data_qubit_flag)
+    
+    # Re-position grid inside square region
+    sensing_qubits = list(np.asarray(sensing_qubits) * 0.75)
 
 ########################
 # Generate Data Qubits
 ########################
 
 if padua_order > 0:
-    data_qubits = generate_data_qubits_coords(data_qubit_num,
-                                          flag=data_qubit_flag)
+    data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
 
     GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits),  len(sensing_qubits) + data_qubit_num, dtype='int')
     GLOBALDICT["INTERPOLATE_FLAG"] = padua_order
@@ -70,7 +86,24 @@ if padua_order == -1:
     GLOBALDICT["INTERPOLATE_FLAG"] = None
     prefix = true_function_type +'_no_padua_'
 
+if padua_order == 'REG_FINE':
+    data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
+    # remove duplicate sensors:
+    sensing_qubits = list(set(sensing_qubits) - set(data_qubits))
+    
+    # update dictionary params:
+    GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits), len(sensing_qubits) + data_qubit_num, dtype='int')
+    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear'
+    prefix = true_function_type +'_regfine_'
 
+if padua_order == 'REG_COARSE':
+    data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
+    
+    # update dictionary params:
+    GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits),  len(sensing_qubits) + data_qubit_num, dtype='int')
+    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear'
+    prefix = true_function_type +'_regcoarse_'
+    
 ########################
 # Set true map and qubit grid
 ########################
