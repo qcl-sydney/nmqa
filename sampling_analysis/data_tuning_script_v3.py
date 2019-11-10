@@ -59,11 +59,11 @@ if padua_order == -1:
 
 # Sensor-qubits in regular (non-Padua) formation
 
-if padua_order == 'REG_FINE':
+if padua_order == -2:
     FINEGRID = 81
     sensing_qubits = generate_data_qubits_coords(FINEGRID, flag=data_qubit_flag)
 
-if padua_order == 'REG_COARSE':
+if padua_order == -3:
     COARSEGRID = 16
     sensing_qubits = generate_data_qubits_coords(COARSEGRID, flag=data_qubit_flag)
     
@@ -86,7 +86,7 @@ if padua_order == -1:
     GLOBALDICT["INTERPOLATE_FLAG"] = None
     prefix = true_function_type +'_no_padua_'
 
-if padua_order == 'REG_FINE':
+if padua_order == -2:
     data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
     # remove duplicate sensors:
     sensing_qubits = list(set(sensing_qubits) - set(data_qubits))
@@ -96,7 +96,7 @@ if padua_order == 'REG_FINE':
     GLOBALDICT["INTERPOLATE_FLAG"] = 'linear'
     prefix = true_function_type +'_regfine_'
 
-if padua_order == 'REG_COARSE':
+if padua_order == -3:
     data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
     
     # update dictionary params:

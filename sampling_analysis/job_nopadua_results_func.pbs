@@ -12,7 +12,7 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-paduaorder==(0 "REG_FINE" "REG_COARSE" "REG_FINE" "REG_COARSE")
+paduaorder==(0 -2 -3 -2 -3)
 func=(0 0 0 1 1)
 
 python ./data_generator_v3.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}

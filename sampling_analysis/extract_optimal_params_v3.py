@@ -32,16 +32,17 @@ if padua_order == -1:
     ALLGRID = data_qubit_num
     max_iterations = ALLGRID * MULTIPLIER 
     prefix = true_function_type +'_no_padua_'
-    
-if padua_order == 'REG_COARSE':
-    COARSEGRID = 16
-    data_qubits = COARSEGRID * MULTIPLIER 
-    prefix = true_function_type +'_regcoarse_'
-    
-if padua_order == 'REG_FINE':
+
+if padua_order == -2:
     FINEGRID = 81
     data_qubits = FINEGRID * MULTIPLIER 
     prefix = true_function_type +'_regfine_'
+
+if padua_order == -3:
+    COARSEGRID = 16
+    data_qubits = COARSEGRID * MULTIPLIER 
+    prefix = true_function_type +'_regcoarse_'
+
     
 ########################
 # Save to path 

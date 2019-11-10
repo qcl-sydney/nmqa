@@ -10,7 +10,7 @@
 
 cd $PBS_O_WORKDIR/
 
-paduaorder="REG_FINE"
+paduaorder=-2
 func=1
 
 module load python

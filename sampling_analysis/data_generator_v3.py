@@ -28,6 +28,7 @@ sys.path.append('./')
 # Taking in bash parameters
 ########################
 padua_order = int(sys.argv[1])  # Padua order 1, 2, 3, 4, 5 for lin; 3, 4, 5 for cheb2fun
+
 idx_functype = int(sys.argv[2])
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
@@ -62,11 +63,11 @@ if padua_order == -1:
 
 # Sensor-qubits in regular (non-Padua) formation
 
-if padua_order == 'REG_FINE':
+if padua_order == -2:
     FINEGRID = 81
     sensing_qubits = generate_data_qubits_coords(FINEGRID, flag=data_qubit_flag)
 
-if padua_order == 'REG_COARSE':
+if padua_order == -3:
     COARSEGRID = 16
     sensing_qubits = generate_data_qubits_coords(COARSEGRID, flag=data_qubit_flag)
     
@@ -90,7 +91,7 @@ if padua_order == -1:
     prefix = true_function_type +'_no_padua_'
     padua_order = "no_padua"
 
-if padua_order == 'REG_FINE':
+if padua_order == -2:
     data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
     
     # remove duplicate sensors:
@@ -104,7 +105,7 @@ if padua_order == 'REG_FINE':
     # reset key for SIMULATIONSDICT
     padua_order = "regfine"
 
-if padua_order == 'REG_COARSE':
+if padua_order == -3:
     data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
     
     # update dictionary params:
