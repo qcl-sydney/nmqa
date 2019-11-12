@@ -5,8 +5,10 @@ from pdpoints import dims_padua_set
 SIMULATIONSDICT = {}
 GRIDSIZE=25 # number of data qubits if padua qubits are used. else, total number of regularly arranged sensing qubits
 MULTIPLIER=5
+
 COARSEGRID=16
 FINEGRID=81
+REMOVE_DUPLICATES=25
 
 for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
     
@@ -18,11 +20,11 @@ for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # P
     
     if padua_order == "regcoarse":
         SIMULATIONSDICT[padua_order]["max_iterations"] = COARSEGRID * MULTIPLIER
-        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID # sensors are mutually exclusive to data qubits
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID # 16 sensor qubits + 25 data qubits; mutually exclusive 
 
     if padua_order == "regfine":
-        SIMULATIONSDICT[padua_order]["max_iterations"] = FINEGRID * MULTIPLIER # RED0
-        SIMULATIONSDICT[padua_order]["num_of_nodes"] = FINEGRID # RED0 all data qubits overlap with sensor positions (and these sensors are removed)
+        SIMULATIONSDICT[padua_order]["max_iterations"] = (FINEGRID - REMOVE_DUPLICATES) * MULTIPLIER # RED0
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = FINEGRID # 56 unique sensor qubits + 25 data qubits; after overlapping sensor qubits are removed
 
     if not isinstance(padua_order, str):
         SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * MULTIPLIER

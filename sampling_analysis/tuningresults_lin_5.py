@@ -6,6 +6,10 @@ SIMULATIONSDICT = {}
 GRIDSIZE=25 # number of data qubits if padua qubits are used. else, total number of regularly arranged sensing qubits
 MULTIPLIER=5
 
+COARSEGRID=16
+FINEGRID=81
+REMOVE_DUPLICATES=25
+
 for padua_order in ["no_padua", 1, 2, 3, 4, 5, 10] : # Padua order for linear function
     
     SIMULATIONSDICT[padua_order] = {}
@@ -14,7 +18,15 @@ for padua_order in ["no_padua", 1, 2, 3, 4, 5, 10] : # Padua order for linear fu
         SIMULATIONSDICT[padua_order]["max_iterations"] = GRIDSIZE * MULTIPLIER
         SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE
     
-    if padua_order != "no_padua":
+    if padua_order == "regcoarse":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = COARSEGRID * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID # 16 sensor qubits + 25 data qubits; mutually exclusive 
+
+    if padua_order == "regfine":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = (FINEGRID - REMOVE_DUPLICATES) * MULTIPLIER # RED0
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = FINEGRID # 56 unique sensor qubits + 25 data qubits; after overlapping sensor qubits are removed
+
+    if not isinstance(padua_order, str):
         SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * MULTIPLIER
         SIMULATIONSDICT[padua_order]["num_of_nodes"] = dims_padua_set(padua_order) + GRIDSIZE
     
@@ -62,6 +74,8 @@ SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_3"] = 4
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_1"] = 8
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
 
 SIMULATIONSDICT[1]["Opt_Beta_Expn"] = "Uniform"
 

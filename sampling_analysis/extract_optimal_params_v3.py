@@ -35,12 +35,13 @@ if padua_order == -1:
 
 if padua_order == -2:
     FINEGRID = 81
-    max_iterations = FINEGRID * MULTIPLIER # REDO - THIS NEEDS TO BE ADJUSTED FOR DUPLICATE SENSOR/DATA QUBITS
+    REMOVE_DUPLICATES = 25
+    max_iterations = (FINEGRID - REMOVE_DUPLICATES) * MULTIPLIER # 56 sensor qubits with locations distinct from 25 data qubits
     prefix = true_function_type +'_regfine_'
 
 if padua_order == -3:
     COARSEGRID = 16
-    max_iterations = COARSEGRID * MULTIPLIER 
+    max_iterations = COARSEGRID * MULTIPLIER # 16 sensor qubits; 25 data qubits 
     prefix = true_function_type +'_regcoarse_'
 
     
