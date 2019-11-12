@@ -194,7 +194,9 @@ for idx_msmt_var in Multiples:
     naive_br = 0.
     qslamdata = 0.
     naivedata = 0.
-
+    
+    print(GLOBALDICT["INTERPOLATE_FLAG"])
+    
     try:
         qslam_br = riskqslam(copy.deepcopy(TRUTHKWARGS), copy.deepcopy(GLOBALDICT))
         naive_br = risknaive(copy.deepcopy(TRUTHKWARGS), copy.deepcopy(GLOBALDICT))

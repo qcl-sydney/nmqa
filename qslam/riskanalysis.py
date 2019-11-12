@@ -288,7 +288,7 @@ class NaiveEstimator(object):
             randomly_choose = np.random.choice(sensing_qubits, self.max_num_iterations, replace=False)
             mask[randomly_choose] = True
 
-        # Final set of qubits that are measured under a Naieve Approach
+        # Final set of qubits that are measured under a Naive Approach
         final_measured_qubits = np.arange(self.numofnodes)[mask]
         self.empirical_estimate = np.ones(self.numofnodes) * np.random.random_sample(size=1) * np.pi
 
@@ -304,20 +304,24 @@ class NaiveEstimator(object):
                 print "There is no noise process dictionary (NaiveEstimator.get_empirical_est)."
                 self.empirical_estimate[idx_node] = Node.inverse_born(np.mean(np.asarray(single_shots, dtype=float)))
 
-        # Add Padua interpolation for unmeasured data qubits.
+        # Add interpolation for unmeasured data qubits.
         if self.data_qubits_indicies is not None and self.intepolationflag is not None:
 
             f_data =  self.empirical_estimate[sensing_qubits]
             data_points = np.asarray([self.all_qubit_locations[idx_point] for idx_point in sensing_qubits])
             test_points = np.asarray([self.all_qubit_locations[idx_point] for idx_point in self.data_qubits_indicies])
+                    
+            if isinstance(self.intepolationflag, int):  # selects Padua interpolation specified by postive integer Padua order
+                
+                if self.intepolationflag > 0:
+                    order = self.intepolationflag
+                    f_interpolated_vals = np.diag(pd_interpolant(order, f_data, [test_points[:,0], test_points[:,1]]))
 
-            if self.intepolationflag > 0:
-                order = self.intepolationflag
-                f_interpolated_vals = np.diag(pd_interpolant(order, f_data, [test_points[:,0], test_points[:,1]]))
-
-            if self.intepolationflag == 'linear':
-                lin_interpolator = LinearNDInterpolator(data_points, f_data, fill_value=np.nan, rescale=False)
-                f_interpolated_vals = lin_interpolator.__call__(test_points)
+            if isinstance(self.intepolationflag, str): # selects interpolation techniques (non-Padua) specified by strings
+                
+                if self.intepolationflag == 'linear':
+                    lin_interpolator = LinearNDInterpolator(data_points, f_data, fill_value=np.nan, rescale=False)
+                    f_interpolated_vals = lin_interpolator.__call__(test_points)
 
             self.empirical_estimate[self.data_qubits_indicies] = f_interpolated_vals
 
