@@ -35,12 +35,12 @@ if padua_order == -1:
 
 if padua_order == -2:
     FINEGRID = 81
-    data_qubits = FINEGRID * MULTIPLIER 
+    max_iterations = FINEGRID * MULTIPLIER 
     prefix = true_function_type +'_regfine_'
 
 if padua_order == -3:
     COARSEGRID = 16
-    data_qubits = COARSEGRID * MULTIPLIER 
+    max_iterations = COARSEGRID * MULTIPLIER 
     prefix = true_function_type +'_regcoarse_'
 
     
