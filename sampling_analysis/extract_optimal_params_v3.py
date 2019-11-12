@@ -35,7 +35,7 @@ if padua_order == -1:
 
 if padua_order == -2:
     FINEGRID = 81
-    max_iterations = FINEGRID * MULTIPLIER 
+    max_iterations = FINEGRID * MULTIPLIER # REDO - THIS NEEDS TO BE ADJUSTED FOR DUPLICATE SENSOR/DATA QUBITS
     prefix = true_function_type +'_regfine_'
 
 if padua_order == -3:
