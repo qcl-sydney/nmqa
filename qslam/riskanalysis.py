@@ -32,6 +32,7 @@ from pdinter_MM import pd_interpolant
 from pdpoints import dims_padua_set
 
 H_PARAM = ['LAMBDA_1', 'LAMBDA_2', 'SIGMOID_VAR', 'QUANT_VAR']
+TYPE = 'multiquadric'
 
 from hardware import Node
 class EngineeredTruth(object):
