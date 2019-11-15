@@ -1,5 +1,5 @@
 #PBS -P QCL_RG
-#PBS -N reg_results_temp
+#PBS -N reg_results_temp_1
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
 #PBS -l select=1:ncpus=1:mem=8GB
@@ -11,5 +11,5 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-python ./data_generator_v3.py -3 0
+python ./data_generator_v3.py -3 1
 
