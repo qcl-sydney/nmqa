@@ -11,4 +11,4 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-python extract_optimal_params_v3.py -3 0
+python extract_optimal_params_v3.py -3 1
