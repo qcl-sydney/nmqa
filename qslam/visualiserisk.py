@@ -123,14 +123,18 @@ class Metric(object):
         dims = residuals.shape
         error = np.zeros(dims[0])
         
+        # ignore np.nan values used as "fillers" in scipy interpolation functions
+        # np.mean --> np.nanmean
+        # np.max --> np.nanmax
+        
         for idx_trial in range(dims[0]):
-            error[idx_trial] = np.max(abs(residuals[idx_trial, :]))
+            error[idx_trial] = np.nanmax(abs(residuals[idx_trial, :]))
         
         if e_type =='maxinf':
             return np.max(error)
         
         if e_type =='expinf':
-            return np.mean(error)
+            return np.nanmean(error) 
             
         print("Invalid e_type")
         raise RuntimeError
