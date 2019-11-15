@@ -10,7 +10,7 @@ COARSEGRID=16
 FINEGRID=81
 REMOVE_DUPLICATES=25
 
-for padua_order in ["no_padua", 1, 2, 3, 4, 5, 10] : # Padua order for linear function
+for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -75,6 +75,24 @@ SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_1"] = 8
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
+
+SIMULATIONSDICT["regcoarse"]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 17.4838256966 Params: (14, 13, 4)
+# Optimal uniform termination error: 18.5018117757 Params: (1, 18, 0)
+
+SIMULATIONSDICT["regcoarse"]["Uniform"]["optimal"]["idx_1"] = 1
+SIMULATIONSDICT["regcoarse"]["Uniform"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT["regcoarse"]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT["regcoarse"]["Uniform"]["zerolambda"]["idx_1"] = 1
+SIMULATIONSDICT["regcoarse"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regcoarse"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["optimal"]["idx_1"] = 14
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_1"] = 14
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
 SIMULATIONSDICT[1]["Opt_Beta_Expn"] = "Uniform"
