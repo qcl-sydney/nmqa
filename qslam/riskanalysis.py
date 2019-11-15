@@ -23,7 +23,7 @@ import qslamr as qs
 import numpy as np
 import os
 
-from scipy.interpolate import LinearNDInterpolator
+from scipy.interpolate import LinearNDInterpolator, Rbf
 
 # PADUA COMPATIBILITY
 import sys
@@ -322,6 +322,10 @@ class NaiveEstimator(object):
                 if self.intepolationflag == 'linear':
                     lin_interpolator = LinearNDInterpolator(data_points, f_data, fill_value=np.nan, rescale=False)
                     f_interpolated_vals = lin_interpolator.__call__(test_points)
+                    
+                if self.intepolationflag == 'Rbf':
+                    rbf_interp = Rbf(data_points[:, 0], data_points[:, 1], f_data, function=TYPE)
+                    f_interpolated_vals = rbf_interp(test_points[:, 0], test_points[:, 1])
 
             self.empirical_estimate[self.data_qubits_indicies] = f_interpolated_vals
 
