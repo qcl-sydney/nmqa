@@ -99,7 +99,7 @@ if padua_order == -2:
     
     # update dictionary params:
     GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits), len(sensing_qubits) + data_qubit_num, dtype='int')
-    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear'
+    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear' # change this to 'Rbf'
     prefix = true_function_type +'_regfine_'
     
     # reset key for SIMULATIONSDICT
@@ -110,7 +110,7 @@ if padua_order == -3:
     
     # update dictionary params:
     GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits),  len(sensing_qubits) + data_qubit_num, dtype='int')
-    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear'
+    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear' # change this to 'Rbf'
     prefix = true_function_type +'_regcoarse_'
     
     # reset key for SIMULATIONSDICT
