@@ -8,19 +8,34 @@ MULTIPLIER=5
 
 COARSEGRID=16
 FINEGRID=81
+REG4 = 4
+REG9 = 9
+REG36= 36
 REMOVE_DUPLICATES=25
 
-for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
     if padua_order == "no_padua":
         SIMULATIONSDICT[padua_order]["max_iterations"] = GRIDSIZE * MULTIPLIER
         SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE
-    
+        
+    if padua_order == "reg4":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = REG4 * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
+
+    if padua_order == "reg9":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = REG9 * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
+            
     if padua_order == "regcoarse":
         SIMULATIONSDICT[padua_order]["max_iterations"] = COARSEGRID * MULTIPLIER
-        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID # 16 sensor qubits + 25 data qubits; mutually exclusive 
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
+    
+    if padua_order == "reg36":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = REG36 * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
 
     if padua_order == "regfine":
         SIMULATIONSDICT[padua_order]["max_iterations"] = (FINEGRID - REMOVE_DUPLICATES) * MULTIPLIER # RED0
@@ -30,7 +45,7 @@ for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # P
         SIMULATIONSDICT[padua_order]["max_iterations"] = dims_padua_set(padua_order) * MULTIPLIER
         SIMULATIONSDICT[padua_order]["num_of_nodes"] = dims_padua_set(padua_order) + GRIDSIZE
     
-    SIMULATIONSDICT[padua_order]["linear"] = False # WTF is this
+    SIMULATIONSDICT[padua_order]["linear"] = True # WTF is this
     SIMULATIONSDICT[padua_order]["repts"] = 50
     SIMULATIONSDICT[padua_order]["functype"]= 'lin'
     

@@ -8,9 +8,12 @@ MULTIPLIER=5
 
 COARSEGRID=16
 FINEGRID=81
+REG4 = 4
+REG9 = 9
+REG26= 36
 REMOVE_DUPLICATES=25
 
-for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -18,9 +21,21 @@ for padua_order in ["no_padua", "regcoarse", "regfine", 1, 2, 3, 4, 5, 10] : # P
         SIMULATIONSDICT[padua_order]["max_iterations"] = GRIDSIZE * MULTIPLIER
         SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE
     
+    if padua_order == "reg4":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = REG4 * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
+
+    if padua_order == "reg9":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = REG9 * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
+            
     if padua_order == "regcoarse":
         SIMULATIONSDICT[padua_order]["max_iterations"] = COARSEGRID * MULTIPLIER
-        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID # 16 sensor qubits + 25 data qubits; mutually exclusive 
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
+    
+    if padua_order == "reg36":
+        SIMULATIONSDICT[padua_order]["max_iterations"] = REG36 * MULTIPLIER
+        SIMULATIONSDICT[padua_order]["num_of_nodes"] = GRIDSIZE + COARSEGRID
 
     if padua_order == "regfine":
         SIMULATIONSDICT[padua_order]["max_iterations"] = (FINEGRID - REMOVE_DUPLICATES) * MULTIPLIER # RED0

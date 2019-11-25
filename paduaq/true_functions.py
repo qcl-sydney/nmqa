@@ -15,8 +15,25 @@ def true_function(X, Y, d=None):
         return np.exp(-X) 
 
     if d == 'gss': 
-        print "true_function not normalised to [0, pi]"
-        return 2.0*np.exp((X-0.25)**2/5. + Y**2/30.)
+        # [min, max] = 0 <= [0.8461838788653079, 3.1315926535897933] < pi over [-1, 1]^2
+        result = np.pi*np.exp(-1.*((X+1)**2./5 + Y**2./2.)) -0.01
+        return result
+
+    if d == 'franke': 
+        # domain of franke function [0,1] --> [-1, 1]^2
+        X = (X + 1.0)*0.5 
+        Y = (Y + 1.0)*0.5
+        
+        # [min, max] = 0 <= [0.0008751540522927725 3.1395926535897933] < pi over [-1, 1]^2
+        result =  0.75*np.exp(-((9*X - 2)**2 )/4 -((9*Y - 2)**2 )/4)
+        result += 0.75*np.exp(-((9*X + 1)**2 )/49. -((9*Y + 1))/10)
+        result +=  0.5*np.exp(-((9*X - 7)**2 )/4 -((9*Y - 3)**2 )/4)
+        result +=  -0.2*np.exp(-((9*X - 4)**2 ) -((9*Y - 7)**2 ))
+        
+        # Rescale function to span [0, np.pi]
+        result = result * np.pi / np.max(result) - 0.002
+        
+        return result
 
     if d == 'sinc':
         print "true_function not normalised to [0, pi]"

@@ -27,15 +27,28 @@ sys.path.append('./')
 ########################
 # Taking in bash parameters
 ########################
-padua_order = int(sys.argv[1])  # Padua order 1, 2, 3, 4, 5 for lin; 3, 4, 5 for cheb2fun
-
+padua_order = int(sys.argv[1])
 idx_functype = int(sys.argv[2])
+
+########################
+# Set True Field
+########################
+
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
-    from tuningresults_cheb2fun_5 import SIMULATIONSDICT
+    from tuningresults_nonpoly import SIMULATIONSDICT
+    
 if idx_functype ==1:
     true_function_type = 'lin'
-    from tuningresults_lin_5 import SIMULATIONSDICT
+    from tuningresults_linear import SIMULATIONSDICT
+
+if idx_functype ==2:
+    true_function_type = 'franke'
+    from tuningresults_franke import SIMULATIONSDICT
+    
+if idx_functype ==3:
+    true_function_type = 'gss'
+    from tuningresults_gss import SIMULATIONSDICT
  
 data_qubit_num = 25
 data_qubit_flag ='uniform'
@@ -74,6 +87,20 @@ if padua_order == -3:
     # Re-position grid inside square region
     sensing_qubits = list(np.asarray(sensing_qubits) * 0.75)
 
+if padua_order == -4:
+    REG4 = 4
+    sensing_qubits = generate_data_qubits_coords(REG4, flag=data_qubit_flag)
+    sensing_qubits = list(np.asarray(sensing_qubits) * 0.75)
+
+if padua_order == -5:
+    REG9 = 9
+    sensing_qubits = generate_data_qubits_coords(REG9, flag=data_qubit_flag)
+    sensing_qubits = list(np.asarray(sensing_qubits) * 0.75)
+
+if padua_order == -6:
+    REG36 = 36
+    sensing_qubits = generate_data_qubits_coords(REG36, flag=data_qubit_flag)
+    
 ########################
 # Generate Data Qubits
 ########################
@@ -93,29 +120,37 @@ if padua_order == -1:
 
 if padua_order == -2:
     data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
-    
     # remove duplicate sensors:
     sensing_qubits = list(set(sensing_qubits) - set(data_qubits))
-    
+
     # update dictionary params:
     GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits), len(sensing_qubits) + data_qubit_num, dtype='int')
-    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear' # change this to 'Rbf'
+    GLOBALDICT["INTERPOLATE_FLAG"] = 'Rbf' # change this to 'Rbf'
     prefix = true_function_type +'_regfine_'
     
     # reset key for SIMULATIONSDICT
     padua_order = "regfine"
 
-if padua_order == -3:
+if padua_order <= -3:
     data_qubits = generate_data_qubits_coords(data_qubit_num, flag=data_qubit_flag)
-    
-    # update dictionary params:
     GLOBALDICT["DATA_QUBITS"] = np.arange(len(sensing_qubits),  len(sensing_qubits) + data_qubit_num, dtype='int')
-    GLOBALDICT["INTERPOLATE_FLAG"] = 'linear' # change this to 'Rbf'
-    prefix = true_function_type +'_regcoarse_'
+    GLOBALDICT["INTERPOLATE_FLAG"] = 'Rbf' 
     
-    # reset key for SIMULATIONSDICT
+if padua_order == -3:
+    prefix = true_function_type +'_regcoarse_'
     padua_order = "regcoarse"
     
+if padua_order == -4:
+    prefix = true_function_type +'_reg4_'
+    padua_order = "reg4"
+    
+if padua_order == -5:
+    prefix = true_function_type +'_reg9_'
+    padua_order = "reg9"
+
+if padua_order == -6:
+    prefix = true_function_type +'_reg36_'
+    padua_order = "reg36"
     
 ########################
 # Set hardware and true map

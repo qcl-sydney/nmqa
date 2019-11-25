@@ -11,16 +11,34 @@ from pdpoints import dims_padua_set
 # Taking in bash parameters
 ########################
 padua_order = int(sys.argv[1]) # Padua order. 1, 2, 3, 4, 5,...
-
 idx_functype = int(sys.argv[2])
+data_qubit_num = 25
+data_qubit_flag ='uniform'
+MULTIPLIER=5
+
+########################
+# Set True Field
+########################
+
 if idx_functype ==0:
     true_function_type = 'cheb2fun'
-    MULTIPLIER=5
+    from tuningresults_nonpoly import SIMULATIONSDICT
+    
 if idx_functype ==1:
     true_function_type = 'lin'
-    MULTIPLIER=5
+    from tuningresults_linear import SIMULATIONSDICT
+
+if idx_functype ==2:
+    true_function_type = 'franke'
+    from tuningresults_franke import SIMULATIONSDICT
     
-data_qubit_num = 25
+if idx_functype ==3:
+    true_function_type = 'gss'
+    from tuningresults_gss import SIMULATIONSDICT
+ 
+########################
+# Set Max Iterations
+########################
 
 # For each type of grid, data is analysed when the num of msmts per sensor = MULTIPLIER
 
@@ -43,8 +61,24 @@ if padua_order == -3:
     COARSEGRID = 16
     max_iterations = COARSEGRID * MULTIPLIER # 16 sensor qubits; 25 data qubits 
     prefix = true_function_type +'_regcoarse_'
-
     
+if padua_order == -4:
+    REG4 = 4
+    max_iterations = REG4 * MULTIPLIER # 4 sensor qubits; 25 data qubits 
+    prefix = true_function_type +'_reg4_'
+
+if padua_order == -5:
+    REG9 = 9
+    max_iterations = REG9 * MULTIPLIER # 9 sensors; 25 data qubits
+    # 1 sensor qubit overlaps with data qubits so effective test-qubits = 24
+    prefix = true_function_type +'_reg9_'
+
+if padua_order == -6:
+    REG36 = 36
+    max_iterations = REG36 * MULTIPLIER # 36 sensors; 25 data qubits
+    # 4 sensor qubits overlap with data qubits so effective test-qubits = 21
+    prefix = true_function_type +'_reg36_'
+  
 ########################
 # Save to path 
 ########################
