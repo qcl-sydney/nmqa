@@ -267,4 +267,22 @@ SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_2"] = 0
 SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
+SIMULATIONSDICT[15]["Opt_Beta_Expn"] = "Uniform"
+#  Optimal trunc termination error: 55.4713633389 Params: (10, 13, 0)
+# Optimal uniform termination error: 54.2825423864 Params: (6, 13, 0)
+
+
+SIMULATIONSDICT[15]["Uniform"]["optimal"]["idx_1"] = 6
+SIMULATIONSDICT[15]["Uniform"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT[15]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[15]["Uniform"]["zerolambda"]["idx_1"] = 6
+SIMULATIONSDICT[15]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[15]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[15]["TruncGauss"]["optimal"]["idx_1"] = 10
+SIMULATIONSDICT[15]["TruncGauss"]["optimal"]["idx_2"] = 13
+SIMULATIONSDICT[15]["TruncGauss"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT[15]["TruncGauss"]["zerolambda"]["idx_1"] = 13
+SIMULATIONSDICT[15]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[15]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
