@@ -1,5 +1,5 @@
 #PBS -P QCL_RG
-#PBS -N franke_results_func
+#PBS -N results_func
 #PBS -J 1-3
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
