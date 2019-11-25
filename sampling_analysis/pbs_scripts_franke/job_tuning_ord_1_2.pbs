@@ -1,5 +1,5 @@
 #PBS -P QCL_RG
-#PBS -N tuning_1_2
+#PBS -N franke_tuning_1_2
 #PBS -J 1-900
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe

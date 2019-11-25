@@ -10,7 +10,7 @@ COARSEGRID=16
 FINEGRID=81
 REG4 = 4
 REG9 = 9
-REG26= 36
+REG36= 36
 REMOVE_DUPLICATES=25
 
 for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
