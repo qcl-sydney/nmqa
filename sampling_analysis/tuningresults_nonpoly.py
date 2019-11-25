@@ -110,6 +110,26 @@ SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_1"] = 19
 SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
+
+SIMULATIONSDICT["regfine"]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 27.2543442798 Params: (21, 18, 4)
+# Optimal uniform termination error: 28.9127980895 Params: (22, 18, 0)
+
+SIMULATIONSDICT["regfine"]["Uniform"]["optimal"]["idx_1"] = 22
+SIMULATIONSDICT["regfine"]["Uniform"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT["regfine"]["Uniform"]["optimal"]["idx_3"] = 0
+SIMULATIONSDICT["regfine"]["Uniform"]["zerolambda"]["idx_1"] = 22
+SIMULATIONSDICT["regfine"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regfine"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["regfine"]["TruncGauss"]["optimal"]["idx_1"] = 21
+SIMULATIONSDICT["regfine"]["TruncGauss"]["optimal"]["idx_2"] = 18
+SIMULATIONSDICT["regfine"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["regfine"]["TruncGauss"]["zerolambda"]["idx_1"] = 21
+SIMULATIONSDICT["regfine"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regfine"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
 SIMULATIONSDICT[1]["Opt_Beta_Expn"] = "TruncGauss"
 # Optimal trunc termination error: 20.4916893855 Params: (29, 23, 4)
 # Optimal uniform termination error: 20.6285757187 Params: (22, 7, 4)

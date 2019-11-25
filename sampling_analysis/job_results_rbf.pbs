@@ -1,6 +1,6 @@
 #PBS -P QCL_RG
 #PBS -N franke_results_func
-#PBS -J 1-12
+#PBS -J 1-3
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
 #PBS -l select=1:ncpus=1:mem=4GB
@@ -12,8 +12,8 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-paduaord=(0 -1 -2 -3 -4 -5 -6 1 2 3 4 5 10)
-func=2
+paduaord=(0 -3 -3 -2)
+func=(0 0 1 0)
 
 python ./data_generator_v4.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}
 

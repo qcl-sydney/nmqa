@@ -204,7 +204,6 @@ Multiples = [1, 3, 5, 7, 9, 10, 15, 20, 50]
 ######## ################
   
 opt_method = "Uniform" # SIMULATIONSDICT[padua_order]["Opt_Beta_Expn"]  
-
 idx_1 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_1"]
 idx_2 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_2"]
 idx_3 = SIMULATIONSDICT[padua_order][opt_method]["optimal"]["idx_3"]
