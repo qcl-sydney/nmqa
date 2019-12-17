@@ -74,5 +74,3 @@ for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine",
 ###########################################################
 
 
-
-

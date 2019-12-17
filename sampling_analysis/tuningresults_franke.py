@@ -13,7 +13,7 @@ REG9 = 9
 REG36= 36
 REMOVE_DUPLICATES=25
 
-for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10] : 
     
     SIMULATIONSDICT[padua_order] = {}
     
@@ -73,7 +73,119 @@ for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine",
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
 
+SIMULATIONSDICT["regcoarse"]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 0.0778637890775 Params: (21, 17, 4)
+# Optimal uniform termination error: 0.082 Params: (0, 0, 2)
 
+SIMULATIONSDICT["regcoarse"]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT["regcoarse"]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT["regcoarse"]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT["regcoarse"]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT["regcoarse"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regcoarse"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["optimal"]["idx_1"] = 21
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["optimal"]["idx_2"] = 17
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_1"] = 21
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+SIMULATIONSDICT["regfine"]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 0.118013979012 Params: (12, 27, 4)
+# Optimal uniform termination error: 0.162 Params: (0, 0, 2)
+
+SIMULATIONSDICT["regfine"]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT["regfine"]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT["regfine"]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT["regfine"]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT["regfine"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regfine"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["regfine"]["TruncGauss"]["optimal"]["idx_1"] = 12
+SIMULATIONSDICT["regfine"]["TruncGauss"]["optimal"]["idx_2"] = 27
+SIMULATIONSDICT["regfine"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["regfine"]["TruncGauss"]["zerolambda"]["idx_1"] = 12
+SIMULATIONSDICT["regfine"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["regfine"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+SIMULATIONSDICT[2]["Opt_Beta_Expn"] = "Uniform"
+# Optimal trunc termination error: 1.35101409137 Params: (13, 0, 2)
+# Optimal uniform termination error: 1.21024395728 Params: (23, 0, 4)
+
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_1"] = 23
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[2]["Uniform"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_1"] = 23
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[2]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_1"] = 13
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[2]["TruncGauss"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_1"] = 13
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[2]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+SIMULATIONSDICT[3]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 0.07 Params: (0, 0, 2)
+# Optimal uniform termination error: 0.07 Params: (0, 0, 2)
+
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[3]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[3]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[3]["TruncGauss"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[3]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+SIMULATIONSDICT[5]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 0.092 Params: (0, 0, 2)
+# Optimal uniform termination error: 0.092 Params: (0, 0, 2)
+
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[5]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[5]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[5]["TruncGauss"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[5]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
+
+SIMULATIONSDICT[10]["Opt_Beta_Expn"] = "Uniform"
+# Optimal trunc termination error: 0.182 Params: (0, 0, 2)
+# Optimal uniform termination error: 0.182 Params: (0, 0, 2)
+
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[10]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[10]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT[10]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
 
 
