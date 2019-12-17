@@ -13,7 +13,7 @@ REG9 = 9
 REG36= 36
 REMOVE_DUPLICATES=25
 
-for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10] : # Padua order for cheb2chev function
+for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine", 1, 2, 3, 4, 5, 10, 15] : # Padua order for cheb2chev function
     
     SIMULATIONSDICT[padua_order] = {}
     
