@@ -3,7 +3,7 @@ import os
 import copy
 import traceback
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 sys.path.append('../qslam')
 sys.path.append('../paduaq')
