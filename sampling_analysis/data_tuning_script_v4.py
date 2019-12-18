@@ -110,7 +110,7 @@ if padua_order > 0:
     prefix = true_function_type +'_padua_ord_'+str(padua_order)+'_'
 
 if padua_order == -1: 
-    GLOBALDICT["DATA_QUBITS"] = None
+    GLOBALDICT["DATA_QUBITS"] = []
     GLOBALDICT["INTERPOLATE_FLAG"] = None
     prefix = true_function_type +'_no_padua_'
 
@@ -157,7 +157,7 @@ TRUTHKWARGS["true_function"] = true_function
 TRUTHKWARGS["true_function_type"] = true_function_type
 
 TRUTHKWARGS["all_qubit_locations"] = sensing_qubits 
-if GLOBALDICT["DATA_QUBITS"] is not None:
+if len(GLOBALDICT["DATA_QUBITS"]) > 0:
     TRUTHKWARGS["all_qubit_locations"] = sensing_qubits + data_qubits
 
 num_of_nodes = len(TRUTHKWARGS["all_qubit_locations"])
