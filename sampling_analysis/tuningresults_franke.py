@@ -72,6 +72,26 @@ for padua_order in ["no_padua", "reg4", "reg9", "regcoarse", "reg36", "regfine",
 ###########################################################
 # NUMERICAL OPTIMISATION RESULTS
 ###########################################################
+
+SIMULATIONSDICT["no_padua"]["Opt_Beta_Expn"] = "TruncGauss"
+# Optimal trunc termination error: 0.0411267623229 Params: (8, 2, 4)
+# Optimal uniform termination error: 0.05 Params: (0, 0, 2)
+
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_1"] = 0
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT["no_padua"]["Uniform"]["optimal"]["idx_3"] = 2
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["no_padua"]["Uniform"]["zerolambda"]["idx_3"] = None
+
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_1"] = 8
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_2"] = 2
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["optimal"]["idx_3"] = 4
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_1"] = 8
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["no_padua"]["TruncGauss"]["zerolambda"]["idx_3"] = None
+
+
 SIMULATIONSDICT["reg4"]["Opt_Beta_Expn"] = "Uniform"
 # Optimal trunc termination error: 13.2112512682 Params: (15, 17, 4)
 # Optimal uniform termination error: 13.1225719567 Params: (21, 17, 0)

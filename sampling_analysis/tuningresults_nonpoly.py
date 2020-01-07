@@ -147,20 +147,21 @@ SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_1"] = 19
 SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT["regcoarse"]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT["reg36"]["Opt_Beta_Expn"] = "TruncGauss"
-#
-# 
-SIMULATIONSDICT["reg36"]["Uniform"]["optimal"]["idx_1"] = 0
-SIMULATIONSDICT["reg36"]["Uniform"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT["reg36"]["Opt_Beta_Expn"] = "Uniform"
+# Optimal trunc termination error: 24.1016817508 Params: (5, 18, 0)
+# Optimal uniform termination error: 23.5657408499 Params: (22, 18, 0)
+
+SIMULATIONSDICT["reg36"]["Uniform"]["optimal"]["idx_1"] = 22
+SIMULATIONSDICT["reg36"]["Uniform"]["optimal"]["idx_2"] = 18
 SIMULATIONSDICT["reg36"]["Uniform"]["optimal"]["idx_3"] = 0
-SIMULATIONSDICT["reg36"]["Uniform"]["zerolambda"]["idx_1"] = 0
-SIMULATIONSDICT["reg36"]["Uniform"]["zerolambda"]["idx_2"] = 0 
+SIMULATIONSDICT["reg36"]["Uniform"]["zerolambda"]["idx_1"] = 22
+SIMULATIONSDICT["reg36"]["Uniform"]["zerolambda"]["idx_2"] = 0
 SIMULATIONSDICT["reg36"]["Uniform"]["zerolambda"]["idx_3"] = None
 
-SIMULATIONSDICT["reg36"]["TruncGauss"]["optimal"]["idx_1"] = 0
-SIMULATIONSDICT["reg36"]["TruncGauss"]["optimal"]["idx_2"] = 0
+SIMULATIONSDICT["reg36"]["TruncGauss"]["optimal"]["idx_1"] = 5
+SIMULATIONSDICT["reg36"]["TruncGauss"]["optimal"]["idx_2"] = 18
 SIMULATIONSDICT["reg36"]["TruncGauss"]["optimal"]["idx_3"] = 0
-SIMULATIONSDICT["reg36"]["TruncGauss"]["zerolambda"]["idx_1"] = 0
+SIMULATIONSDICT["reg36"]["TruncGauss"]["zerolambda"]["idx_1"] = 5
 SIMULATIONSDICT["reg36"]["TruncGauss"]["zerolambda"]["idx_2"] = 0 
 SIMULATIONSDICT["reg36"]["TruncGauss"]["zerolambda"]["idx_3"] = None
 
