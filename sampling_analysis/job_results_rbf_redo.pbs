@@ -1,0 +1,15 @@
+#PBS -P QCL_RG
+#PBS -N results_func_4
+#PBS -M riddhi.sw@gmail.com
+#PBS -m abe
+#PBS -l select=1:ncpus=1:mem=15GB
+#PBS -l walltime=150:00:00 
+#PBS -q defaultQ
+# #PBS -j oe
+
+cd $PBS_O_WORKDIR/
+
+module load python
+
+python ./data_generator_v4.py -2 0
+
