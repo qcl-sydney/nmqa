@@ -11,5 +11,5 @@ cd $PBS_O_WORKDIR/
 
 module load python
 
-python ./data_generator_v4.py -2 0
+python ./data_generator_v4.py -3 0
 
