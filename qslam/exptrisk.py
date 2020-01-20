@@ -161,7 +161,7 @@ class EmpiricalRisk(object):
 
                 empr_array[idx_run, idx] = Metric.singlemap_rmse(residuals, axis=0)
 
-        return np.mean(empr_array, axis=0), np.mean(ssim_array, axis=0)
+        return np.mean(empr_array, axis=0), np.mean(ssim_array, axis=0), empr_array, ssim_array
 
 
 class NaiveEstimatorExpt(object):

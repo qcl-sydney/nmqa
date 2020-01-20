@@ -133,7 +133,7 @@ for idx_l in range(len(ParamUpdater.lambda_scan)):
         SAMPLE_GLOBAL_MODEL["MODELDESIGN"]["MAX_NUM_ITERATIONS"] = ParamUpdater.meta_max_iter_scan[idx_msmt_iter]
         
         expt = EmpiricalRisk(SAMPLE_GLOBAL_MODEL, datakey)
-        err, ssim = expt.calculate_risk(number_of_trials=50)
+        err, ssim = expt.calculate_risk(number_of_trials=50)[0:2]
         
         ssim_qslam.append(ssim[0])
         err_qslam.append(err[0])
