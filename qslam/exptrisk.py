@@ -122,7 +122,7 @@ class EmpiricalRisk(object):
         posterior_map, true_map_ = naiveobj.get_empirical_est()
         return posterior_map, true_map_
 
-    def calculate_risk(self, number_of_trials=50):
+    def calculate_risk(self, number_of_trials=50, Cone=0.01, Ctwo=0.01):
         '''
         Return error matrices for map reconstructions for QSLAM and Naive
         measurement strategies using experimental measurement data.
@@ -157,7 +157,7 @@ class EmpiricalRisk(object):
                 residuals = posterior_map_list[idx] - true_map_
                 ssim_array[idx_run, idx] = Metric.score_ssim(posterior_map_list[idx],
                                                              true_map_,
-                                                             Cone=0.01, Ctwo=0.01)
+                                                             Cone=Cone, Ctwo=Ctwo)
 
                 empr_array[idx_run, idx] = Metric.singlemap_rmse(residuals, axis=0)
 
