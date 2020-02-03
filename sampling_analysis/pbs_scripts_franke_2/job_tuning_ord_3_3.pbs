@@ -1,0 +1,19 @@
+#PBS -P QCL_RG
+#PBS -N franke_3_3
+#PBS -J 1-900
+#PBS -M riddhi.sw@gmail.com
+#PBS -m abe
+#PBS -l select=1:ncpus=1:mem=2GB
+#PBS -l walltime=16:00:00 
+#PBS -q defaultQ
+# #PBS -j oe
+
+cd $PBS_O_WORKDIR/
+
+paduaorder=3
+func=3
+
+module load python
+
+python ./data_tuning_script_v4.py ${paduaorder} ${PBS_ARRAY_INDEX} ${func}
+

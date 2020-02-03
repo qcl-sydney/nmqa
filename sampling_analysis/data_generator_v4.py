@@ -47,6 +47,10 @@ if idx_functype ==2:
     from tuningresults_franke import SIMULATIONSDICT
     
 if idx_functype ==3:
+    true_function_type = 'franke_2'
+    from tuningresults_franke_2 import SIMULATIONSDICT
+
+if idx_functype ==4:
     true_function_type = 'gss'
     from tuningresults_gss import SIMULATIONSDICT
  
@@ -57,8 +61,8 @@ data_qubit_flag ='uniform'
 # Save to path 
 ########################
 
-path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
-
+# path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
+path = './data/'
 ########################
 # Generate Sensor Qubits
 ########################
@@ -166,7 +170,8 @@ if len(GLOBALDICT["DATA_QUBITS"]) > 0:
 
 num_of_nodes = len(TRUTHKWARGS["all_qubit_locations"])
 true_map_ =  EngineeredTruth(num_of_nodes, TRUTHKWARGS).get_map()
-
+print(true_map_)
+raise RuntimeError
 
 
 GLOBALDICT["GRIDDICT"] = {}

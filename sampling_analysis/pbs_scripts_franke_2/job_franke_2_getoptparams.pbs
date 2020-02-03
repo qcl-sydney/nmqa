@@ -1,0 +1,18 @@
+#PBS -P QCL_RG
+#PBS -N frank_2_optparams
+#PBS -J 1-12
+#PBS -M riddhi.sw@gmail.com
+#PBS -m abe
+#PBS -l select=1:ncpus=1:mem=10GB
+#PBS -l walltime=100:00:00 
+#PBS -q defaultQ
+# #PBS -j oe
+
+cd $PBS_O_WORKDIR/
+
+module load python
+
+paduaord=(0 -1 -2 -3 -4 -5 -6 1 2 3 4 5 10)
+func=3
+
+python extract_optimal_params_v4.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}

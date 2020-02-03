@@ -1,0 +1,19 @@
+#PBS -P QCL_RG
+#PBS -N franke_2_results
+#PBS -J 1-12
+#PBS -M riddhi.sw@gmail.com
+#PBS -m abe
+#PBS -l select=1:ncpus=1:mem=4GB
+#PBS -l walltime=20:00:00 
+#PBS -q defaultQ
+# #PBS -j oe
+
+cd $PBS_O_WORKDIR/
+
+module load python
+
+paduaord=(0 -1 -2 -3 -4 -5 -6 1 2 3 4 5 10)
+func=3
+
+python ./data_generator_v4.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}
+

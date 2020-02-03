@@ -47,6 +47,10 @@ if idx_functype ==2:
     from tuningresults_franke import SIMULATIONSDICT
     
 if idx_functype ==3:
+    true_function_type = 'franke_2'
+    from tuningresults_franke_2 import SIMULATIONSDICT
+
+if idx_functype ==4:
     true_function_type = 'gss'
     from tuningresults_gss import SIMULATIONSDICT
        
