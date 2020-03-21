@@ -61,8 +61,8 @@ data_qubit_flag ='uniform'
 # Save to path 
 ########################
 
-# path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
-path = './data/'
+path = '/scratch/QCL_RG/qslam_padua_paper/' # on Artemis './data/'
+# path = './data/'
 ########################
 # Generate Sensor Qubits
 ########################
