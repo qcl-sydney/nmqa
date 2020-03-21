@@ -170,8 +170,6 @@ if len(GLOBALDICT["DATA_QUBITS"]) > 0:
 
 num_of_nodes = len(TRUTHKWARGS["all_qubit_locations"])
 true_map_ =  EngineeredTruth(num_of_nodes, TRUTHKWARGS).get_map()
-print(true_map_)
-raise RuntimeError
 
 
 GLOBALDICT["GRIDDICT"] = {}
