@@ -15,4 +15,4 @@ module load python
 paduaord=(0 -1 -2 -3 -4 -5 -6 1 2 3 4 5 10)
 func=3
 
-python extract_optimal_params_v4.py ${paduaord[$PBS_ARRAY_INDEX]} ${func[$PBS_ARRAY_INDEX]}
+python extract_optimal_params_v4.py ${paduaord[$PBS_ARRAY_INDEX]} ${func}
