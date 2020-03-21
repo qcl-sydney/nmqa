@@ -134,8 +134,11 @@ class Metric(object):
             return np.max(error)
         
         if e_type =='expinf':
-            return np.nanmean(error) 
+            return np.nanmean(error)
             
+        if e_type =='expinf_':
+            return error
+        
         print("Invalid e_type")
         raise RuntimeError
         
