@@ -4,7 +4,7 @@
 #PBS -M riddhi.sw@gmail.com
 #PBS -m abe
 #PBS -l select=1:ncpus=1:mem=4GB
-#PBS -l walltime=600:00:00 
+#PBS -l walltime=400:00:00 
 #PBS -q defaultQ
 # #PBS -j oe
 
