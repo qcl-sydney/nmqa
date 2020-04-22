@@ -8,7 +8,7 @@ References:
 
 [2] Gupta, R. S., & Biercuk, M. J. (2019). Convergence analysis for autonomous adaptive learning applied to quantum architectures. arXiv preprint arXiv:1911.05752. Accessed https://arxiv.org/abs/1911.05752
 
-[3] Gupta, R., Govia L.~C.~G. & Biercuk, M. J. Interpolation and architectural impacts of spectator qubits for efficient quantum computer calibration and tuneup (forthcoming 2020).
+[3] Gupta, R., Govia L. C. G. & Biercuk, M. J. Interpolation and architectural impacts of spectator qubits for efficient quantum computer calibration and tuneup (forthcoming 2020).
 
 Contains the following Python packges:
     
