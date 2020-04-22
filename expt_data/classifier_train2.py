@@ -70,16 +70,36 @@ def classifier_train2(N,reps,img_shape,prefix,year,date,brightID,darkID):
     #%% Plot result and divisions
     fig = plt.figure
     plt.imshow(np.sum(train_bright, axis=0).reshape(img_shape))
+    plt.savefig('ionimage.svg', format='svg')
     plt.show()
     
-    fig, ax = plt.subplots(figsize=(16, 4))
-    #ax.plot(x,y,'bo')
-    out.plot_fit(numpoints = 300, xlabel='pixel', ylabel='integrated counts')
+    fig, ax = plt.subplots(figsize=(11*0.39, 11*0.39))
+    
+    data_kws={}
+    data_kws['marker']= 'o'
+    data_kws['markersize']=4
+    data_kws['markeredgecolor']='steelblue'
+    data_kws['markerfacecolor']='None'
+    data_kws['alpha']=0.75
+    
+    fit_kws={}
+    fit_kws['linewidth']= 1.5
+    fit_kws['linestyle']= '-'
+    fit_kws['color']='gray'
+    fit_kws['alpha']=0.4
+        
+    out.plot_fit(ax=ax, 
+                 numpoints = 300,
+                 data_kws=data_kws,
+                 fit_kws=fit_kws)
+                 
     for d in div:
-        ax.plot([(d), (d)],[0, max(bright_col_sum_bgs)],'--')
-        ax.plot([int(d), int(d)],[0, max(bright_col_sum_bgs)])
-    plt.title('ion locations and regions')
-    plt.legend(('data','best-fit','ideal division','max pixel div'))
+        ax.plot([(d), (d)],[0, max(bright_col_sum_bgs)],'--',  c='darkred', lw=1.)
+        ax.plot([int(d), int(d)],[0, max(bright_col_sum_bgs)], c='k',lw=1.)
+    # plt.title('ion locations and regions')
+    ax.set_ylim([0, 400000])
+    plt.legend(('Msmts','Dest-fit','Ideal division','Max pixel div'))
+    plt.savefig('ionlocations.svg', format='svg')
     plt.show()
     
     #%% Classifier training
