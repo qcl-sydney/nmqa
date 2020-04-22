@@ -4,11 +4,11 @@ Research Codebase Noise Mapping for Quantum Architectures (NMQA). Formerly known
 
 References:
 
-[1] Swaroop Gupta, R., Milne, A. R., Edmunds, C. L., Hempel, C., & Biercuk, M. J. (2019). Adaptive scheduling of noise characterization in quantum computers. arXiv preprint arXiv:1904.07225. Accessed https://arxiv.org/abs/1904.07225 
+[1] Gupta, R. S., Milne, A. R., Edmunds, C. L., Hempel, C., & Biercuk, M. J. (2019). Adaptive scheduling of noise characterization in quantum computers. arXiv preprint arXiv:1904.07225. Accessed https://arxiv.org/abs/1904.07225 
 
 [2] Gupta, R. S., & Biercuk, M. J. (2019). Convergence analysis for autonomous adaptive learning applied to quantum architectures. arXiv preprint arXiv:1911.05752. Accessed https://arxiv.org/abs/1911.05752
 
-[3] Gupta, R., Govia L. C. G. & Biercuk, M. J. Interpolation and architectural impacts of spectator qubits for efficient quantum computer calibration and tuneup (forthcoming 2020).
+[3] Gupta, R. S., Govia, L. C. G., & Biercuk, M. J. Interpolation and architectural impacts of spectator qubits for efficient quantum computer calibration and tuneup (forthcoming 2020).
 
 Contains the following Python packges:
     
