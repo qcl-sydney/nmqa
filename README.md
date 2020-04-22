@@ -1,4 +1,4 @@
-# NMQA-QSLAM 
+# NMQA 
 
 Research Codebase Noise Mapping for Quantum Architectures (NMQA). Formerly known as: Quantum Simultaneous Localisation and Mapping (QSLAM).
 
