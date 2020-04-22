@@ -4,11 +4,11 @@ Research Codebase Noise Mapping for Quantum Architectures (NMQA). Formerly known
 
 References:
 
-[1] Gupta, R et. al. Adaptive scheduling of noise characterization in quantum computers (2019). Accessed https://arxiv.org/abs/1904.07225 
+[1] Swaroop Gupta, R., Milne, A. R., Edmunds, C. L., Hempel, C., & Biercuk, M. J. (2019). Adaptive scheduling of noise characterization in quantum computers. arXiv preprint arXiv:1904.07225. Accessed https://arxiv.org/abs/1904.07225 
 
-[2] Gupta, R & Biercuk, M. J.  Convergence analysis for NMQA (unpublished 2019)
+[2] Gupta, R. S., & Biercuk, M. J. (2019). Convergence analysis for autonomous adaptive learning applied to quantum architectures. arXiv preprint arXiv:1911.05752. Accessed https://arxiv.org/abs/1911.05752
 
-[3] Gupta, R. & Biercuk, M. J. Spatial sampling analysis for NMQA using Padua points (unpublished 2019)
+[3] Gupta, R., Govia L.~C.~G. & Biercuk, M. J. Interpolation and architectural impacts of spectator qubits for efficient quantum computer calibration and tuneup (forthcoming 2020).
 
 Contains the following Python packges:
     
@@ -24,22 +24,22 @@ Contains the following Python packges:
 
 Contains the following directories for associated research analysis:
 
-    paperdata : Compares NMQA-QSLAM to Naive Approach using simulated data. 
+    nmqa1 : Compares NMQA-QSLAM to Naive Approach using simulated data. 
         Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
         Supports Reference [1].
+    
+    nmqa2 : Implements convergence analysis for NMQA-QSLAM.
+        Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
+        Supports Reference [2].
+ 
+    nmqa3: Compares NMQA-QSLAM to Naive Approach with Padua interpolation. 
+        Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
+        Supports Reference [3].
         
     expt_qslam : Compares NMQA-QSLAM to Naive Approach using experimental data.
         Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
         Supports Reference [1].
-    
-    intrarun : Implements convergence analysis for NMQA-QSLAM.
-        Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
-        Supports Reference [2].
- 
-    sampling_analysis: Compares NMQA-QSLAM to Naive Approach with Padua interpolation. 
-        Codebase stored as a series of Python (.py) + Artemis (.pbs) scripts.
-        Supports Reference [3].
-    
+
     expt_data : Converts trapped ion images into measurement database. 
         Codebase stored as a series of Jupyter Notebooks (.ipynb) 
         Supports Reference [1].
