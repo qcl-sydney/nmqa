@@ -76,7 +76,8 @@ def true_function(X, Y, d=None, n=None, trial=None):
             # print('Insufficient parameters for randpoly')
             raise RuntimeError # add print statement to explain error 
         
-        unique_polynomial = np.load('scaledrandpoly_n_'+str(n)+'.npz')['uniquepoly'][:, trial]
+        # This is a local respository of scaled and shift polynomials. High risk of code-breaking due to filepath errors.
+        unique_polynomial = np.load('./data/scaledrandpoly_n_'+str(n)+'.npz')['uniquepoly'][:, trial]
         scale, shift = unique_polynomial[0:2]
         
         points = [(X,Y)]
