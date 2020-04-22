@@ -168,10 +168,23 @@ class EngineeredTruth(object):
 
             true_map = []
             true_function_type = self.TRUTHKWARGS["true_function_type"]
+            
+            # PADUA PROJECT: RANDOM POLYNOMIALS FUNCTIONALITY
+            if true_function_type == 'randpoly':
+                n = self.TRUTHKWARGS["randpoly"]["n"]
+                trial = np.random.randint(low=0,high=199) 
+            
             for idx_point in range(self.dims):
                 point = self.TRUTHKWARGS["all_qubit_locations"][idx_point]
-                true_map.append(self.TRUTHKWARGS["true_function"](point[0], point[1], d=true_function_type))
-
+                
+                # PADUA PROJECT: RANDOM POLYNOMIALS FUNCTIONALITY
+                if true_function_type != 'randpoly':
+                    true_map.append(self.TRUTHKWARGS["true_function"](point[0], point[1], d=true_function_type))
+                
+                if true_function_type == 'randpoly':
+                    true_map.append(self.TRUTHKWARGS["true_function"](point[0], point[1], d=true_function_type,
+                                                                      n=n,trial=trial))
+            
             truemap = np.asarray(true_map)
 
         return truemap
@@ -218,18 +231,6 @@ class NaiveEstimator(object):
         -----------
             TRUTHKWARGS (`type` | dictionary object):
                 Dictionary object used to instantiate a EngineeredTruth instance.
-
-                TRUTHKWARGS["truthtype"] : Sets shape of a true map as "Uniform",
-                    "OneStep", "OneStepd", "OneStepq" or "Gaussian".
-
-                TRUTHKWARGS["OneStepdheight"]["low"] : phase value of "low field",
-                    a scalar between 0 and np.pi, when "OneStepd" or "OneStepq" is selected.
-
-                TRUTHKWARGS["OneStepdheight"]["high"] : phase value of "high field",
-                    a scalar between 0 and np.pi, when "OneStepd" or "OneStepq" is selected.
-
-                TRUTHKWARGS["OneStepdfloorarea"] : Ratio of the number of qubits
-                    in low vs. high field region when truth type "OneStepdheight" is selected.
 
             msmt_per_node (`dtype` | scalar int):
                 Number of measurements per qubit per iteration before information is
